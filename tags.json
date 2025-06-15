@@ -31,6 +31,14 @@
     {
       "id": "4jGWTHrHiYoy3e5q",
       "name": "1Y Beauties"
+    },
+    {
+      "id": "CzopXiQRFrAmbFnk",
+      "name": "text2img"
+    },
+    {
+      "id": "T2WqpSHFONPmV2eK",
+      "name": "aigc"
     }
   ],
   "mappings": [
@@ -93,6 +101,14 @@
     {
       "workflowId": "BtUXgO7tKebZFlDg",
       "tagId": "4jGWTHrHiYoy3e5q"
+    },
+    {
+      "workflowId": "gx2XhPOwUEjRihNA",
+      "tagId": "CzopXiQRFrAmbFnk"
+    },
+    {
+      "workflowId": "gx2XhPOwUEjRihNA",
+      "tagId": "T2WqpSHFONPmV2eK"
     }
   ]
 }
