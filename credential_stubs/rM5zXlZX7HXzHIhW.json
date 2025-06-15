@@ -1,0 +1,12 @@
+{
+  "id": "rM5zXlZX7HXzHIhW",
+  "name": "OpenAi - yangshoulai.me@gmail.com",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

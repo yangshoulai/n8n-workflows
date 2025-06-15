@@ -1,0 +1,14 @@
+{
+  "id": "UrGVZctbylwhiTCt",
+  "name": "Postgres - ClawCloud",
+  "type": "postgres",
+  "data": {
+    "host": "",
+    "password": "",
+    "port": 30672
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

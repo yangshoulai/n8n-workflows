@@ -1,0 +1,16 @@
+{
+  "id": "GhYByP9bpg1zvCiZ",
+  "name": "Postgres - Neon",
+  "type": "postgres",
+  "data": {
+    "host": "",
+    "database": "",
+    "user": "",
+    "password": "",
+    "ssl": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

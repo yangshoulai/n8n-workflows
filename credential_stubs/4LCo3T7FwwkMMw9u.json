@@ -1,0 +1,12 @@
+{
+  "id": "4LCo3T7FwwkMMw9u",
+  "name": "Telegram - @wallpaper_test_tg_bot",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

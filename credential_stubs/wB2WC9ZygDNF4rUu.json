@@ -1,0 +1,13 @@
+{
+  "id": "wB2WC9ZygDNF4rUu",
+  "name": "OpenAi - FAST PRO API",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

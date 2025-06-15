@@ -1,0 +1,14 @@
+{
+  "id": "8YD8ZL8jLcVjsyse",
+  "name": "MongoDB - MongDB Cloud",
+  "type": "mongoDb",
+  "data": {
+    "configurationType": "",
+    "connectionString": "",
+    "database": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

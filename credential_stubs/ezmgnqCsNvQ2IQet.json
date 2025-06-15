@@ -1,0 +1,12 @@
+{
+  "id": "ezmgnqCsNvQ2IQet",
+  "name": "Telegram - @iwallpapers_bot",
+  "type": "telegramApi",
+  "data": {
+    "accessToken": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

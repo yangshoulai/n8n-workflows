@@ -1,0 +1,12 @@
+{
+  "id": "HcRpLQ8AC9QYmUDr",
+  "name": "Google Gemini(PaLM) Api - shoulai.yang@gmail.com",
+  "type": "googlePalmApi",
+  "data": {
+    "apiKey": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

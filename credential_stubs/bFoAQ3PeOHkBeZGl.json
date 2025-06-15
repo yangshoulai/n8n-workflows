@@ -1,0 +1,13 @@
+{
+  "id": "bFoAQ3PeOHkBeZGl",
+  "name": "Google Drive - yangshoulai.me@gmail.com",
+  "type": "googleDriveOAuth2Api",
+  "data": {
+    "clientId": "",
+    "clientSecret": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

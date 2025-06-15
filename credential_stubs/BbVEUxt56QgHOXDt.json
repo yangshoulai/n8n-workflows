@@ -1,0 +1,12 @@
+{
+  "id": "BbVEUxt56QgHOXDt",
+  "name": "Bearer Auth - pollinations.ai",
+  "type": "httpBearerAuth",
+  "data": {
+    "token": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}
