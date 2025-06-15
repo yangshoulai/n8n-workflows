@@ -1,0 +1,527 @@
+{
+  "id": "BtUXgO7tKebZFlDg",
+  "name": "1Y Beauties 套图下载",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $json.相册首页 }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -440,
+        100
+      ],
+      "id": "adf803a5-13f9-4980-b8aa-4a8dfca2ee57",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "title"
+            },
+            {
+              "key": "images",
+              "cssSelector": ".site-main .entry-content img",
+              "returnValue": "attribute",
+              "attribute": "src",
+              "returnArray": true
+            },
+            {
+              "key": "pages",
+              "cssSelector": ".page-links a.post-page-numbers",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -220,
+        100
+      ],
+      "id": "1788bf7f-c931-4ca3-a244-128ff6d04a38",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "pages",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fac92c05-4c12-4baf-95bc-2d0138727a71",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.pages }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "e035c5b9-1588-4ed6-9b45-e5d91ad19227",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "title"
+            },
+            {
+              "key": "images",
+              "cssSelector": ".site-main .entry-content img",
+              "returnValue": "attribute",
+              "attribute": "src",
+              "returnArray": true
+            },
+            {
+              "key": "pages",
+              "cssSelector": ".page-links a.post-page-numbers",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "0b0b23e3-0cec-40f6-b35f-e3423e33bae0",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "images"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        660,
+        0
+      ],
+      "id": "74c7ef49-fe51-41d1-853a-c88459978ccf",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "169547e9-83c0-41b3-a691-65f18ca89198",
+              "name": "images",
+              "value": "={{ $json.images }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        660,
+        200
+      ],
+      "id": "4d37b9ae-ca04-49e7-adb3-248e63a22a64",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        880,
+        100
+      ],
+      "id": "13317ec9-5a8a-4717-b43e-551d89c8904d",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "images"
+            }
+          ]
+        },
+        "options": {
+          "mergeLists": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        100
+      ],
+      "id": "11a3c207-1016-4b5d-9e44-1388c78d7cd5",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "images",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        100
+      ],
+      "id": "d3c852b1-6453-499c-bcc1-a27c14109258",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.images }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 300
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        100
+      ],
+      "id": "747fb25d-f744-4599-8fc9-1ddc9490a32e",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "compress",
+        "binaryPropertyName": "={{ Object.keys($binary).join(',') }}",
+        "fileName": "={{ $('HTML').item.json.title + '.zip' }}",
+        "binaryPropertyOutput": "=data"
+      },
+      "type": "n8n-nodes-base.compression",
+      "typeVersion": 1.1,
+      "position": [
+        1980,
+        100
+      ],
+      "id": "800f1ea4-97ce-4e96-9d39-213a51e5eca8",
+      "name": "Compression"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "data"
+            }
+          ]
+        },
+        "options": {
+          "includeBinaries": true
+        }
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        100
+      ],
+      "id": "a4c2d8e3-11ce-4ef3-ab44-8674bf3bfb88",
+      "name": "Aggregate2"
+    },
+    {
+      "parameters": {
+        "formTitle": "相册下载",
+        "formDescription": "=访问 <a href=\"https://www.1y.is/\">1Y Beauties</a> 复制相册地址贴入下面输入框",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "相册首页",
+              "placeholder": "请输入相册首页访问地址",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "下 载"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -660,
+        100
+      ],
+      "id": "793a07e4-e9ac-4edb-811e-b961d668facd",
+      "name": "On form submission",
+      "webhookId": "63df609c-f4f7-4697-83ac-5e04f54aa944"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "respondWith": "returnBinary",
+        "completionTitle": "正在下载",
+        "completionMessage": "=相册「{{$('HTML').item.json.title}}」正在下载......",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        0
+      ],
+      "id": "9abb403e-3913-4b98-90be-bb51353749b1",
+      "name": "Form",
+      "webhookId": "aff8e6fb-acbd-4b1b-b6d0-7cf6ab50ff50"
+    },
+    {
+      "parameters": {
+        "name": "={{$('HTML').item.json.title}}.zip",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1XwPwxvxzBhh8UH3GRgx3GemQFwT0MAdy",
+          "mode": "list",
+          "cachedResultName": "1Y Beauties",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1XwPwxvxzBhh8UH3GRgx3GemQFwT0MAdy"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2200,
+        200
+      ],
+      "id": "03ca8785-fefe-49f2-8fa1-a97d09577aef",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "bFoAQ3PeOHkBeZGl",
+          "name": "Google Drive - yangshoulai.me@gmail.com"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compression": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate2": {
+      "main": [
+        [
+          {
+            "node": "Compression",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "d564dc7b-f292-4538-b9e7-26da9f183a66",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "5s3PR4wTbF5gcmj3",
+  "isArchived": false
+}
