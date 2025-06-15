@@ -1,0 +1,105 @@
+{
+  "id": "1VoLqwFWmIy5Wgq5",
+  "name": "n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -380,
+        40
+      ],
+      "id": "9ace2d43-95f9-466b-84c4-0121799e1c77",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://shoulai-n8n-worker.hf.space/healthz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -160,
+        40
+      ],
+      "id": "5fb4877a-3d81-4375-b989-23aefdba90ab",
+      "name": "n8n-worker",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://shoulai-n8n-webhook.hf.space/webhook/healthz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -160,
+        -160
+      ],
+      "id": "c9952120-8af4-4468-9d01-7d790fbff9a2",
+      "name": "n8n-webhook",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://n8n.yangshoulai.site/webhook/healthz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -160,
+        240
+      ],
+      "id": "a5e3db76-abfe-4881-86dc-64ae3cccce9b",
+      "name": "n8n-worker1",
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "n8n-webhook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "n8n-worker",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "n8n-worker1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "8f4beb29-fdd5-4bb9-a7fb-eed06a3b0291",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "ver0BTPbVL6EbqRd",
+  "isArchived": false
+}
