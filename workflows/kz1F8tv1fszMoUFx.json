@@ -1,0 +1,1034 @@
+{
+  "id": "kz1F8tv1fszMoUFx",
+  "name": "Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -440,
+        675
+      ],
+      "id": "654a407c-148b-4b43-9429-9f4e8547ce8d",
+      "name": "监听机器人消息",
+      "webhookId": "220d2a8f-2261-435d-8c3b-a5f4920c9546",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/start",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "7261cbba-97d5-4406-a547-a2500200d07c"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/start"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f77855c2-ad29-4489-b7f2-78494694a88f",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/subscribe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/subscribe"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "799d8087-572f-4dc2-9975-bcf7e4ea6800",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/unsubscribe",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/unsubscribe"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "e56d1e9b-dd47-4030-a089-35f07d7ccd5e",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/sfw",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/sfw"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2da9752a-5b5b-43e7-8580-eacabc071a0f",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/nsfw",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "/nsfw"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "none"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -220,
+        633
+      ],
+      "id": "c1714da6-7402-40e0-a756-12652770763f",
+      "name": "处理命令"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('监听机器人消息').item.json.message.chat.id }}",
+        "text": "👋 欢迎使用爱壁纸机器人!\n\n可用命令： \n/sfw         - 随机安全壁纸 \n/nsfw        - 随机非安全壁纸 \n/subscribe   - 订阅 \n/unsubscribe - 取消订阅",
+        "replyMarkup": "forceReply",
+        "forceReply": {},
+        "additionalFields": {
+          "appendAttribution": false,
+          "reply_to_message_id": "={{ $('监听机器人消息').item.json.message.message_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2011a1e2-8b90-4c90-942f-a20880867b4f",
+      "name": "处理 /start",
+      "webhookId": "52255315-7c14-448b-b50b-4070953a30a0",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "subscriptions",
+          "mode": "list",
+          "cachedResultName": "subscriptions"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "chat_id",
+              "value": "={{ $('监听机器人消息').item.json.message.chat.id }}"
+            }
+          ]
+        },
+        "options": {
+          "outputColumns": [
+            "chat_id"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        200
+      ],
+      "id": "abaae735-575b-425e-ac31-3ee06ab25e21",
+      "name": "订阅记录",
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ec7cab89-9ca6-4de6-bed4-54ad17d9f6c5",
+              "leftValue": "={{ $json.chat_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        200
+      ],
+      "id": "5745d440-713a-4456-a011-d954e25e5dfc",
+      "name": "判断是否已订阅"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('监听机器人消息').item.json.message.chat.id }}",
+        "text": "✅ 成功订阅，每隔一段时间会为您推送一张随机精美壁纸。",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        660,
+        100
+      ],
+      "id": "931a01fc-14b1-43ca-9797-58c059ea3a23",
+      "name": "订阅成功",
+      "webhookId": "4981a2b0-f2fb-4cba-bf13-d85a75bd9790",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "subscriptions",
+          "mode": "list",
+          "cachedResultName": "subscriptions"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "is_admin": false,
+            "active": true,
+            "chat_id": "={{ $('监听机器人消息').item.json.message.chat.id }}",
+            "chat_type": "={{ $('监听机器人消息').item.json.message.chat.type }}",
+            "title": "={{ $('监听机器人消息').item.json.message.chat.first_name }}",
+            "username": "={{ $('监听机器人消息').item.json.message.chat.username }}",
+            "created_at": "={{ $now }}",
+            "updated_at": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "chat_type",
+              "displayName": "chat_type",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "is_admin",
+              "displayName": "is_admin",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "active",
+              "displayName": "active",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "extra_info",
+              "displayName": "extra_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        440,
+        350
+      ],
+      "id": "4098633a-4627-4ae1-a149-66637d824f8b",
+      "name": "新增订阅",
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('监听机器人消息').item.json.message.chat.id }}",
+        "text": "❌ 订阅失败，请稍后重试。",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        660,
+        300
+      ],
+      "id": "b7e65766-ac08-406b-8e84-ad02647d6de4",
+      "name": "订阅失败",
+      "webhookId": "6f9d83b1-f992-4d71-b65b-256f3197c459",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "subscriptions",
+          "mode": "list",
+          "cachedResultName": "subscriptions"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "chat_id",
+              "value": "={{ $('监听机器人消息').item.json.message.chat.id }}"
+            }
+          ]
+        },
+        "options": {
+          "outputColumns": [
+            "chat_id"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        675
+      ],
+      "id": "f4c6d9ea-db09-4b5c-8fa7-748fbc8cc7fc",
+      "name": "订阅记录1",
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ec7cab89-9ca6-4de6-bed4-54ad17d9f6c5",
+              "leftValue": "={{ $json.chat_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        675
+      ],
+      "id": "888f3027-f19d-4d51-a494-ffc928b41f75",
+      "name": "判断是否已订阅1"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('监听机器人消息').item.json.message.chat.id }}",
+        "text": "✅ 已取消订阅。",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        660,
+        775
+      ],
+      "id": "2290bd4c-f1bb-4c12-a085-a849dfaa97a0",
+      "name": "取消订阅成功",
+      "webhookId": "1c94067c-87dd-46ee-81b5-a0215e229d04",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "subscriptions",
+          "mode": "list",
+          "cachedResultName": "subscriptions"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "active": false,
+            "updated_at": "={{ $now }}",
+            "chat_id": "={{ $('监听机器人消息').item.json.message.chat.id }}"
+          },
+          "matchingColumns": [
+            "chat_id"
+          ],
+          "schema": [
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chat_type",
+              "displayName": "chat_type",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "is_admin",
+              "displayName": "is_admin",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "updated_at",
+              "displayName": "updated_at",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "active",
+              "displayName": "active",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "extra_info",
+              "displayName": "extra_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        440,
+        600
+      ],
+      "id": "2ffe27d9-8c56-4efa-af95-14e1faddd6be",
+      "name": "取消订阅",
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('监听机器人消息').item.json.message.chat.id }}",
+        "text": "❌ 取消订阅失败，请稍后重试。",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        660,
+        550
+      ],
+      "id": "4c996ca7-2597-4473-ae9f-7076a051de08",
+      "name": "取消订阅失败",
+      "webhookId": "d8e38e2f-2b74-4b42-ac92-27a95a04568a",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "update public.subscriptions set active = true, updated_at = $1 where chat_id = $2",
+        "options": {
+          "queryReplacement": "={{ $now }},{{ $('监听机器人消息').item.json.message.chat.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        440,
+        50
+      ],
+      "id": "55c23e2d-4546-42b8-8a1c-ff15cf544a2d",
+      "name": "更新订阅",
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "l8Q1yOALQQCgrKS0",
+          "mode": "list",
+          "cachedResultName": "发送壁纸"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "sendErrorMsg": true,
+            "chat_id": "={{ $('监听机器人消息').item.json.message.chat.id }}",
+            "nsfw": 1
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "nsfw",
+              "displayName": "nsfw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "sendErrorMsg",
+              "displayName": "sendErrorMsg",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        875
+      ],
+      "id": "814cfd26-6f8f-4d6e-8232-9d398ab48fdb",
+      "name": "发送 NSFW 壁纸"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "l8Q1yOALQQCgrKS0",
+          "mode": "list",
+          "cachedResultName": "发送壁纸"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "sendErrorMsg": true,
+            "chat_id": "={{ $('监听机器人消息').item.json.message.chat.id }}",
+            "nsfw": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "nsfw",
+              "displayName": "nsfw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "sendErrorMsg",
+              "displayName": "sendErrorMsg",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        1075
+      ],
+      "id": "39e262bc-d9c6-4c10-8517-26edd09a1b93",
+      "name": "发送 SFW 壁纸"
+    }
+  ],
+  "connections": {
+    "监听机器人消息": {
+      "main": [
+        [
+          {
+            "node": "处理命令",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "处理命令": {
+      "main": [
+        [
+          {
+            "node": "处理 /start",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "订阅记录",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "订阅记录1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "发送 SFW 壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "发送 NSFW 壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "订阅记录": {
+      "main": [
+        [
+          {
+            "node": "判断是否已订阅",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否已订阅": {
+      "main": [
+        [
+          {
+            "node": "更新订阅",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "新增订阅",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "新增订阅": {
+      "main": [
+        [
+          {
+            "node": "订阅成功",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "订阅失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "订阅记录1": {
+      "main": [
+        [
+          {
+            "node": "判断是否已订阅1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否已订阅1": {
+      "main": [
+        [
+          {
+            "node": "取消订阅",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "取消订阅成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "取消订阅": {
+      "main": [
+        [
+          {
+            "node": "取消订阅成功",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "取消订阅失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "更新订阅": {
+      "main": [
+        [
+          {
+            "node": "订阅成功",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "订阅失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "88538308-984c-4936-b920-3b60489d8c74",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "5s3PR4wTbF5gcmj3",
+  "isArchived": false
+}

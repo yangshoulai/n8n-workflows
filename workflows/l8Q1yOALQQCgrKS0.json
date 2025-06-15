@@ -1,0 +1,622 @@
+{
+  "id": "l8Q1yOALQQCgrKS0",
+  "name": "发送壁纸",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "update public.wallpapers set file_id = '{{ $json.result.photo[$json.result.photo.length - 1].file_id }}' where id = '{{ $('是否存在合适壁纸').item.json.id }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1100,
+        300
+      ],
+      "id": "bf6951f2-7755-4e35-8d4a-e666377b40bf",
+      "name": "成功 - 更新 file_id",
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('入口').item.json.chat_id }}",
+        "text": "❌ 没有合适壁纸",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        660,
+        300
+      ],
+      "id": "41e649b4-4585-4aa3-b924-cbbde3995832",
+      "name": "失败 - 没有合适壁纸",
+      "webhookId": "52eb7909-16bc-4893-a402-caee8ee6bb7d",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('入口').item.json.chat_id }}",
+        "text": "=❌ 发送壁纸失败 {{ $json.error }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        100
+      ],
+      "id": "319fab41-6109-4e45-82a0-43a814ba6564",
+      "name": "失败 - 壁纸发送异常",
+      "webhookId": "0816ddbe-e8a2-4fb4-8c89-3246a3ac0a8f",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.wallpapers WHERE size < 5 * 1024 * 1024 AND width < 10000 AND height < 10000 AND sfw is true ORDER BY RANDOM() LIMIT 1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4a72335f-9ace-4e15-89c4-07c924835f53",
+      "name": "查询 SFW 壁纸",
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.wallpapers WHERE size < 5 * 1024 * 1024 AND width < 10000 AND height < 10000 AND sfw is false ORDER BY RANDOM() LIMIT 1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        200
+      ],
+      "id": "4d87657c-e9b7-41da-9562-c1ba1b712ac2",
+      "name": "查询 NSFW 壁纸",
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "528db360-ed2a-4976-b507-4e3a728bd8ed",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        200
+      ],
+      "id": "91271f2f-dc3d-4d3e-af5c-088dfca8d36a",
+      "name": "是否存在合适壁纸"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "21ec3703-7210-4dc5-b945-52cbba7f0c03",
+              "leftValue": "={{ $json.file_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        660,
+        100
+      ],
+      "id": "742fddb9-97c3-407e-8a6f-9db1f9c1f240",
+      "name": "是否存在 file_id"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $('入口').item.json.chat_id }}",
+        "file": "={{ $json.file_id }}",
+        "replyMarkup": "forceReply",
+        "forceReply": {},
+        "additionalFields": {
+          "caption": "={{ $json.caption }}",
+          "parse_mode": "MarkdownV2",
+          "has_spoiler": "={{ !$json.sfw }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        0
+      ],
+      "id": "a414b6e0-a82d-4348-8930-defc38592acf",
+      "name": "发送壁纸 - file_id",
+      "webhookId": "e71dbedf-9c56-4e16-b9f8-cb6239abcf67",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $('入口').item.json.chat_id }}",
+        "file": "={{ $json.src }}",
+        "additionalFields": {
+          "caption": "={{ $json.caption }}",
+          "parse_mode": "MarkdownV2",
+          "has_spoiler": "={{ !$json.sfw }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        200
+      ],
+      "id": "7d355ded-f5a5-4268-9d93-4aa79defb318",
+      "name": "发送壁纸 - src",
+      "webhookId": "23936616-108c-4ed0-bdcf-8c0c3a130378",
+      "credentials": {
+        "telegramApi": {
+          "id": "ezmgnqCsNvQ2IQet",
+          "name": "Telegram - @iwallpapers_bot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "def _escape_markdown(text: str) -> str:\n    \"\"\"转义 Markdown 特殊字符\"\"\"\n    escape_chars = r\"_*[]()~`>#+-=|{}.!\"\n    return \"\".join(f\"\\\\{c}\" if c in escape_chars else c for c in str(text))\n\ndef _is_valid_tag(tag: str) -> bool:\n    \"\"\"检查标签是否有效（只包含英文、数字、-、_）\n    Args:\n        tag: 标签\n    \"\"\"\n    return all(c.isalnum() or c in \"-_\" for c in tag)\ndef _format_file_size(size_in_bytes: int) -> str:\n    \"\"\"格式化文件大小\n\n    Args:\n        size_in_bytes: 文件大小（字节）\n    \"\"\"\n    if size_in_bytes >= 1024 * 1024:  # >= 1MB\n        return f\"{size_in_bytes / (1024 * 1024):.1f} MB\"\n    else:\n        return f\"{size_in_bytes / 1024:.0f} KB\"\n\ndef _format_caption(wallpaper) -> str:\n    \"\"\"格式化壁纸描述信息\n\n    Args:\n        wallpaper: 壁纸对象\n    \"\"\"\n    resolution = _escape_markdown(f\"{wallpaper.width} × {wallpaper.height}\")\n    file_size = _escape_markdown(_format_file_size(wallpaper.size))\n\n    # 过滤并转义标签\n    valid_tags = [tag for tag in wallpaper.tags if _is_valid_tag(tag.replace(\" \", \"_\").replace(\"-\", \"_\"))]\n    tags = (\n        \" \".join([f\"\\\\#{_escape_markdown(tag.replace(' ', '_').replace('-', '_'))}\" for tag in valid_tags])\n        if valid_tags\n        else \"无标签\"\n    )\n\n    source_link = f\"[{_escape_markdown(wallpaper.source)}]({_escape_markdown(wallpaper.source_src)})\"\n    author_link = f\"[{_escape_markdown(wallpaper.author)}]({_escape_markdown(wallpaper.author_url)})\"\n\n    caption = (\n        f\"📸 *精选壁纸* {('_' + wallpaper.description + '_') if wallpaper.description else ''}\\n\\n\"\n        f\"🔗 _来源_：{source_link}\\n\"\n        f\"👨‍🎨 _作者_：{author_link}\\n\"\n        f\"📏 _分辨率_：`{resolution}`\\n\"\n        f\"💾 _大小_：`{file_size}`\\n\"\n        f\"🏷️ _标签_：{tags}\"\n    )\n    return caption\n\n\n# Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor item in _input.all():\n  item.json.caption = _format_caption(item.json)\n\nreturn _input.all()"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        100
+      ],
+      "id": "6e34dd3a-0a8a-4ab4-88bb-e19278253719",
+      "name": "格式化字幕"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "chat_id",
+              "type": "number"
+            },
+            {
+              "name": "nsfw",
+              "type": "number"
+            },
+            {
+              "name": "sendErrorMsg",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -440,
+        200
+      ],
+      "id": "4f803b04-7580-4f09-a483-83c001a48a43",
+      "name": "入口"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.nsfw }}",
+                    "rightValue": 1,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    },
+                    "id": "6e3b39ae-3759-4dfd-83a0-fb62983bcf43"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "nsfw"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f5fa49ca-9c5b-41ec-add1-1177081421d2",
+                    "leftValue": "={{ $json.nsfw }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "sfw"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -220,
+        200
+      ],
+      "id": "d3c44c5a-70d7-474e-a480-0e9fc605dd90",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM public.wallpapers WHERE size < 5 * 1024 * 1024 AND width < 10000 AND height < 10000 ORDER BY RANDOM() LIMIT 1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        400
+      ],
+      "id": "5e857d51-bcd5-4551-96f0-0bfdd30e6a23",
+      "name": "查询壁纸",
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a96c4f74-bacb-4094-b910-3cd72b5f7628",
+              "leftValue": "={{ $('入口').item.json.sendErrorMsg }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ],
+      "id": "d63e572a-9c85-44f8-8615-17d33494a291",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a96c4f74-bacb-4094-b910-3cd72b5f7628",
+              "leftValue": "={{ $('入口').item.json.sendErrorMsg }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1100,
+        100
+      ],
+      "id": "3954492e-5e98-4efe-9eaa-2a2b0d5d63ae",
+      "name": "If1"
+    }
+  ],
+  "connections": {
+    "查询 SFW 壁纸": {
+      "main": [
+        [
+          {
+            "node": "是否存在合适壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询 NSFW 壁纸": {
+      "main": [
+        [
+          {
+            "node": "是否存在合适壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否存在合适壁纸": {
+      "main": [
+        [
+          {
+            "node": "格式化字幕",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否存在 file_id": {
+      "main": [
+        [
+          {
+            "node": "发送壁纸 - file_id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "发送壁纸 - src",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送壁纸 - file_id": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送壁纸 - src": {
+      "main": [
+        [
+          {
+            "node": "成功 - 更新 file_id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "格式化字幕": {
+      "main": [
+        [
+          {
+            "node": "是否存在 file_id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "入口": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "查询 NSFW 壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "查询 SFW 壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "查询壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询壁纸": {
+      "main": [
+        [
+          {
+            "node": "是否存在合适壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "失败 - 没有合适壁纸",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "失败 - 壁纸发送异常",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "430ddd79-7f8a-4b25-99cf-73dba2f298f0",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "5s3PR4wTbF5gcmj3",
+  "isArchived": false
+}

@@ -1,0 +1,574 @@
+{
+  "id": "DklJQkytfc1pDpqV",
+  "name": "Spider Wallhaven",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://wallhaven.cc/api/v1/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $vars.WALLHAVEN_API_KEY }}"
+            },
+            {
+              "name": "q"
+            },
+            {
+              "name": "purity",
+              "value": "111"
+            },
+            {
+              "name": "atleast",
+              "value": "1920x1080"
+            },
+            {
+              "name": "page",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {
+          "pagination": {
+            "pagination": {
+              "parameters": {
+                "parameters": [
+                  {
+                    "name": "page",
+                    "value": "={{ $pageCount + 1 }}"
+                  }
+                ]
+              },
+              "limitPagesFetched": true,
+              "maxRequests": 2,
+              "requestInterval": 500
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "e417e1eb-ff2c-4df5-acfc-6a961e515edc",
+      "name": "HTTP Request",
+      "notesInFlow": true,
+      "notes": "壁纸列表"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "37a1617b-a32a-4060-91e1-541caaae8531",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2f35af68-5b1e-4f5f-a6fb-818a91f62ed6",
+              "name": "id",
+              "value": "={{ $json.id.hash() }}",
+              "type": "string"
+            },
+            {
+              "id": "d2bb1ef6-7488-4a08-835d-f7c03d0d7026",
+              "name": "source",
+              "value": "wallhaven.cc",
+              "type": "string"
+            },
+            {
+              "id": "efa00b58-c330-44cd-80c6-6edc238554b0",
+              "name": "source_src",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "91712a2a-e2e9-4072-880c-997f1197f830",
+              "name": "sfw",
+              "value": "={{ $json.purity == 'sfw' }}",
+              "type": "boolean"
+            },
+            {
+              "id": "b0a9abc9-68f8-4163-95c1-8834eed4aa0d",
+              "name": "category",
+              "value": "={{ $json.category }}",
+              "type": "string"
+            },
+            {
+              "id": "8e99ce7f-7eca-45fd-b6a5-2638093a34b9",
+              "name": "width",
+              "value": "={{ $json.dimension_x }}",
+              "type": "number"
+            },
+            {
+              "id": "2eb46856-c0ae-4e68-9f73-b8de6fb826aa",
+              "name": "height",
+              "value": "={{ $json.dimension_y }}",
+              "type": "number"
+            },
+            {
+              "id": "e75de636-82f4-4398-9dfa-4b9dc7b92ace",
+              "name": "ratio",
+              "value": "={{ ($json.dimension_x / $json.dimension_y).toFixed(2) }}",
+              "type": "number"
+            },
+            {
+              "id": "7606fbe0-3d25-470a-8cd1-b95057fd85dd",
+              "name": "size",
+              "value": "={{ $json.file_size }}",
+              "type": "number"
+            },
+            {
+              "id": "507934a2-1b2a-4724-9a6d-fefada5a835d",
+              "name": "colors",
+              "value": "={{ $json.colors }}",
+              "type": "array"
+            },
+            {
+              "id": "f10d27db-22cb-4abd-aed1-604d5611f931",
+              "name": "src",
+              "value": "={{ $json.path }}",
+              "type": "string"
+            },
+            {
+              "id": "cd27edb8-72a4-401b-82c3-804030651213",
+              "name": "author",
+              "value": "={{ $json.uploader.username }}",
+              "type": "string"
+            },
+            {
+              "id": "1bdabbbd-6b9a-4dbb-9dc2-614cfeda731d",
+              "name": "author_url",
+              "value": "={{ 'https://wallhaven.cc/user/' + $json.uploader.username }}",
+              "type": "string"
+            },
+            {
+              "id": "6cc568e4-0eca-4e38-9a31-058cfe064228",
+              "name": "tags",
+              "value": "={{ $json.tags.map(item => item.name) }}",
+              "type": "string"
+            },
+            {
+              "id": "c7c83702-4a69-44fa-abfa-96b8048b1b4a",
+              "name": "extra_info",
+              "value": "={{ {thumbs: $json.thumbs} }}",
+              "type": "object"
+            },
+            {
+              "id": "b5a6b2ff-3b25-4616-9594-44d9916557bd",
+              "name": "created_at",
+              "value": "={{ DateTime.now().format('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
+            },
+            {
+              "id": "da03953b-a06f-441d-ad8a-e17031664087",
+              "name": "description",
+              "value": "={{ null }}",
+              "type": "string"
+            },
+            {
+              "id": "25be2d7b-268e-484f-8100-602b3353d0eb",
+              "name": "type",
+              "value": "={{ $json.file_type }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "bff3fc43-13bc-419e-ae61-1b33398da606",
+      "name": "Edit Fields",
+      "notesInFlow": true,
+      "notes": "数据格式化"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "fOFlcDKISPEMGFXK",
+          "mode": "list",
+          "cachedResultName": "保存壁纸"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $json.id }}",
+            "source": "={{ $json.source }}",
+            "category": "={{ $json.category }}",
+            "width": "={{ $json.width }}",
+            "height": "={{ $json.height }}",
+            "ratio": "={{ $json.ratio }}",
+            "size": "={{ $json.size }}",
+            "colors": "={{ $json.colors }}",
+            "src": "={{ $json.src }}",
+            "source_src": "={{ $json.source_src }}",
+            "sfw": "={{ $json.sfw }}",
+            "author": "={{ $json.author }}",
+            "author_url": "={{ $json.author_url }}",
+            "tags": "={{ $json.tags }}",
+            "extra_info": "={{ $json.extra_info }}",
+            "description": "={{ $json.description }}",
+            "type": "={{ $json.type }}",
+            "created_at": "={{ $json.created_at }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "source_src",
+              "displayName": "source_src",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "sfw",
+              "displayName": "sfw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean",
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "ratio",
+              "displayName": "ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "size",
+              "displayName": "size",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "colors",
+              "displayName": "colors",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "array"
+            },
+            {
+              "id": "src",
+              "displayName": "src",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "author",
+              "displayName": "author",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "author_url",
+              "displayName": "author_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "tags",
+              "displayName": "tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "extra_info",
+              "displayName": "extra_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "object",
+              "removed": false
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        0
+      ],
+      "id": "d6b4644d-00c1-469d-abf2-a7e5b505ac97",
+      "name": "Execute Workflow",
+      "notesInFlow": true,
+      "notes": "保存壁纸"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5ba3a124-0138-4b29-b32f-72f6511b9cab",
+      "name": "Schedule Trigger",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "url": "=https://wallhaven.cc/api/v1/w/{{ $json.id }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $vars.WALLHAVEN_API_KEY }}"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1500
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        0
+      ],
+      "id": "c3f03acb-68eb-4e75-8415-239939be494b",
+      "name": "HTTP Request1",
+      "notesInFlow": true,
+      "notes": "壁纸详情"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{$json.data}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        0
+      ],
+      "id": "5745dcb6-21f5-43d0-a041-d8d3166b11a8",
+      "name": "Edit Fields1"
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "adeaf35c-7756-4bc3-ba2e-1190959fb08a",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "5s3PR4wTbF5gcmj3",
+  "isArchived": false
+}

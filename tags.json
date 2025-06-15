@@ -3,12 +3,88 @@
     {
       "id": "37r56d7QF4Z1Iv1k",
       "name": "n8n"
+    },
+    {
+      "id": "nEui8NO6V3a5hMut",
+      "name": "iwallpapers"
+    },
+    {
+      "id": "gw0QmrN3jEN1J7Du",
+      "name": "wallpaper"
+    },
+    {
+      "id": "4hHYQ8Udn6n4RER3",
+      "name": "telegram"
+    },
+    {
+      "id": "gfAmv6FLMbG1bDt8",
+      "name": "wallhere"
+    },
+    {
+      "id": "dGAQOVe0Ky0cExcB",
+      "name": "wallhaven"
+    },
+    {
+      "id": "1QYEuiRtjdyfvJm0",
+      "name": "bot"
     }
   ],
   "mappings": [
     {
       "workflowId": "eCGftXqizfL12bnI",
       "tagId": "37r56d7QF4Z1Iv1k"
+    },
+    {
+      "workflowId": "1VoLqwFWmIy5Wgq5",
+      "tagId": "37r56d7QF4Z1Iv1k"
+    },
+    {
+      "workflowId": "fOFlcDKISPEMGFXK",
+      "tagId": "nEui8NO6V3a5hMut"
+    },
+    {
+      "workflowId": "l8Q1yOALQQCgrKS0",
+      "tagId": "nEui8NO6V3a5hMut"
+    },
+    {
+      "workflowId": "l8Q1yOALQQCgrKS0",
+      "tagId": "gw0QmrN3jEN1J7Du"
+    },
+    {
+      "workflowId": "l8Q1yOALQQCgrKS0",
+      "tagId": "4hHYQ8Udn6n4RER3"
+    },
+    {
+      "workflowId": "cFMzCbYiwHhagkE3",
+      "tagId": "nEui8NO6V3a5hMut"
+    },
+    {
+      "workflowId": "cFMzCbYiwHhagkE3",
+      "tagId": "4hHYQ8Udn6n4RER3"
+    },
+    {
+      "workflowId": "p87HpqvmEs4jMeuh",
+      "tagId": "nEui8NO6V3a5hMut"
+    },
+    {
+      "workflowId": "p87HpqvmEs4jMeuh",
+      "tagId": "gfAmv6FLMbG1bDt8"
+    },
+    {
+      "workflowId": "DklJQkytfc1pDpqV",
+      "tagId": "nEui8NO6V3a5hMut"
+    },
+    {
+      "workflowId": "DklJQkytfc1pDpqV",
+      "tagId": "dGAQOVe0Ky0cExcB"
+    },
+    {
+      "workflowId": "kz1F8tv1fszMoUFx",
+      "tagId": "nEui8NO6V3a5hMut"
+    },
+    {
+      "workflowId": "kz1F8tv1fszMoUFx",
+      "tagId": "1QYEuiRtjdyfvJm0"
     }
   ]
 }

@@ -1,0 +1,743 @@
+{
+  "id": "p87HpqvmEs4jMeuh",
+  "name": "Spider Wallhere",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://wallhere.com/zh/wallpapers",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "order",
+              "value": "latest"
+            },
+            {
+              "name": "NSFW",
+              "value": "on"
+            },
+            {
+              "name": "page",
+              "value": "1"
+            },
+            {
+              "name": "format",
+              "value": "json"
+            }
+          ]
+        },
+        "options": {
+          "pagination": {
+            "pagination": {
+              "parameters": {
+                "parameters": [
+                  {
+                    "name": "page",
+                    "value": "={{$pageCount + 1}}"
+                  }
+                ]
+              },
+              "limitPagesFetched": true,
+              "maxRequests": 1,
+              "requestInterval": 500
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1540,
+        160
+      ],
+      "id": "38fd3132-d3e0-42a2-ae1f-9db690667456",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "items",
+              "cssSelector": "div.item-container > a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -1320,
+        60
+      ],
+      "id": "08b0908c-99a9-40b5-b4ad-1d8d9aaece3d",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.source_src }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -440,
+        80
+      ],
+      "id": "9b74aff6-bf60-48d4-80ca-835a1eca6cd5",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "src",
+              "cssSelector": ".hub-photomodal > a",
+              "returnValue": "attribute",
+              "attribute": "href"
+            },
+            {
+              "key": "resolution",
+              "cssSelector": ".photobaseinfo li span"
+            },
+            {
+              "key": "tags",
+              "cssSelector": ".hub-tags li a",
+              "returnArray": true
+            },
+            {
+              "key": "author",
+              "cssSelector": ".hub-infowhattop > p > a.profile-link"
+            },
+            {
+              "key": "author_url",
+              "cssSelector": ".hub-infowhattop > p > a.profile-link",
+              "returnValue": "attribute",
+              "attribute": "href"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -220,
+        80
+      ],
+      "id": "b5b14403-749f-4d87-b0ae-ecd49436d8fb",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\n\nfor(let i = 0; i < $input.all().length; i++){\n  let _item = $input.all()[i].json;\n  results.push({\n    id : _item.id,\n    source: 'wallhere.com',\n    source_src: _item.source_src,\n    sfw: _item.class.indexOf('sketchy') < 0,\n    category: null,\n    width: parseInt(_item.resolution.split('x')[0]),\n    height: parseInt(_item.resolution.split('x')[1]),\n    ratio: (parseInt(_item.resolution.split('x')[0]) / parseInt(_item.resolution.split('x')[1])).toFixed(2),\n    corlors:[],\n    src: _item.src,\n    author: _item.author.split('/')[0].trim(),\n    author_url: 'https://wallhere.com' + _item.author_url,\n    extra_info: {},\n    description: null,\n    type: _item.type,\n    size: _item.size,\n    tags: _item.tags || []\n  });\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        160
+      ],
+      "id": "3974898c-b1a1-487c-9e9c-222812375a4c",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "classes",
+              "cssSelector": "div.item",
+              "returnValue": "attribute",
+              "attribute": "class",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -1100,
+        260
+      ],
+      "id": "f0f3f1c9-f649-44f9-9bba-0e2b6c788661",
+      "name": "HTML2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -660,
+        160
+      ],
+      "id": "539f6a53-146a-478a-ac00-b2d8bf5169d6",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "items",
+        "options": {
+          "destinationFieldName": "source_src"
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -1100,
+        60
+      ],
+      "id": "a3668ef4-8128-4e9c-81e5-eed646cdc0d2",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "classes",
+        "options": {
+          "destinationFieldName": "class"
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        260
+      ],
+      "id": "be44e190-7b13-4df5-9b13-b7b150813b1c",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {
+          "includeUnpaired": false
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        440,
+        160
+      ],
+      "id": "8c687602-1dee-46ae-84b5-c18ad7f31c44",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "method": "HEAD",
+        "url": "={{ $json.src }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "236c8d4e-f3f1-4182-9a4d-0d9d18359ee9",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ee85ca3d-47ac-45f6-8ab4-dc5d617c1232",
+              "name": "type",
+              "value": "={{ $json.headers['content-type'] }}",
+              "type": "string"
+            },
+            {
+              "id": "571ed8e5-ac60-4f4e-baba-5715c12e7e04",
+              "name": "size",
+              "value": "={{ $json.headers['content-length'] }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "b5058a8c-8816-4e9f-9047-a1d727ca70a0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "46c5e19c-a046-46a3-9b10-47b66d4552ae",
+              "name": "source_src",
+              "value": "={{ 'https://wallhere.com' + $json.source_src }}",
+              "type": "string"
+            },
+            {
+              "id": "a422fd82-4cf5-434a-8f4b-f23b0768d664",
+              "name": "id",
+              "value": "={{ ('https://wallhere.com' + $json.source_src).hash() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -880,
+        60
+      ],
+      "id": "ee667007-2530-4885-92a4-04d63b55a4a8",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "fOFlcDKISPEMGFXK",
+          "mode": "list",
+          "cachedResultName": "保存壁纸"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "sfw": "={{ $json.sfw }}",
+            "id": "={{ $json.id }}",
+            "source": "={{ $json.source }}",
+            "source_src": "={{ $json.source_src }}",
+            "category": "={{ $json.category }}",
+            "width": "={{ $json.width }}",
+            "height": "={{ $json.height }}",
+            "ratio": "={{ $json.ratio }}",
+            "colors": "={{ $json.corlors }}",
+            "size": "={{ $json.size }}",
+            "src": "={{ $json.src }}",
+            "author": "={{ $json.author }}",
+            "author_url": "={{ $json.author_url }}",
+            "tags": "={{ $json.tags }}",
+            "extra_info": "={{ $json.extra_info }}",
+            "description": "={{ $json.description }}",
+            "type": "={{ $json.type }}",
+            "created_at": "={{ DateTime.now().format('yyyy-MM-dd HH:mm:ss') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "source_src",
+              "displayName": "source_src",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "sfw",
+              "displayName": "sfw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean"
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "ratio",
+              "displayName": "ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "size",
+              "displayName": "size",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number"
+            },
+            {
+              "id": "colors",
+              "displayName": "colors",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "array"
+            },
+            {
+              "id": "src",
+              "displayName": "src",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "author",
+              "displayName": "author",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "author_url",
+              "displayName": "author_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "tags",
+              "displayName": "tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "extra_info",
+              "displayName": "extra_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "object"
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": true,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        160
+      ],
+      "id": "c5ab43bc-332b-46f6-9af2-81fda76861b9",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1760,
+        160
+      ],
+      "id": "c1b7f990-822a-4897-ae07-b374e9e996f1",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTML2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML2": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "dd3cf993-7107-49f4-991b-9e073f958062",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "5s3PR4wTbF5gcmj3",
+  "isArchived": false
+}
