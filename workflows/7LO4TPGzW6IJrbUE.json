@@ -1,0 +1,17 @@
+{
+  "id": "7LO4TPGzW6IJrbUE",
+  "name": "My workflow",
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "6df299b3-4f26-4691-9478-ad2092d53b5f",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}
