@@ -1,6 +1,6 @@
 {
   "id": "OTrcCwPXz3mLpSm5",
-  "name": "My workflow",
+  "name": "HealthyCheck",
   "nodes": [
     {
       "parameters": {},
@@ -69,7 +69,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "6589dbc5-aa74-411d-9733-bef9675abe67",
+  "versionId": "e4ae2cc4-bf71-4367-940f-96fb0d4ccf92",
   "owner": {
     "type": "personal",
     "personalEmail": "shoulai.yang@gmail.com"
