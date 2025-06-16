@@ -16,8 +16,8 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -380,
-        40
+        -1900,
+        380
       ],
       "id": "9ace2d43-95f9-466b-84c4-0121799e1c77",
       "name": "Schedule Trigger"
@@ -30,8 +30,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -160,
-        40
+        -980,
+        300
       ],
       "id": "5fb4877a-3d81-4375-b989-23aefdba90ab",
       "name": "n8n-worker",
@@ -45,8 +45,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -160,
-        -160
+        -980,
+        100
       ],
       "id": "c9952120-8af4-4468-9d01-7d790fbff9a2",
       "name": "n8n-webhook",
@@ -60,12 +60,102 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -160,
-        240
+        -980,
+        -220
       ],
       "id": "a5e3db76-abfe-4881-86dc-64ae3cccce9b",
-      "name": "n8n-worker1",
+      "name": "n8n-ui",
       "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://shoulai-n8n-worker2.hf.space/healthz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -980,
+        500
+      ],
+      "id": "b4b75bb4-b2c9-49ab-b309-b93589c61e7d",
+      "name": "n8n-worker2",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://yangshoulai-n8n-worker.hf.space/healthz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -980,
+        700
+      ],
+      "id": "ac8d9cad-613d-49b4-be87-8bc1cb4419ae",
+      "name": "n8n-worker3",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://yangshoulai-n8n-worker2.hf.space/healthz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -980,
+        900
+      ],
+      "id": "2d7ee97b-d0fd-4dba-8223-bd4d654a3f0a",
+      "name": "n8n-worker4",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## huggingface space - shoulai.yang@gmail.com \n**Double click** to visit. [Huggingface Space](https://huggingface.co/shoulai)",
+        "height": 580,
+        "width": 600
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1260,
+        60
+      ],
+      "typeVersion": 1,
+      "id": "4b97eb61-d9d4-47de-b063-d106fb6a4ba6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## huggingface space - yanhshoulai.me@gmail.com \n**Double click** to visit. [Huggingface Space](https://huggingface.co/yangshoulai)",
+        "height": 580,
+        "width": 600
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1260,
+        660
+      ],
+      "typeVersion": 1,
+      "id": "068fbd9f-116a-456b-b54f-3d6c7d5bf3bc",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## 腾讯云",
+        "height": 300,
+        "width": 600
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1260,
+        -280
+      ],
+      "typeVersion": 1,
+      "id": "5e5a75cf-ca2e-4c00-abec-2cf1e6c1fe35",
+      "name": "Sticky Note2"
     }
   ],
   "connections": {
@@ -83,7 +173,22 @@
             "index": 0
           },
           {
-            "node": "n8n-worker1",
+            "node": "n8n-ui",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "n8n-worker2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "n8n-worker3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "n8n-worker4",
             "type": "main",
             "index": 0
           }
@@ -94,8 +199,8 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "triggerCount": 0,
-  "versionId": "8f4beb29-fdd5-4bb9-a7fb-eed06a3b0291",
+  "triggerCount": 1,
+  "versionId": "b8a9d688-51ab-4acb-ad6b-2d795c634b4e",
   "owner": {
     "type": "personal",
     "personalEmail": "shoulai.yang@gmail.com"

@@ -39,15 +39,23 @@
     {
       "id": "T2WqpSHFONPmV2eK",
       "name": "aigc"
+    },
+    {
+      "id": "fxbqLZzsBDbCfaSk",
+      "name": "mongodb"
+    },
+    {
+      "id": "eEmfL1XnWze94eNn",
+      "name": "redis"
+    },
+    {
+      "id": "HX91sBMJ1WgHlatP",
+      "name": "upstash"
     }
   ],
   "mappings": [
     {
       "workflowId": "eCGftXqizfL12bnI",
-      "tagId": "37r56d7QF4Z1Iv1k"
-    },
-    {
-      "workflowId": "1VoLqwFWmIy5Wgq5",
       "tagId": "37r56d7QF4Z1Iv1k"
     },
     {
@@ -109,6 +117,22 @@
     {
       "workflowId": "gx2XhPOwUEjRihNA",
       "tagId": "T2WqpSHFONPmV2eK"
+    },
+    {
+      "workflowId": "bPfCnrm8MJTv3DFc",
+      "tagId": "fxbqLZzsBDbCfaSk"
+    },
+    {
+      "workflowId": "IeIDTPAVMR9L4V22",
+      "tagId": "eEmfL1XnWze94eNn"
+    },
+    {
+      "workflowId": "IeIDTPAVMR9L4V22",
+      "tagId": "HX91sBMJ1WgHlatP"
+    },
+    {
+      "workflowId": "1VoLqwFWmIy5Wgq5",
+      "tagId": "37r56d7QF4Z1Iv1k"
     }
   ]
 }

@@ -1,0 +1,104 @@
+{
+  "id": "IeIDTPAVMR9L4V22",
+  "name": "Redis",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "upstash::redis::keep",
+        "value": "1",
+        "keyType": "string"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        60,
+        -160
+      ],
+      "id": "61e43e98-c233-4bcf-b1aa-b776fb42fe65",
+      "name": "Redis",
+      "alwaysOutputData": true,
+      "credentials": {
+        "redis": {
+          "id": "aaGkfP5Z35WJZ3BW",
+          "name": "Redis - Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "upstash::redis::keep"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        280,
+        -160
+      ],
+      "id": "b506f72a-19bf-4e3f-83dc-2845dcb23a14",
+      "name": "Redis1",
+      "credentials": {
+        "redis": {
+          "id": "aaGkfP5Z35WJZ3BW",
+          "name": "Redis - Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -160,
+        -160
+      ],
+      "id": "8d59bd0d-b281-4c84-840f-f705cf62308f",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "connections": {
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "Redis1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "70d92204-08ce-4cd5-a7ed-5167dab3846c",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "ver0BTPbVL6EbqRd",
+  "isArchived": false
+}
