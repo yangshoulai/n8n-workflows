@@ -1,0 +1,13 @@
+{
+  "id": "raPmtBkqvWYcWlwR",
+  "name": "OpenAi - TB AI / GPT",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

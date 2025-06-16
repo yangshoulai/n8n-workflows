@@ -1,0 +1,12 @@
+{
+  "id": "6MNMBkSbYY1ANfDb",
+  "name": "Bearer Auth - siliconflow",
+  "type": "httpBearerAuth",
+  "data": {
+    "token": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

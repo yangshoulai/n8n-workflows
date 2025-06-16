@@ -1,0 +1,94 @@
+{
+  "id": "f06kzQLOJBQD0Bul",
+  "name": "测试",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d12a66b5-8b18-4973-a137-cb9d756837b2",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.siliconflow.cn/v1/images/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer sk-tqszpjvfxtzzccgqhqpkwjxiolycabqrpmgiupqokefisdpg"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "Kwai-Kolors/Kolors"
+            },
+            {
+              "name": "prompt",
+              "value": "an island near sea, with seagulls, moon shining over the sea, light house, boats int he background, fish flying over the sea"
+            },
+            {
+              "name": "image_size",
+              "value": "960x1280"
+            },
+            {
+              "name": "batch_size",
+              "value": "1"
+            },
+            {
+              "name": "num_inference_steps",
+              "value": "20"
+            },
+            {
+              "name": "guidance_scale",
+              "value": "7.5"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "c05bfc61-cb91-4d89-822d-dd7416351a04",
+      "name": "HTTP Request"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "3081cd55-c9b2-40b3-8d25-4af2bd8e3438",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "tXbrPLEAcjwVXk68",
+  "isArchived": false
+}
