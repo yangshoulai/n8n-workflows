@@ -237,7 +237,7 @@
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
         "binaryData": true,
         "additionalFields": {
-          "caption": "={{ $('AI Agent').item.json.output.englishPrompt }}",
+          "caption": "={{ $('AI Agent').item.json.output.englishPrompt.substring(0, 100) }}",
           "reply_to_message_id": "={{ $('Telegram Trigger').item.json.message.message_id }}"
         }
       },
@@ -440,7 +440,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "1932f6b0-5e05-4500-9b93-99c8f40f11c6",
+  "versionId": "ceb30573-7f5e-4dd2-95df-e4b5de7d8387",
   "owner": {
     "type": "personal",
     "personalEmail": "shoulai.yang@gmail.com"

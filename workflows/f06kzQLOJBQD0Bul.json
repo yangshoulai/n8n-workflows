@@ -3,55 +3,149 @@
   "name": "测试",
   "nodes": [
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
+      "parameters": {
+        "public": true,
+        "options": {
+          "responseMode": "responseNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
       "position": [
-        0,
-        0
+        -420,
+        40
       ],
-      "id": "d12a66b5-8b18-4973-a137-cb9d756837b2",
-      "name": "When clicking ‘Execute workflow’"
+      "id": "3df17f2b-c79a-4195-9f05-fabed482cf90",
+      "name": "When chat message received",
+      "webhookId": "c308d919-03ce-421a-b342-59606dc22c14"
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://api.siliconflow.cn/v1/images/generations",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        40
+      ],
+      "id": "6ca20778-b984-4209-b56a-636db353398d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "stable-diffusion-xl-lightning-cf",
+          "mode": "list",
+          "cachedResultName": "stable-diffusion-xl-lightning-cf"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -112,
+        260
+      ],
+      "id": "9cb4dfc7-e587-4f10-91cb-8c0b48656437",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "F9vzYM3L7l6nm7lx",
+          "name": "OpenAi - cloudflare"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f543e45e-3ab4-4a2b-b863-fd80943c6396",
+              "leftValue": "={{ $json.output.match(/\\((https?:.*)\\)/) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        176,
+        40
+      ],
+      "id": "31791b73-e476-4c36-a514-1dcbe75b37a4",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4d201b2-d177-416c-919a-7d5eea134c34",
+              "name": "image",
+              "value": "={{ $json.output.match(/\\((https?:.*)\\)/)[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        396,
+        40
+      ],
+      "id": "2dde9d18-0b00-427d-ae40-149e7b19e1ab",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $vars.TG_CHAT_ID_TEST }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        836,
+        -60
+      ],
+      "id": "1fff7b9e-19d6-4c8a-9f27-6dc8330b741f",
+      "name": "Telegram",
+      "webhookId": "fe07269c-02f8-42a6-aed1-da5c3bea4cf9",
+      "credentials": {
+        "telegramApi": {
+          "id": "4LCo3T7FwwkMMw9u",
+          "name": "Telegram - @wallpaper_test_tg_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{$json.image}}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
             {
-              "name": "Authorization",
-              "value": "Bearer sk-tqszpjvfxtzzccgqhqpkwjxiolycabqrpmgiupqokefisdpg"
-            }
-          ]
-        },
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "model",
-              "value": "Kwai-Kolors/Kolors"
-            },
-            {
-              "name": "prompt",
-              "value": "an island near sea, with seagulls, moon shining over the sea, light house, boats int he background, fish flying over the sea"
-            },
-            {
-              "name": "image_size",
-              "value": "960x1280"
-            },
-            {
-              "name": "batch_size",
-              "value": "1"
-            },
-            {
-              "name": "num_inference_steps",
-              "value": "20"
-            },
-            {
-              "name": "guidance_scale",
-              "value": "7.5"
+              "name": "Referer",
+              "value": "https://smms.app/"
             }
           ]
         },
@@ -60,19 +154,93 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        220,
-        0
+        616,
+        40
       ],
-      "id": "c05bfc61-cb91-4d89-822d-dd7416351a04",
+      "id": "5eec871d-ae1e-4f12-9f34-26077e45cdcb",
       "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        836,
+        140
+      ],
+      "id": "23f34817-2aa0-4c75-a8ff-99f7e432d44a",
+      "name": "Respond to Webhook"
     }
   ],
   "connections": {
-    "When clicking ‘Execute workflow’": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
       "main": [
         [
           {
             "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
             "type": "main",
             "index": 0
           }
@@ -83,8 +251,8 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "triggerCount": 0,
-  "versionId": "3081cd55-c9b2-40b3-8d25-4af2bd8e3438",
+  "triggerCount": 1,
+  "versionId": "bdbf894d-dcd7-436d-bbbe-265468a102b7",
   "owner": {
     "type": "personal",
     "personalEmail": "shoulai.yang@gmail.com"
