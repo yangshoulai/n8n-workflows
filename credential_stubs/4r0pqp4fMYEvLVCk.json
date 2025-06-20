@@ -1,0 +1,13 @@
+{
+  "id": "4r0pqp4fMYEvLVCk",
+  "name": "Header Auth - SM.MS",
+  "type": "httpHeaderAuth",
+  "data": {
+    "name": "",
+    "value": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

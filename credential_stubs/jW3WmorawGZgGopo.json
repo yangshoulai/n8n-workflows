@@ -1,0 +1,13 @@
+{
+  "id": "jW3WmorawGZgGopo",
+  "name": "OpenAi - cloudflare - text2img",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

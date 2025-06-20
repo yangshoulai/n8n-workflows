@@ -21,6 +21,8 @@
     },
     {
       "parameters": {
+        "promptType": "define",
+        "text": "={{ '---tl ' + $json.chatInput }}",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -36,9 +38,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "stable-diffusion-xl-lightning-cf",
+          "value": "stable-diffusion-xl-base-1.0",
           "mode": "list",
-          "cachedResultName": "stable-diffusion-xl-lightning-cf"
+          "cachedResultName": "stable-diffusion-xl-base-1.0"
         },
         "options": {}
       },
@@ -86,7 +88,7 @@
       "typeVersion": 2.2,
       "position": [
         176,
-        40
+        -60
       ],
       "id": "31791b73-e476-4c36-a514-1dcbe75b37a4",
       "name": "If"
@@ -109,7 +111,7 @@
       "typeVersion": 3.4,
       "position": [
         396,
-        40
+        -60
       ],
       "id": "2dde9d18-0b00-427d-ae40-149e7b19e1ab",
       "name": "Edit Fields"
@@ -155,20 +157,21 @@
       "typeVersion": 4.2,
       "position": [
         616,
-        40
+        -60
       ],
       "id": "5eec871d-ae1e-4f12-9f34-26077e45cdcb",
       "name": "HTTP Request"
     },
     {
       "parameters": {
-        "respondWith": "binary",
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
         "options": {}
       },
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        836,
+        176,
         140
       ],
       "id": "23f34817-2aa0-4c75-a8ff-99f7e432d44a",
@@ -205,6 +208,11 @@
             "node": "If",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -238,11 +246,6 @@
             "node": "Telegram",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -252,7 +255,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "bdbf894d-dcd7-436d-bbbe-265468a102b7",
+  "versionId": "d58ecaf1-904a-4797-8b42-2a09a8d46872",
   "owner": {
     "type": "personal",
     "personalEmail": "shoulai.yang@gmail.com"
