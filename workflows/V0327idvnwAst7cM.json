@@ -339,9 +339,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "dreamshaper-8-lcm",
+          "value": "flux-1-schnell",
           "mode": "list",
-          "cachedResultName": "dreamshaper-8-lcm"
+          "cachedResultName": "flux-1-schnell"
         },
         "options": {}
       },
@@ -413,7 +413,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        472,
+        480,
         100
       ],
       "id": "cda82a89-130a-437a-bfc2-48896cfddd3c",
@@ -624,7 +624,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "5685cb60-8ae0-4203-9ba4-d68107766d41",
+  "versionId": "b89368fb-d493-48a6-aeb3-928cae031faa",
   "owner": {
     "type": "personal",
     "personalEmail": "shoulai.yang@gmail.com"

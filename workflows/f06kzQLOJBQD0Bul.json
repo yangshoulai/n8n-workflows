@@ -1,6 +1,6 @@
 {
   "id": "f06kzQLOJBQD0Bul",
-  "name": "测试",
+  "name": "CloudFlare 文生图测试",
   "nodes": [
     {
       "parameters": {
@@ -38,16 +38,16 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "stable-diffusion-xl-base-1.0",
+          "value": "dreamshaper-8-lcm",
           "mode": "list",
-          "cachedResultName": "stable-diffusion-xl-base-1.0"
+          "cachedResultName": "dreamshaper-8-lcm"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -112,
+        -120,
         260
       ],
       "id": "9cb4dfc7-e587-4f10-91cb-8c0b48656437",
@@ -255,7 +255,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "d58ecaf1-904a-4797-8b42-2a09a8d46872",
+  "versionId": "a6c86c61-d534-4ec9-ac6d-9031e429ed8e",
   "owner": {
     "type": "personal",
     "personalEmail": "shoulai.yang@gmail.com"

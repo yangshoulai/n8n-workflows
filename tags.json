@@ -59,12 +59,24 @@
     {
       "id": "NfpWFOl4Ilnk74rk",
       "name": "测试"
+    },
+    {
+      "id": "ihO0qAcTP0w8PcTF",
+      "name": "cloudflare"
     }
   ],
   "mappings": [
     {
       "workflowId": "eCGftXqizfL12bnI",
       "tagId": "37r56d7QF4Z1Iv1k"
+    },
+    {
+      "workflowId": "f06kzQLOJBQD0Bul",
+      "tagId": "ihO0qAcTP0w8PcTF"
+    },
+    {
+      "workflowId": "f06kzQLOJBQD0Bul",
+      "tagId": "CzopXiQRFrAmbFnk"
     },
     {
       "workflowId": "fOFlcDKISPEMGFXK",
@@ -107,6 +119,14 @@
       "tagId": "dGAQOVe0Ky0cExcB"
     },
     {
+      "workflowId": "V0327idvnwAst7cM",
+      "tagId": "CzopXiQRFrAmbFnk"
+    },
+    {
+      "workflowId": "V0327idvnwAst7cM",
+      "tagId": "T2WqpSHFONPmV2eK"
+    },
+    {
       "workflowId": "BtUXgO7tKebZFlDg",
       "tagId": "4jGWTHrHiYoy3e5q"
     },
@@ -132,14 +152,6 @@
     },
     {
       "workflowId": "gx2XhPOwUEjRihNA",
-      "tagId": "T2WqpSHFONPmV2eK"
-    },
-    {
-      "workflowId": "V0327idvnwAst7cM",
-      "tagId": "CzopXiQRFrAmbFnk"
-    },
-    {
-      "workflowId": "V0327idvnwAst7cM",
       "tagId": "T2WqpSHFONPmV2eK"
     },
     {
