@@ -1,0 +1,293 @@
+{
+  "id": "vrWIAC0eTgcNiUmC",
+  "name": "SD API",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://8eed7dd71bd544de812449ab5f373404--7860.ap-shanghai.cloudstudio.club/sdapi/v1/txt2img",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"{{$json.output.prompt}},<lora:Hand v3 SD1.5:0.4>,Hand,Perfect hand,Detailed hand,<lora:breastinClass:0.4>,<lora:koreanDollLikeness:0.2>,<lora:mix4:0.2>,mix4,<lora:more_details_59655:0.3>,\",\n  \"negative_prompt\": \"paintings, cartoon, rendered, anime, sketches, (worst quality:2), (low quality:2), (normal quality:2), wet, child, chest hair, dot, mole, lowres, normal quality, monochrome, grayscale, lowres, text, error, cropped, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature,\",\n  \"width\": 512,\n  \"height\": 768,\n  \"steps\": 20,\n  \"sampler_index\": \"DPM++ 2M\",\n  \"seed\": -1,\n  \"cfg_scale\": 7,\n  \"override_settings\": {\n    \"sd_model_checkpoint\": \"majicmixRealistic_v7.safetensors\"\n  },\n  \"batch_size\": 2,\n\"alwayson_scripts\": {\n    \"ADetailer\": {\n      \"args\": [\n        {\n          \"ad_model\": \"face_yolov8n.pt\",\n          \"ad_prompt\": \"best quality, detailed face\",\n          \"ad_denoising_strength\": 0.4,\n          \"ad_inpaint_only_masked\": true,\n          \"ad_use_steps\": true,\n          \"ad_steps\": 12\n        },\n        {\n          \"ad_model\": \"hand_yolov8n.pt\",\n          \"ad_prompt\": \"realistic hand, beautiful fingers, photorealistic, five fingers\",\n \"ad_negative_prompt\": \"bad hand, deformed, extra fingers, fused fingers\",\n          \"ad_confidence\": 0.3,\n          \"ad_denoising_strength\": 0.5,\n          \"ad_use_inpaint_width_height\": true,\n          \"ad_inpaint_only_masked\": true,\n          \"ad_use_steps\": true,\n          \"ad_steps\": 12,\n          \"ad_inpaint_only_masked_padding\": 32\n        }\n      ]\n    }\n  }\n}",
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        -540
+      ],
+      "id": "f0fb5a7a-6ae5-4a50-a99d-0efd2eb900e6",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b191e27d-7450-410f-83af-7010907ec710",
+              "leftValue": "={{ $json.images.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        776,
+        -540
+      ],
+      "id": "fc8ba82b-e016-4751-bde8-08cf429007f5",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "images",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1220,
+        -540
+      ],
+      "id": "7cc07c19-6172-4ef5-818a-dd3e5a94b3a4",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "binaryData": true,
+        "additionalFields": {
+          "caption": "={{ $('AI Agent').item.json.output.prompt }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1436,
+        -540
+      ],
+      "id": "6eb1e93c-ca7c-448b-9898-e4390e3711ca",
+      "name": "Send a photo message",
+      "webhookId": "fe07269c-02f8-42a6-aed1-da5c3bea4cf9",
+      "credentials": {
+        "telegramApi": {
+          "id": "4LCo3T7FwwkMMw9u",
+          "name": "Telegram - @wallpaper_test_tg_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=You are a professional Stable Diffusion prompt expert, specifically skilled at creating NSFW prompts that can generate vivid, intricate, and memorable character images. Your task is to generate a Stable Diffusion prompt based on the user's input phrase or word.\nFirst, please carefully read the following user input:\n<UserInput>\n{{USER_INPUT}}\n</UserInput>\nWhen generating the prompt, please follow these requirements:\n1. Based on the user input, creatively expand with bold imagination, pushing boundaries where appropriate while respecting NSFW constraints.\n2. Avoid using contradictory terms, such as \"nude\" and \"long dress\" or \"standing\" and \"lying\" appearing together.\n3. Avoid unnatural or bizarre terms, such as \"three hands,\" \"one leg,\" or \"one eye.\"\n4. Ensure the prompt forms a cohesive, visually harmonious scene without abrupt or jarring elements.\n5. Use parentheses to emphasize key elements, e.g., `(sit:1.2)` to highlight sitting with weighted importance.\n6. Include only Stable Diffusion - compatible descriptors, avoiding non - SD characters or formats.\n7. The prompt should cover background, quality, style, and the user description, with 20–50 words.\nYour output should be in strict JSON format with a single `prompt` field. For example:\n```json\n{\n  \"prompt\": \"8k, RAW photo, masterpiece, photorealistic:1.4, ultra-detailed, 1girl, long hair, (lying on bed:1.3), nude, (nsfw:1.3), small breasts, spread legs, shiny skin, (blush:1.2), detailed face, looking at viewer, soft lighting, (silk stockings:1.2), traditional Japanese room, tatami, highres\"\n}\n```\nPlease start generating the prompt now.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        180,
+        -540
+      ],
+      "id": "f376e053-ee76-4366-b41e-a0f40a9e7bb3",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"prompt\": \"<StableDiffusion Prompt You Generate>\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        328,
+        -320
+      ],
+      "id": "b5b5a51d-fa51-467d-989a-e10eb436b176",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        -320
+      ],
+      "id": "640c35fb-8eb9-43df-871c-1cdb7751442f",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "raPmtBkqvWYcWlwR",
+          "name": "OpenAi - TB AI / GPT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -40,
+        -540
+      ],
+      "id": "6b59213c-5893-4b3d-be41-9e9136c26533",
+      "name": "Telegram Trigger",
+      "webhookId": "a374dadd-786d-4501-81af-2196619d82ca",
+      "credentials": {
+        "telegramApi": {
+          "id": "4LCo3T7FwwkMMw9u",
+          "name": "Telegram - @wallpaper_test_tg_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "images",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        996,
+        -540
+      ],
+      "id": "aa8bf40e-0811-4fed-bc64-f125547d0281",
+      "name": "Split Out"
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Send a photo message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "5f6912c2-533a-4dd8-a185-c32678fe3a4f",
+  "owner": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "tXbrPLEAcjwVXk68",
+  "isArchived": false
+}

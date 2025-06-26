@@ -63,6 +63,14 @@
     {
       "id": "ihO0qAcTP0w8PcTF",
       "name": "cloudflare"
+    },
+    {
+      "id": "jOK0l1uCxvJ7zJ8C",
+      "name": "Stable Diffusion"
+    },
+    {
+      "id": "Leao4ANSdBAGu26a",
+      "name": "API"
     }
   ],
   "mappings": [
@@ -143,16 +151,24 @@
       "tagId": "HX91sBMJ1WgHlatP"
     },
     {
-      "workflowId": "1VoLqwFWmIy5Wgq5",
-      "tagId": "37r56d7QF4Z1Iv1k"
-    },
-    {
       "workflowId": "gx2XhPOwUEjRihNA",
       "tagId": "CzopXiQRFrAmbFnk"
     },
     {
       "workflowId": "gx2XhPOwUEjRihNA",
       "tagId": "T2WqpSHFONPmV2eK"
+    },
+    {
+      "workflowId": "vrWIAC0eTgcNiUmC",
+      "tagId": "jOK0l1uCxvJ7zJ8C"
+    },
+    {
+      "workflowId": "vrWIAC0eTgcNiUmC",
+      "tagId": "Leao4ANSdBAGu26a"
+    },
+    {
+      "workflowId": "1VoLqwFWmIy5Wgq5",
+      "tagId": "37r56d7QF4Z1Iv1k"
     },
     {
       "workflowId": "kz1F8tv1fszMoUFx",

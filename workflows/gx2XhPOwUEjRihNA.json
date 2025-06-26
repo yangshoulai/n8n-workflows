@@ -306,8 +306,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -472,
-        320
+        -580,
+        460
       ],
       "id": "9c31b794-ae8a-449a-9780-65a22ac846bb",
       "name": "Google Gemini Chat Model",
@@ -351,6 +351,31 @@
       ],
       "id": "cd781ecb-3a4a-422b-9d73-592aa7c21165",
       "name": "If1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -480,
+        320
+      ],
+      "id": "429cf82c-f684-4f07-86da-a439ea04c84d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "raPmtBkqvWYcWlwR",
+          "name": "OpenAi - TB AI / GPT"
+        }
+      }
     }
   ],
   "connections": {
@@ -460,13 +485,7 @@
     },
     "Google Gemini Chat Model": {
       "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "If1": {
@@ -479,13 +498,24 @@
           }
         ]
       ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "28a81ea6-1e6d-435d-b972-2b9f74f55730",
+  "versionId": "68740541-15b5-46fd-90dc-bb18d715dd48",
   "owner": {
     "type": "personal",
     "personalEmail": "shoulai.yang@gmail.com"

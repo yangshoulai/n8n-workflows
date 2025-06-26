@@ -1,0 +1,14 @@
+{
+  "id": "E8sSOvQ08v4CZXDR",
+  "name": "Postgres account",
+  "type": "postgres",
+  "data": {
+    "host": "",
+    "password": "",
+    "allowUnauthorizedCerts": true
+  },
+  "ownedBy": {
+    "type": "personal",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}
