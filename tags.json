@@ -71,6 +71,14 @@
     {
       "id": "Leao4ANSdBAGu26a",
       "name": "API"
+    },
+    {
+      "id": "QafRNLAxx047S8NH",
+      "name": "Postgresql"
+    },
+    {
+      "id": "pf7a3IS889GlrTtS",
+      "name": "supabase"
     }
   ],
   "mappings": [
@@ -165,6 +173,14 @@
     {
       "workflowId": "vrWIAC0eTgcNiUmC",
       "tagId": "Leao4ANSdBAGu26a"
+    },
+    {
+      "workflowId": "D74j9GG75n9MPlPo",
+      "tagId": "QafRNLAxx047S8NH"
+    },
+    {
+      "workflowId": "D74j9GG75n9MPlPo",
+      "tagId": "pf7a3IS889GlrTtS"
     },
     {
       "workflowId": "1VoLqwFWmIy5Wgq5",

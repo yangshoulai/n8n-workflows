@@ -1,14 +1,17 @@
 {
   "id": "E8sSOvQ08v4CZXDR",
-  "name": "Postgres account",
+  "name": "Postgres - supabase",
   "type": "postgres",
   "data": {
     "host": "",
+    "user": "",
     "password": "",
     "allowUnauthorizedCerts": true
   },
   "ownedBy": {
     "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   }
 }
