@@ -1,0 +1,392 @@
+{
+  "id": "awIVZ9dZb1fZeZUO",
+  "name": "保存壁纸（批量）",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"id\": \"47e8a04bebdaf0be553c183d9d35089a\",\n  \"source\": \"wallhaven.cc\",\n  \"source_src\": \"https://wallhaven.cc/w/je8dxq\",\n  \"sfw\": true,\n  \"category\": \"general\",\n  \"width\": 2560,\n  \"height\": 1440,\n  \"ratio\": 1.78,\n  \"size\": 6298148,\n  \"colors\": [\n    \"#abbcda\",\n    \"#999999\",\n    \"#663399\",\n    \"#ffffff\",\n    \"#fdadc7\"\n  ],\n  \"src\": \"https://w.wallhaven.cc/full/je/wallhaven-je8dxq.png\",\n  \"author\": \"thedrexter\",\n  \"author_url\": \"https://wallhaven.cc/user/thedrexter\",\n  \"tags\": \"[\\\"Justin Maller\\\",\\\"digital art\\\",\\\"gradient\\\",\\\"Porsche 911\\\",\\\"Porsche 911 Turbo Cabriolet Facet\\\",\\\"simple background\\\",\\\"car\\\",\\\"rear view\\\",\\\"licence plates\\\",\\\"taillights\\\",\\\"white cars\\\",\\\"shadow\\\",\\\"centered\\\",\\\"vehicle\\\"]\",\n  \"extra_info\": {\n    \"thumbs\": {\n      \"large\": \"https://th.wallhaven.cc/lg/je/je8dxq.jpg\",\n      \"original\": \"https://th.wallhaven.cc/orig/je/je8dxq.jpg\",\n      \"small\": \"https://th.wallhaven.cc/small/je/je8dxq.jpg\"\n    }\n  },\n  \"created_at\": \"2025-06-03 17:20:32\",\n  \"description\": null,\n  \"type\": \"image/png\"\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "bcee98c5-5ae4-48e1-9a4c-a69250b19877",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "wallpapers",
+          "mode": "list",
+          "cachedResultName": "wallpapers"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "column": "source",
+              "value": "={{ $json.source }}"
+            }
+          ]
+        },
+        "options": {
+          "outputColumns": [
+            "id"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        224,
+        0
+      ],
+      "id": "48047d7d-a457-4824-90c1-943eaf89d308",
+      "name": "Postgres",
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      },
+      "notes": "查询壁纸"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "52fd0888-2639-4502-b5fb-df1029861087",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "e41b9738-1432-4529-816f-5c931970ba57",
+      "name": "If",
+      "alwaysOutputData": false,
+      "notesInFlow": true,
+      "notes": "判断壁纸是否存在"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "wallpapers",
+          "mode": "list",
+          "cachedResultName": "wallpapers"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "sfw": "={{ $('When Executed by Another Workflow').item.json.sfw }}",
+            "width": "={{ $('When Executed by Another Workflow').item.json.width }}",
+            "height": "={{ $('When Executed by Another Workflow').item.json.height }}",
+            "ratio": "={{ $('When Executed by Another Workflow').item.json.ratio }}",
+            "size": "={{ $('When Executed by Another Workflow').item.json.size }}",
+            "id": "={{ $('When Executed by Another Workflow').item.json.id }}",
+            "src": "={{ $('When Executed by Another Workflow').item.json.src }}",
+            "source": "={{ $('When Executed by Another Workflow').item.json.source }}",
+            "source_src": "={{ $('When Executed by Another Workflow').item.json.source_src }}",
+            "description": "={{ $('When Executed by Another Workflow').item.json.description }}",
+            "author": "={{ $('When Executed by Another Workflow').item.json.author }}",
+            "author_url": "={{ $('When Executed by Another Workflow').item.json.author_url }}",
+            "tags": "={{ $('When Executed by Another Workflow').item.json.tags }}",
+            "colors": "={{ $('When Executed by Another Workflow').item.json.colors }}",
+            "category": "={{ $('When Executed by Another Workflow').item.json.category }}",
+            "type": "={{ $('When Executed by Another Workflow').item.json.type }}",
+            "extra_info": "={{ $('When Executed by Another Workflow').item.json.extra_info }}",
+            "created_at": "={{ $('When Executed by Another Workflow').item.json.created_at }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": true,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "src",
+              "displayName": "src",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_src",
+              "displayName": "source_src",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "author",
+              "displayName": "author",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "author_url",
+              "displayName": "author_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tags",
+              "displayName": "tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "array",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "colors",
+              "displayName": "colors",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "array",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ratio",
+              "displayName": "ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "size",
+              "displayName": "size",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sfw",
+              "displayName": "sfw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "extra_info",
+              "displayName": "extra_info",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "object",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "file_id",
+              "displayName": "file_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        672,
+        0
+      ],
+      "id": "e801f666-4843-4980-87eb-049e4cc7520e",
+      "name": "Postgres1",
+      "notesInFlow": true,
+      "credentials": {
+        "postgres": {
+          "id": "GhYByP9bpg1zvCiZ",
+          "name": "Postgres - Neon"
+        }
+      },
+      "notes": "插入壁纸"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Postgres1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "bdf50adb-49b6-4609-987e-fb3c79bd4925",
+  "owner": {
+    "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "5s3PR4wTbF5gcmj3",
+  "isArchived": false
+}

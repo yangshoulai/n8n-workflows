@@ -47,7 +47,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1540,
+        -1536,
         160
       ],
       "id": "38fd3132-d3e0-42a2-ae1f-9db690667456",
@@ -75,8 +75,8 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        -1320,
-        60
+        -1328,
+        64
       ],
       "id": "08b0908c-99a9-40b5-b4ad-1d8d9aaece3d",
       "name": "HTML"
@@ -96,7 +96,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -440,
+        -448,
         80
       ],
       "id": "9b74aff6-bf60-48d4-80ca-835a1eca6cd5",
@@ -139,7 +139,7 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        -220,
+        -224,
         80
       ],
       "id": "b5b14403-749f-4d87-b0ae-ecd49436d8fb",
@@ -152,7 +152,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        660,
+        672,
         160
       ],
       "id": "3974898c-b1a1-487c-9e9c-222812375a4c",
@@ -177,8 +177,8 @@
       "type": "n8n-nodes-base.html",
       "typeVersion": 1.2,
       "position": [
-        -1100,
-        260
+        -1104,
+        272
       ],
       "id": "f0f3f1c9-f649-44f9-9bba-0e2b6c788661",
       "name": "HTML2"
@@ -192,7 +192,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -660,
+        -656,
         160
       ],
       "id": "539f6a53-146a-478a-ac00-b2d8bf5169d6",
@@ -208,8 +208,8 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        -1100,
-        60
+        -1104,
+        64
       ],
       "id": "a3668ef4-8128-4e9c-81e5-eed646cdc0d2",
       "name": "Split Out"
@@ -225,7 +225,7 @@
       "typeVersion": 1,
       "position": [
         -880,
-        260
+        272
       ],
       "id": "be44e190-7b13-4df5-9b13-b7b150813b1c",
       "name": "Split Out1"
@@ -242,7 +242,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        440,
+        448,
         160
       ],
       "id": "8c687602-1dee-46ae-84b5-c18ad7f31c44",
@@ -292,7 +292,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        220,
+        224,
         0
       ],
       "id": "b5058a8c-8816-4e9f-9047-a1d727ca70a0",
@@ -322,7 +322,7 @@
       "typeVersion": 3.4,
       "position": [
         -880,
-        60
+        64
       ],
       "id": "ee667007-2530-4885-92a4-04d63b55a4a8",
       "name": "Edit Fields1"
@@ -331,9 +331,9 @@
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "fOFlcDKISPEMGFXK",
+          "value": "awIVZ9dZb1fZeZUO",
           "mode": "list",
-          "cachedResultName": "保存壁纸"
+          "cachedResultName": "保存壁纸（批量）"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -525,7 +525,6 @@
           "attemptToConvertTypes": true,
           "convertFieldsToString": true
         },
-        "mode": "each",
         "options": {}
       },
       "type": "n8n-nodes-base.executeWorkflow",
@@ -733,9 +732,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "dd3cf993-7107-49f4-991b-9e073f958062",
+  "versionId": "2290e93f-cf42-4141-86e7-80e69d9eba05",
   "owner": {
     "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "5s3PR4wTbF5gcmj3",

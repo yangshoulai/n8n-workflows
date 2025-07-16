@@ -4,6 +4,26 @@
   "nodes": [
     {
       "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -160,
+        -60
+      ],
+      "id": "8d59bd0d-b281-4c84-840f-f705cf62308f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
         "operation": "set",
         "key": "upstash::redis::keep",
         "value": "1",
@@ -16,7 +36,7 @@
         -160
       ],
       "id": "61e43e98-c233-4bcf-b1aa-b776fb42fe65",
-      "name": "Redis",
+      "name": "Upstash Set",
       "alwaysOutputData": true,
       "credentials": {
         "redis": {
@@ -37,7 +57,7 @@
         -160
       ],
       "id": "b506f72a-19bf-4e3f-83dc-2845dcb23a14",
-      "name": "Redis1",
+      "name": "Upstash Delete",
       "credentials": {
         "redis": {
           "id": "aaGkfP5Z35WJZ3BW",
@@ -47,42 +67,81 @@
     },
     {
       "parameters": {
-        "rule": {
-          "interval": [
-            {
-              "field": "hours",
-              "hoursInterval": 2
-            }
-          ]
-        }
+        "operation": "set",
+        "key": "upstash::redis::keep",
+        "value": "1",
+        "keyType": "string"
       },
-      "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1.2,
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
       "position": [
-        -160,
-        -160
+        60,
+        40
       ],
-      "id": "8d59bd0d-b281-4c84-840f-f705cf62308f",
-      "name": "Schedule Trigger"
+      "id": "e30eddde-e168-4f57-9e3c-465cd7a0c040",
+      "name": "redis.io - Set",
+      "alwaysOutputData": true,
+      "credentials": {
+        "redis": {
+          "id": "KaZdb6SPosGGjdjZ",
+          "name": "Redis - redis.io"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "upstash::redis::keep"
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        280,
+        40
+      ],
+      "id": "21af3f51-3bb6-4640-acc5-a42827fc2876",
+      "name": "redis.io - Delete",
+      "credentials": {
+        "redis": {
+          "id": "KaZdb6SPosGGjdjZ",
+          "name": "Redis - redis.io"
+        }
+      }
     }
   ],
   "connections": {
-    "Redis": {
+    "Schedule Trigger": {
       "main": [
         [
           {
-            "node": "Redis1",
+            "node": "Upstash Set",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "redis.io - Set",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Schedule Trigger": {
+    "Upstash Set": {
       "main": [
         [
           {
-            "node": "Redis",
+            "node": "Upstash Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "redis.io - Set": {
+      "main": [
+        [
+          {
+            "node": "redis.io - Delete",
             "type": "main",
             "index": 0
           }
@@ -94,9 +153,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "70d92204-08ce-4cd5-a7ed-5167dab3846c",
+  "versionId": "ab18ccff-4bbb-40d6-891d-a67a72ce0a93",
   "owner": {
     "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "ver0BTPbVL6EbqRd",

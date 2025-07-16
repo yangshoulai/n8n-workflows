@@ -96,6 +96,21 @@
       "typeVersion": 1,
       "id": "068fbd9f-116a-456b-b54f-3d6c7d5bf3bc",
       "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "url": "https://yangshoulai-n8n-worker2.hf.space/healthz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1020,
+        1020
+      ],
+      "id": "b30e66c9-2c79-4ebb-ac81-e7bda30a953b",
+      "name": "n8n-worker4",
+      "onError": "continueRegularOutput"
     }
   ],
   "connections": {
@@ -116,6 +131,11 @@
             "node": "n8n-worker3",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "n8n-worker4",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -125,9 +145,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "20e89628-1be4-41a5-b8dd-9077cfbd2342",
+  "versionId": "69fb6e03-7c97-4fce-9224-6f6b95ea141d",
   "owner": {
     "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "ver0BTPbVL6EbqRd",

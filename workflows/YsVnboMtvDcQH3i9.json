@@ -1,0 +1,193 @@
+{
+  "id": "YsVnboMtvDcQH3i9",
+  "name": "Dreamify 文生图",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://dreamify.slmnb.cn/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"prompt\": \"{{ $json.prompt }}\",\n    \"width\": {{ $json.width }},\n    \"height\": {{ $json.height }},\n    \"steps\": 30,\n    \"seed\": {{Math.floor(1e8 * Math.random())}},\n    \"batch_size\": 1,\n    \"model\": \"Flux-Dev\",\n    \"image\": null\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -120,
+        -20
+      ],
+      "id": "fc827ea5-f00b-497d-aa6c-f3ebb9dee5f1",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fcaa39dd-9feb-4828-8cd1-8fe2fb149690",
+              "name": "imageBase64",
+              "value": "={{ $json.imageUrl.match(/^data:(.+);base64,(.+)$/)[2] }}",
+              "type": "string"
+            },
+            {
+              "id": "ff86379d-4eaf-40bc-a321-523cf03cfd44",
+              "name": "imageType",
+              "value": "={{ $json.imageUrl.match(/^data:(.+);base64,(.+)$/)[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        -20
+      ],
+      "id": "78b714b7-6c15-487f-8906-9db17ee8c1ed",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "abf03dac-5f77-4d91-85d4-01fd37c4c061",
+              "leftValue": "={{ $json.imageUrl.match(/^data:(.+);base64,(.+)$/) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        100,
+        -20
+      ],
+      "id": "2efe947c-54a4-4c42-9bd4-d442572f9bfd",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "imageBase64",
+        "options": {
+          "fileName": "={{ $json.imageBase64.hash() + '.png' }}",
+          "mimeType": "={{ $json.imageType }}"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        540,
+        -20
+      ],
+      "id": "54f73526-944a-460c-ac1f-527c5b21d40b",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -380,
+        -20
+      ],
+      "id": "ca040bb8-7742-49f2-a8b7-b41575ca972c",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "de044a16-7dbe-459a-b0c9-15d44868fab8",
+  "owner": {
+    "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "tXbrPLEAcjwVXk68",
+  "isArchived": false
+}

@@ -11,8 +11,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1100,
-        300
+        1104,
+        304
       ],
       "id": "bf6951f2-7755-4e35-8d4a-e666377b40bf",
       "name": "成功 - 更新 file_id",
@@ -34,8 +34,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        660,
-        300
+        672,
+        304
       ],
       "id": "41e649b4-4585-4aa3-b924-cbbde3995832",
       "name": "失败 - 没有合适壁纸",
@@ -58,8 +58,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1320,
-        100
+        1328,
+        112
       ],
       "id": "319fab41-6109-4e45-82a0-43a814ba6564",
       "name": "失败 - 壁纸发送异常",
@@ -102,7 +102,7 @@
       "typeVersion": 2.6,
       "position": [
         0,
-        200
+        208
       ],
       "id": "4d87657c-e9b7-41da-9562-c1ba1b712ac2",
       "name": "查询 NSFW 壁纸",
@@ -141,8 +141,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        220,
-        200
+        224,
+        208
       ],
       "id": "91271f2f-dc3d-4d3e-af5c-088dfca8d36a",
       "name": "是否存在合适壁纸"
@@ -175,8 +175,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        660,
-        100
+        672,
+        112
       ],
       "id": "742fddb9-97c3-407e-8a6f-9db1f9c1f240",
       "name": "是否存在 file_id"
@@ -226,7 +226,7 @@
       "typeVersion": 1.2,
       "position": [
         880,
-        200
+        208
       ],
       "id": "7d355ded-f5a5-4268-9d93-4aa79defb318",
       "name": "发送壁纸 - src",
@@ -247,8 +247,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        440,
-        100
+        448,
+        112
       ],
       "id": "6e34dd3a-0a8a-4ab4-88bb-e19278253719",
       "name": "格式化字幕"
@@ -275,8 +275,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -440,
-        200
+        -448,
+        208
       ],
       "id": "4f803b04-7580-4f09-a483-83c001a48a43",
       "name": "入口"
@@ -342,8 +342,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -220,
-        200
+        -224,
+        208
       ],
       "id": "d3c44c5a-70d7-474e-a480-0e9fc605dd90",
       "name": "Switch"
@@ -397,8 +397,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        440,
-        300
+        448,
+        304
       ],
       "id": "d63e572a-9c85-44f8-8615-17d33494a291",
       "name": "If"
@@ -431,8 +431,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1100,
-        100
+        1104,
+        112
       ],
       "id": "3954492e-5e98-4efe-9eaa-2a2b0d5d63ae",
       "name": "If1"
@@ -612,9 +612,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "430ddd79-7f8a-4b25-99cf-73dba2f298f0",
+  "versionId": "790b3481-d6d4-49cf-bdf9-205eef1f42fd",
   "owner": {
     "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "5s3PR4wTbF5gcmj3",

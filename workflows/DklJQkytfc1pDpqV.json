@@ -50,7 +50,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        220,
+        224,
         0
       ],
       "id": "e417e1eb-ff2c-4df5-acfc-6a961e515edc",
@@ -66,7 +66,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        440,
+        448,
         0
       ],
       "id": "37a1617b-a32a-4060-91e1-541caaae8531",
@@ -193,7 +193,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1100,
+        1104,
         0
       ],
       "id": "bff3fc43-13bc-419e-ae61-1b33398da606",
@@ -205,9 +205,9 @@
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "fOFlcDKISPEMGFXK",
+          "value": "awIVZ9dZb1fZeZUO",
           "mode": "list",
-          "cachedResultName": "保存壁纸"
+          "cachedResultName": "保存壁纸（批量）"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -407,7 +407,6 @@
           "attemptToConvertTypes": false,
           "convertFieldsToString": true
         },
-        "mode": "each",
         "options": {
           "waitForSubWorkflow": true
         }
@@ -415,7 +414,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1320,
+        1328,
         0
       ],
       "id": "d6b4644d-00c1-469d-abf2-a7e5b505ac97",
@@ -468,7 +467,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        660,
+        672,
         0
       ],
       "id": "c3f03acb-68eb-4e75-8415-239939be494b",
@@ -564,9 +563,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "adeaf35c-7756-4bc3-ba2e-1190959fb08a",
+  "versionId": "e5174335-332b-4d2b-90d9-7f77fef6f806",
   "owner": {
     "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "5s3PR4wTbF5gcmj3",

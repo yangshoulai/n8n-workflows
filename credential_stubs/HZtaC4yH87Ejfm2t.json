@@ -1,0 +1,15 @@
+{
+  "id": "HZtaC4yH87Ejfm2t",
+  "name": "OpenAi - https://doi9.top",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

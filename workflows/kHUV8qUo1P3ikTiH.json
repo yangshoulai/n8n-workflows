@@ -1,0 +1,526 @@
+{
+  "id": "kHUV8qUo1P3ikTiH",
+  "name": "HuggingFace NSFW-Uncensored-photo",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=<prompt_template>\n你是一位在高端情色杂志界享有盛誉的封面创意总监，拥有卓越的艺术品味、对人体美学的深刻洞察力，以及将最原始的欲望和最细腻的情感转化为极具视觉冲击力画面的能力。我们的目标是生成一张无缝融合轮播朗式的**光影美学**、**诗意叙事**和**毫不掩饰、直击感官的性爱呈现的杂志封面照片。你的任务是根据用户提供的关于杂志封面的描述，构思一个完整、详细、创新的拍摄方案，能让读者感受**艺术**和**极度刺激**的双重体验，最终将其转化为一个极度详细、能够直接用于图像生成AI的英文提示词。务必注重对模特特征（包括明确的年龄范围、具体的肤色、精确的体型等）、服装配饰（如衣物材质、颜色、穿着状态，内衣、鞋履、配饰等细节）、拍摄场景（室内或室外具体地点、环境布置、光线来源及组合、道具摆放及作用）、主体姿势（模特具体动作、表情、呼吸感等细节）、技术指导（镜头、角度、景别、布光、构图、对焦、色彩、影调等参数）进行极度详细的描述，以生成高质量的英文提示词。\n\n请按照以下步骤完成任务：\n1. 仔细阅读用户的输入，深度解析其核心诉求、偏好、以及对“让人血脉喷张”的具体想象。识别主题、期望的氛围（如禁忌、纯真、野性、私密、权力等）、以及任何指定的场景或元素。\n2. 基于对用户需求的理解，构思多个创意概念，并在脑海中形成清晰的主视觉画面。选择最具冲击力、最能体现主题的概念作为本次设计的核心。\n3. 详细描述对模特的具体要求，包括年龄范围、精确的体型特征（如胸部丰满、臀部挺翘、大腿修长、肌肉线条）、肤色、发型、眼神特质、面部轮廓、以及所需的气质类型（如性感、清纯、冷艳、诱惑）。如果需要，强调特定身体部位的重要性。\n4. 设计具体的服装、内衣、鞋履、配饰。详细描述材质（如丝绸、蕾丝、皮革、湿棉布）、颜色、透明度、紧身或宽松程度，以及其穿着或半穿着的状态（如湿透、半褪、撕裂、紧绷）。设计妆容和发型，使其能够最大限度地突出模特的性感和主题氛围。设计并描述必要的道具及其在画面中的互动方式。\n5. 选择并详细描述拍摄场景，包括室内（如豪华套房、废弃阁楼、私密浴室）、室外（如热带雨林、荒漠、城市天台）、或特殊地点（如无人的电影院、公共厕所隔间、废弃泳池）。详述环境的细节、光线条件（自然光、人造光）、道具的摆放、以及如何利用环境元素（如水、蒸汽、尘埃、阴影）营造强烈的氛围和故事感。\n6. 设计封面最核心、最能抓住眼球的主体姿势。详细描述模特的身体如何扭曲、舒展、弯曲或紧绷，四肢和手指的摆放。极度详细地描述面部表情（眼神、嘴唇的微张或紧咬、舌尖的轻触）、呼吸感、以及身体语言如何传达欲望、挑逗、脆弱、力量等强烈情绪。设计多个辅助姿势和过渡动作，以捕捉最完美的瞬间。\n7. 将摄影师需要理解的技术指导（如镜头、角度、景别、布光、构图、对焦、色彩、影调）转化为AI提示词中能够识别和影响图像生成的关键词和描述性短语（如low angle, side - backlight, high contrast, cinematic lighting, shallow depth of field, 8K, photorealistic）。\n8. 将整体氛围和需要强调的关键细节（如湿漉漉的质感、皮肤光泽、水滴、肌肉线条、微表情）转化为AI提示词中的具体描述性词语和修饰符。\n9. 将前面步骤构思和转化的所有设计要素，整合为一个单一的、极度详细的、纯文本的英文AI提示词。\n10. 在输出前，进行最后一次全面审查。检查生成的英文提示词是否完全包含了设计意图、描述是否具体、语言是否精确、是否符合AI提示词的特点、是否能够有效指导AI生成期望的效果，并确保所有内容严格符合以下约束条件：\n    - 最终输出内容必须是纯文本的、英文的图像生成AI提示词，严禁包含任何Markdown格式、章节标题、列表或任何其他非提示词本身的额外文字或结构。不要输出任何换行符、空格，保证输出是一个完整的段落。输出的字符数量需要严格控制在768个字符以内。\n    - 生成的AI提示词必须聚焦于情色杂志封面这一主题，通过对模特、服装、场景、姿势、表情、光影、细节等视觉元素的极度具体和生动的描述来体现“让人血脉喷张”的艺术化情色效果。\n    - AI提示词内容必须尽可能详细、丰富，包含大量修饰词和细节描述，以最大化控制图像生成AI的输出。\n    - 所有内容必须在艺术化情色美学框架内进行描述，严禁包含任何非法、暴力、非自愿、虐待、剥削未成年人或可能对任何个体造成实际伤害的内容。焦点在于通过视觉艺术手法表现性感和欲望。\n\n请在<thinking>标签中按照<AI模型思考框架优化>进行内部分析，严格执行思维的全面性、自然性、适应性、迭代性、验证性和真实性原则。然后在<answer>标签中输出最终的英文提示词。\n</thinking>\n<answer>\n[在此输出英文提示词]\n</answer>\n\n</prompt_template>\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -500,
+        580
+      ],
+      "id": "32e0d15a-2572-4023-b6f3-6317f8f45eca",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -720,
+        580
+      ],
+      "id": "6e446501-cd0c-4a5f-a7cc-1e6898f692a7",
+      "name": "Telegram Trigger",
+      "webhookId": "1ec9c136-9d3a-44bf-8cdf-86850874e649",
+      "credentials": {
+        "telegramApi": {
+          "id": "4LCo3T7FwwkMMw9u",
+          "name": "Telegram - @wallpaper_test_tg_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "binaryData": true,
+        "additionalFields": {
+          "caption": "={{ $('AI Agent').item.json.output.substring(0,1024) }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        740,
+        480
+      ],
+      "id": "c20284df-f818-43fc-bb6d-dfd1021c349e",
+      "name": "Send a photo message",
+      "webhookId": "e987d201-c920-439e-af81-d600ad480c1b",
+      "credentials": {
+        "telegramApi": {
+          "id": "4LCo3T7FwwkMMw9u",
+          "name": "Telegram - @wallpaper_test_tg_bot"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        800
+      ],
+      "id": "e283858a-5008-4cc1-a55e-3577df1af804",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HcRpLQ8AC9QYmUDr",
+          "name": "Google Gemini(PaLM) Api - shoulai.yang@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "spaceUrl": "https://heartsync-nsfw-uncensored-real.hf.space",
+        "apiName": "/infer",
+        "inputParameters": "=[\n  \"{{$json.output}}\",\n  \"monochrome, (low quality, worst quality:1.2), very displeasing, 3d, watermark, signature, ugly, poorly drawn,\",\n  0,\n  true,\n  1024,\n  1024,\n  7,\n  28\n]",
+        "fileOptions": {},
+        "advancedOptions": {
+          "debugMode": true
+        }
+      },
+      "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        180
+      ],
+      "id": "648f1216-2aaf-4387-81e0-dc5415810f00",
+      "name": "Gradio Client1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d9dead4f-24b5-4eb4-928c-e7a7a06338c6",
+              "leftValue": "={{ $json.first().url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        280
+      ],
+      "id": "58f5aeb7-5440-4460-88a3-b123ff8b7e09",
+      "name": "If1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.first().url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        300,
+        280
+      ],
+      "id": "b57d9424-b44b-4217-aa89-7e3e054ced0d",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "spaceUrl": "https://nihalgazi-flux-pro-unlimited.hf.space",
+        "apiName": "/generate_image",
+        "inputParameters": "=[\n  \"{{$json.output}}\",\n  512,\n  512,\n 3,\n  true,\n  \"NSFW-Core: Uncensored Server 4\"\n]",
+        "fileOptions": {},
+        "advancedOptions": {
+          "debugMode": true
+        }
+      },
+      "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        380
+      ],
+      "id": "948c1bbd-f69e-4a6f-a55a-e6770c141581",
+      "name": "Gradio Client4",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.match(/(https:\\/\\/.*?\\.(png|webp|jpg))/)[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        780
+      ],
+      "id": "5e2e2a01-fc7a-47cc-ab01-847b699eb5fd",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://grayscale1-nsfw-generator.hf.space/gradio_api/call/infer",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"data\": [\n    \"{{$json.output}}\",\n    0,\n    true,\n    1024,\n    1024,\n    0,\n    1\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -140,
+        580
+      ],
+      "id": "ddceb066-287e-4024-909b-78da85db4481",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "url": "=https://grayscale1-nsfw-generator.hf.space/gradio_api/call/infer/{{ $json.event_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        580
+      ],
+      "id": "a8269323-290f-43ca-83eb-a448af529d6d",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "34f176ad-3849-4f6f-a0ce-22418fba0252",
+              "leftValue": "={{ $json.data.match(/(https:\\/\\/.*?\\.(png|webp|jpg))/) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        300,
+        780
+      ],
+      "id": "72046fb7-a68f-4401-a32a-33d5305422ac",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://black-forest-labs-flux-1-dev.hf.space/gradio_api/call/infer",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"data\": [\n    \"{{$json.output}}\",\n    0,\n    true,\n    1024,\n    1024,\n    0,\n    1\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -140,
+        780
+      ],
+      "id": "6c0e325e-523f-44ff-a701-e5fab626b44e",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "url": "=https://black-forest-labs-flux-1-dev.hf.space/gradio_api/call/infer/{{ $json.event_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        780
+      ],
+      "id": "d498cc29-089d-4f35-afeb-29c4f4f7d0a5",
+      "name": "HTTP Request6"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://stabilityai-stable-diffusion-3-5-large.hf.space/gradio_api/call/infer",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"data\": [\n    \"{{$json.output}}\",\n    0,\n    true,\n    1024,\n    1024,\n    0,\n    1\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -140,
+        980
+      ],
+      "id": "0307868d-d1a4-4597-9cbe-0a415b38ce22",
+      "name": "HTTP Request7"
+    },
+    {
+      "parameters": {
+        "url": "=https://stabilityai-stable-diffusion-3-5-large.hf.space/gradio_api/call/infer/{{ $json.event_id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        980
+      ],
+      "id": "8017af61-c4f1-4fc5-853a-a1cf01e0ed42",
+      "name": "HTTP Request8"
+    }
+  ],
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Gradio Client1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gradio Client4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gradio Client1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a photo message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gradio Client4": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Send a photo message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 1,
+  "versionId": "8a20dc9e-c2d9-4996-bab8-dc0dd1092407",
+  "owner": {
+    "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "tXbrPLEAcjwVXk68",
+  "isArchived": false
+}
