@@ -1,6 +1,6 @@
 {
   "id": "kHUV8qUo1P3ikTiH",
-  "name": "HuggingFace NSFW-Uncensored-photo",
+  "name": "HuggingFace Image Model",
   "nodes": [
     {
       "parameters": {
@@ -14,8 +14,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        -500,
-        580
+        -880,
+        768
       ],
       "id": "32e0d15a-2572-4023-b6f3-6317f8f45eca",
       "name": "AI Agent"
@@ -30,8 +30,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -720,
-        580
+        -1104,
+        768
       ],
       "id": "6e446501-cd0c-4a5f-a7cc-1e6898f692a7",
       "name": "Telegram Trigger",
@@ -47,7 +47,7 @@
       "parameters": {
         "operation": "sendPhoto",
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "binaryData": true,
+        "file": "={{ $json.first().url }}",
         "additionalFields": {
           "caption": "={{ $('AI Agent').item.json.output.substring(0,1024) }}"
         }
@@ -55,8 +55,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        740,
-        480
+        -32,
+        768
       ],
       "id": "c20284df-f818-43fc-bb6d-dfd1021c349e",
       "name": "Send a photo message",
@@ -77,8 +77,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -420,
-        800
+        -784,
+        992
       ],
       "id": "e283858a-5008-4cc1-a55e-3577df1af804",
       "name": "Google Gemini Chat Model",
@@ -102,12 +102,12 @@
       "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
       "typeVersion": 1,
       "position": [
-        -140,
-        180
+        -480,
+        192
       ],
       "id": "648f1216-2aaf-4387-81e0-dc5415810f00",
       "name": "Gradio Client1",
-      "onError": "continueRegularOutput"
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -137,8 +137,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        80,
-        280
+        -256,
+        768
       ],
       "id": "58f5aeb7-5440-4460-88a3-b123ff8b7e09",
       "name": "If1",
@@ -146,23 +146,9 @@
     },
     {
       "parameters": {
-        "url": "={{ $json.first().url }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        300,
-        280
-      ],
-      "id": "b57d9424-b44b-4217-aa89-7e3e054ced0d",
-      "name": "HTTP Request"
-    },
-    {
-      "parameters": {
         "spaceUrl": "https://nihalgazi-flux-pro-unlimited.hf.space",
         "apiName": "/generate_image",
-        "inputParameters": "=[\n  \"{{$json.output}}\",\n  512,\n  512,\n 3,\n  true,\n  \"NSFW-Core: Uncensored Server 4\"\n]",
+        "inputParameters": "=[\n  \"{{$json.output}}\",\n  1024,\n  1024,\n 3,\n  true,\n  \"NSFW-Core: Uncensored Server 4\"\n]",
         "fileOptions": {},
         "advancedOptions": {
           "debugMode": true
@@ -171,156 +157,94 @@
       "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
       "typeVersion": 1,
       "position": [
-        -140,
-        380
+        -480,
+        384
       ],
       "id": "948c1bbd-f69e-4a6f-a55a-e6770c141581",
       "name": "Gradio Client4",
-      "onError": "continueRegularOutput"
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "url": "={{ $json.data.match(/(https:\\/\\/.*?\\.(png|webp|jpg))/)[0] }}",
-        "options": {}
+        "spaceUrl": "https://heartsync-nsfw-uncensored.hf.space",
+        "apiName": "/infer",
+        "inputParameters": "=[\n  \"{{$json.output}}\",\n  \"text, talk bubble, low quality, watermark, signature\",\n  0,\n  true,\n  1024,\n  1024,\n  7,\n  28\n]",
+        "fileOptions": {},
+        "advancedOptions": {
+          "debugMode": true
+        }
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
+      "typeVersion": 1,
       "position": [
-        520,
-        780
+        -480,
+        576
       ],
-      "id": "5e2e2a01-fc7a-47cc-ab01-847b699eb5fd",
-      "name": "HTTP Request2"
+      "id": "9bbd9ea9-96f2-41d6-8613-ef57e4cf1c4c",
+      "name": "Gradio Client",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "method": "POST",
-        "url": "https://grayscale1-nsfw-generator.hf.space/gradio_api/call/infer",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"data\": [\n    \"{{$json.output}}\",\n    0,\n    true,\n    1024,\n    1024,\n    0,\n    1\n  ]\n}",
-        "options": {}
+        "spaceUrl": "https://black-forest-labs-flux-1-dev.hf.space",
+        "apiSelection": "manual",
+        "apiNameManual": "/infer",
+        "inputParameters": "=[\n  \"{{$json.output}}\",\n  0,\n  true,\n  1024,\n  1024,\n  7,\n  28\n]",
+        "fileOptions": {},
+        "advancedOptions": {
+          "debugMode": true
+        }
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
+      "typeVersion": 1,
       "position": [
-        -140,
-        580
+        -480,
+        768
       ],
-      "id": "ddceb066-287e-4024-909b-78da85db4481",
-      "name": "HTTP Request3"
+      "id": "4aea6ee6-a0d0-4767-8c51-fa724228f437",
+      "name": "Gradio Client3",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "url": "=https://grayscale1-nsfw-generator.hf.space/gradio_api/call/infer/{{ $json.event_id }}",
-        "options": {}
+        "spaceUrl": "https://menyu-illustrious-pencil-xl.hf.space",
+        "apiName": "/infer",
+        "inputParameters": "=[\n  \"{{$json.output}}\",\n  \"text, talk bubble, low quality, watermark, signature\",\n  true,\n  0,\n  1024,\n  1024,\n  7,\n  28,\n  true\n]",
+        "fileOptions": {},
+        "advancedOptions": {
+          "debugMode": true
+        }
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
+      "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
+      "typeVersion": 1,
       "position": [
-        80,
-        580
+        -480,
+        1056
       ],
-      "id": "a8269323-290f-43ca-83eb-a448af529d6d",
-      "name": "HTTP Request4"
+      "id": "568880e0-40b5-4907-a453-7ebf7a435bd1",
+      "name": "Gradio Client5",
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "34f176ad-3849-4f6f-a0ce-22418fba0252",
-              "leftValue": "={{ $json.data.match(/(https:\\/\\/.*?\\.(png|webp|jpg))/) }}",
-              "rightValue": "",
-              "operator": {
-                "type": "array",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+        "spaceUrl": "https://dhead-wainsfwillustrious-v130-space.hf.space",
+        "apiSelection": "manual",
+        "apiNameManual": "/infer",
+        "inputParameters": "=[\n  \"{{$json.output}}\",\n  \"text, talk bubble, low quality, watermark, signature\",\n  0,\n  true,\n  1024,\n  1024,\n  7,\n  28\n]",
+        "fileOptions": {},
+        "advancedOptions": {
+          "debugMode": true
+        }
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
+      "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
+      "typeVersion": 1,
       "position": [
-        300,
-        780
+        -480,
+        1248
       ],
-      "id": "72046fb7-a68f-4401-a32a-33d5305422ac",
-      "name": "If2"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://black-forest-labs-flux-1-dev.hf.space/gradio_api/call/infer",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"data\": [\n    \"{{$json.output}}\",\n    0,\n    true,\n    1024,\n    1024,\n    0,\n    1\n  ]\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        -140,
-        780
-      ],
-      "id": "6c0e325e-523f-44ff-a701-e5fab626b44e",
-      "name": "HTTP Request5"
-    },
-    {
-      "parameters": {
-        "url": "=https://black-forest-labs-flux-1-dev.hf.space/gradio_api/call/infer/{{ $json.event_id }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        80,
-        780
-      ],
-      "id": "d498cc29-089d-4f35-afeb-29c4f4f7d0a5",
-      "name": "HTTP Request6"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://stabilityai-stable-diffusion-3-5-large.hf.space/gradio_api/call/infer",
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"data\": [\n    \"{{$json.output}}\",\n    0,\n    true,\n    1024,\n    1024,\n    0,\n    1\n  ]\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        -140,
-        980
-      ],
-      "id": "0307868d-d1a4-4597-9cbe-0a415b38ce22",
-      "name": "HTTP Request7"
-    },
-    {
-      "parameters": {
-        "url": "=https://stabilityai-stable-diffusion-3-5-large.hf.space/gradio_api/call/infer/{{ $json.event_id }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        80,
-        980
-      ],
-      "id": "8017af61-c4f1-4fc5-853a-a1cf01e0ed42",
-      "name": "HTTP Request8"
+      "id": "5fa482ad-8d6a-4e00-9cce-be20c2cb3d95",
+      "name": "Gradio Client6",
+      "onError": "continueErrorOutput"
     }
   ],
   "connections": {
@@ -338,17 +262,27 @@
             "index": 0
           },
           {
-            "node": "HTTP Request3",
+            "node": "Gradio Client",
             "type": "main",
             "index": 0
           },
           {
-            "node": "HTTP Request5",
+            "node": "Gradio Client3",
             "type": "main",
             "index": 0
           },
           {
-            "node": "HTTP Request7",
+            "node": "Gradio Client5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gradio Client6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -392,17 +326,6 @@
       "main": [
         [
           {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
             "node": "Send a photo message",
             "type": "main",
             "index": 0
@@ -421,88 +344,44 @@
         ]
       ]
     },
-    "HTTP Request3": {
+    "Gradio Client": {
       "main": [
         [
           {
-            "node": "HTTP Request4",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request4": {
+    "Gradio Client3": {
       "main": [
         [
           {
-            "node": "If2",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If2": {
+    "Gradio Client5": {
       "main": [
         [
           {
-            "node": "HTTP Request2",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "HTTP Request2": {
+    "Gradio Client6": {
       "main": [
         [
           {
-            "node": "Send a photo message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request5": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request6",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request6": {
-      "main": [
-        [
-          {
-            "node": "If2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request7": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request8",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request8": {
-      "main": [
-        [
-          {
-            "node": "If2",
+            "node": "If1",
             "type": "main",
             "index": 0
           }
@@ -514,7 +393,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "8a20dc9e-c2d9-4996-bab8-dc0dd1092407",
+  "versionId": "919f2270-6c19-4d01-b3ba-b85edbc7ff56",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",

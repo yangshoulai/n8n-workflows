@@ -89,7 +89,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -140,
+        -96,
         0
       ],
       "id": "27d50283-bd16-422d-b435-0dcde90a2501",
@@ -108,7 +108,7 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        520,
+        576,
         0
       ],
       "id": "e5d7ddd3-0195-4444-9568-592aa4d4e9bb",
@@ -142,7 +142,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        80,
+        128,
         0
       ],
       "id": "a8d6843e-cbef-4444-98bd-d553d5c5fd1e",
@@ -171,7 +171,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        300,
+        352,
         0
       ],
       "id": "2d1213d8-3c52-456c-9baa-a223f1b451e5",
@@ -189,8 +189,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        -500,
-        100
+        -496,
+        96
       ],
       "id": "8a939ad3-fecf-41b9-95eb-edb0ee639555",
       "name": "AI Agent"
@@ -206,7 +206,7 @@
       "typeVersion": 1.2,
       "position": [
         -720,
-        100
+        96
       ],
       "id": "f1f519d1-7a3d-42b4-b9f0-10f615124e9e",
       "name": "Telegram Trigger",
@@ -226,8 +226,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        520,
-        200
+        576,
+        192
       ],
       "id": "75541367-953d-42a7-bee7-7b3be65ba169",
       "name": "HTTP Request1"
@@ -246,8 +246,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        80,
-        200
+        128,
+        192
       ],
       "id": "ada34ce2-aa6d-4678-bcca-b4460aed289b",
       "name": "siliconflow",
@@ -287,8 +287,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        300,
-        200
+        352,
+        192
       ],
       "id": "cd781ecb-3a4a-422b-9d73-592aa7c21165",
       "name": "If1"
@@ -306,8 +306,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        740,
-        100
+        800,
+        96
       ],
       "id": "58d29a85-e8b0-4a64-b300-3b290981ec81",
       "name": "Send a photo message",
@@ -321,13 +321,12 @@
     },
     {
       "parameters": {
-        "modelName": "models/gemini-2.5-flash",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -420,
+        -400,
         320
       ],
       "id": "d49e04c7-d734-48c0-b59b-63df519157d2",
@@ -461,7 +460,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "d3e3dec1-a42e-4f38-aa0e-42b4be5873d4",
+  "versionId": "d1f62def-5af3-4190-9f88-95e69d5d3294",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",

@@ -14,8 +14,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        240,
-        -264
+        256,
+        -208
       ],
       "id": "f07fbde8-5a6a-42a0-85f1-26dcf5debf14",
       "name": "AI Agent"
@@ -24,9 +24,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "deepseek-r1",
+          "value": "deepseek-v3",
           "mode": "list",
-          "cachedResultName": "deepseek-r1"
+          "cachedResultName": "deepseek-v3"
         },
         "options": {}
       },
@@ -34,14 +34,14 @@
       "typeVersion": 1.2,
       "position": [
         224,
-        -40
+        32
       ],
       "id": "90a07a20-7df6-406d-ac43-f0bff4e3a392",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "lOJYtHwBcq0BkwxZ",
-          "name": "OpenAi - api-0711-node144.be-a.dev"
+          "id": "rWwwiBpUQ4VNLaxV",
+          "name": "OpenAi - TB AI / DeepSeek"
         }
       }
     },
@@ -56,7 +56,7 @@
       "typeVersion": 1.2,
       "position": [
         0,
-        -264
+        -208
       ],
       "id": "3aec2d73-ca09-4d67-b544-1b3894c46e13",
       "name": "Telegram Trigger",
@@ -80,8 +80,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        752,
-        -264
+        880,
+        -208
       ],
       "id": "77934a0d-1eb2-4011-b92b-53b3abb76ffc",
       "name": "Send a text message",
@@ -101,8 +101,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        352,
-        -40
+        480,
+        32
       ],
       "id": "cc814cfb-d029-4a05-9bea-7dd9ce8d3460",
       "name": "Structured Output Parser"
@@ -168,8 +168,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        1424,
-        -336
+        1552,
+        -272
       ],
       "id": "e7c20c90-4667-48e7-86d4-1a99b7d8bc8a",
       "name": "Execute Workflow",
@@ -177,13 +177,13 @@
     },
     {
       "parameters": {
-        "jsCode": "let size = 3;\nlet results = [];\nfor(let i = 0; i < size; i++){\n  results.push({\n    prompt: $('AI Agent').first().json.output.positivePrompt,\n    width: $('AI Agent').first().json.output.width,\n    height: $('AI Agent').first().json.output.height,\n    nsfw: !!$('AI Agent').first().json.output.nsfw\n  });\n}\n\nreturn results;"
+        "jsCode": "let size = 1;\nlet results = [];\nfor(let i = 0; i < size; i++){\n  results.push({\n    prompt: $('AI Agent').first().json.output.positivePrompt,\n    width: $('AI Agent').first().json.output.width,\n    height: $('AI Agent').first().json.output.height,\n    nsfw: !!$('AI Agent').first().json.output.nsfw\n  });\n}\n\nreturn results;"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        976,
-        -264
+        1104,
+        -208
       ],
       "id": "139f8418-97d3-4a0c-ad6c-50f775710a93",
       "name": "Code1"
@@ -195,8 +195,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        1200,
-        -264
+        1328,
+        -208
       ],
       "id": "bb7e5d8c-b0a3-411f-8a85-a1ac97d78762",
       "name": "Loop Over Items"
@@ -206,8 +206,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1872,
-        -264
+        2000,
+        -208
       ],
       "id": "b267b4e2-58f2-4833-af9a-cd86012c9f97",
       "name": "Wait",
@@ -225,8 +225,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1648,
-        -336
+        1776,
+        -272
       ],
       "id": "b8d66aec-78aa-485d-83aa-a5203507d1db",
       "name": "Send a photo message",
@@ -243,24 +243,44 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4o-mini",
+          "value": "gemini-2.5-flash-preview-05-20",
           "mode": "list",
-          "cachedResultName": "gpt-4o-mini"
+          "cachedResultName": "gemini-2.5-flash-preview-05-20"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        448,
-        168
+        576,
+        240
       ],
       "id": "7ec14661-ab04-41ac-b9ea-d62e2941ebce",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
-          "id": "lOJYtHwBcq0BkwxZ",
-          "name": "OpenAi - api-0711-node144.be-a.dev"
+          "id": "8LHWKXcGXV7Kb8rI",
+          "name": "OpenAi - https://x666.me"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        352,
+        32
+      ],
+      "id": "bcbe8131-6a03-47c4-8c01-07a82e889df4",
+      "name": "MongoDB Chat Memory",
+      "credentials": {
+        "mongoDb": {
+          "id": "8YD8ZL8jLcVjsyse",
+          "name": "MongoDB - MongDB Cloud"
         }
       }
     }
@@ -387,13 +407,24 @@
           }
         ]
       ]
+    },
+    "MongoDB Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "2bd33a55-5916-4ecd-b8b3-b1e2791ca317",
+  "versionId": "aafa4fe4-383b-4046-9016-617038a0746a",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",

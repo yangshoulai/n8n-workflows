@@ -1,0 +1,153 @@
+{
+  "id": "p4HH3AqIHjUTknc1",
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {
+          "responseMode": "responseNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        -32
+      ],
+      "id": "08a9a8f1-2a8a-40be-81f1-e4b3b70fc234",
+      "name": "When chat message received",
+      "webhookId": "f18ad88a-44f3-474d-a930-4737d7cce97b"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -256,
+        -32
+      ],
+      "id": "9dfc86b1-f455-4285-b428-611a1047b283",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "deepseek-ai/DeepSeek-R1-0528",
+          "mode": "list",
+          "cachedResultName": "deepseek-ai/DeepSeek-R1-0528"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -272,
+        128
+      ],
+      "id": "97f1aa1d-788b-4698-b9c0-400ccb57a031",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "yrRfdSryvtbHFJNV",
+          "name": "OpenAi - https://one-hub.passerbywtj.us.kg"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        144,
+        -32
+      ],
+      "id": "1e22b48b-6bd4-48d4-afdb-e49378026ce0",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        144
+      ],
+      "id": "00bb0920-a9f9-41be-9b10-242d9a389fbb",
+      "name": "MongoDB Chat Memory",
+      "credentials": {
+        "mongoDb": {
+          "id": "8YD8ZL8jLcVjsyse",
+          "name": "MongoDB - MongDB Cloud"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "19ea8bb3-bbf8-4c8a-8c19-9365c4d53d63",
+  "owner": {
+    "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "tXbrPLEAcjwVXk68",
+  "isArchived": false
+}
