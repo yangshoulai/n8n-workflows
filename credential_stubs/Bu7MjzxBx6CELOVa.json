@@ -1,0 +1,14 @@
+{
+  "id": "Bu7MjzxBx6CELOVa",
+  "name": "Bearer Auth - image-fx",
+  "type": "httpBearerAuth",
+  "data": {
+    "token": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  }
+}

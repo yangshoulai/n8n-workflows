@@ -280,11 +280,6 @@
             "node": "Gradio Client6",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -393,7 +388,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "919f2270-6c19-4d01-b3ba-b85edbc7ff56",
+  "versionId": "95f0785b-0ebb-4a1b-95f6-db50867cf306",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",

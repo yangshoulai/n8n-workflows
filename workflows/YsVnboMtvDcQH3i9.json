@@ -10,17 +10,18 @@
         "specifyBody": "json",
         "jsonBody": "={\n    \"prompt\": \"{{ $json.prompt }}\",\n    \"width\": {{ $json.width }},\n    \"height\": {{ $json.height }},\n    \"steps\": 30,\n    \"seed\": {{Math.floor(1e8 * Math.random())}},\n    \"batch_size\": 1,\n    \"model\": \"Flux-Dev\",\n    \"image\": null\n}",
         "options": {
-          "timeout": 300000
+          "timeout": 150000
         }
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -120,
-        -20
+        -160,
+        -16
       ],
       "id": "fc827ea5-f00b-497d-aa6c-f3ebb9dee5f1",
-      "name": "HTTP Request"
+      "name": "HTTP Request",
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -45,8 +46,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        320,
-        -20
+        288,
+        -16
       ],
       "id": "78b714b7-6c15-487f-8906-9db17ee8c1ed",
       "name": "Edit Fields"
@@ -79,8 +80,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        100,
-        -20
+        64,
+        -16
       ],
       "id": "2efe947c-54a4-4c42-9bd4-d442572f9bfd",
       "name": "If"
@@ -97,8 +98,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        540,
-        -20
+        512,
+        -16
       ],
       "id": "54f73526-944a-460c-ac1f-527c5b21d40b",
       "name": "Convert to File"
@@ -124,11 +125,137 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -380,
-        -20
+        -384,
+        -16
       ],
       "id": "ca040bb8-7742-49f2-a8b7-b41575ca972c",
       "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://sm.ms/api/v2/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "multipart/form-data"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "smfile",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        736,
+        -16
+      ],
+      "id": "77ed3999-3571-43df-a7f6-cde990497315",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "6MNMBkSbYY1ANfDb",
+          "name": "Bearer Auth - siliconflow"
+        },
+        "httpHeaderAuth": {
+          "id": "4r0pqp4fMYEvLVCk",
+          "name": "Header Auth - SM.MS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "image",
+              "renameField": true,
+              "outputFieldName": "images"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        -16
+      ],
+      "id": "77d39388-c3c4-40be-89c4-893c22b83b8c",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "814fa69e-0efe-4bd4-a613-072a5f11792f",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        -16
+      ],
+      "id": "a49ce089-0344-4fca-b605-2c2f011405ff",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f7a3fcd-a3ad-4fd6-a0ed-4c68f10322aa",
+              "name": "image",
+              "value": "={{ $json.data }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        -16
+      ],
+      "id": "37e49369-7653-4cdf-902f-d01b2c55a8b7",
+      "name": "Edit Fields1"
     }
   ],
   "connections": {
@@ -175,13 +302,57 @@
           }
         ]
       ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "de044a16-7dbe-459a-b0c9-15d44868fab8",
+  "versionId": "7785171f-3025-4c2a-80d4-e5cd0b68310c",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",

@@ -87,6 +87,10 @@
     {
       "id": "OwpwWLu2J07ixMds",
       "name": "huggingface"
+    },
+    {
+      "id": "30QR8Xlnb4dtomfO",
+      "name": "ImageFx"
     }
   ],
   "mappings": [
@@ -97,6 +101,14 @@
     {
       "workflowId": "fOFlcDKISPEMGFXK",
       "tagId": "nEui8NO6V3a5hMut"
+    },
+    {
+      "workflowId": "p4HH3AqIHjUTknc1",
+      "tagId": "T2WqpSHFONPmV2eK"
+    },
+    {
+      "workflowId": "p4HH3AqIHjUTknc1",
+      "tagId": "30QR8Xlnb4dtomfO"
     },
     {
       "workflowId": "f06kzQLOJBQD0Bul",
@@ -168,15 +180,11 @@
     },
     {
       "workflowId": "dXRBkc4yDaj8MQwH",
-      "tagId": "J10QWUvqhdiOibaz"
+      "tagId": "T2WqpSHFONPmV2eK"
     },
     {
       "workflowId": "dXRBkc4yDaj8MQwH",
       "tagId": "jOK0l1uCxvJ7zJ8C"
-    },
-    {
-      "workflowId": "dXRBkc4yDaj8MQwH",
-      "tagId": "T2WqpSHFONPmV2eK"
     },
     {
       "workflowId": "Hc8bgUmDWTZ9WmSK",
@@ -189,6 +197,10 @@
     {
       "workflowId": "Hc8bgUmDWTZ9WmSK",
       "tagId": "OwpwWLu2J07ixMds"
+    },
+    {
+      "workflowId": "dXRBkc4yDaj8MQwH",
+      "tagId": "J10QWUvqhdiOibaz"
     },
     {
       "workflowId": "p87HpqvmEs4jMeuh",

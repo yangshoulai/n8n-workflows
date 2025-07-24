@@ -1,136 +1,365 @@
 {
   "id": "p4HH3AqIHjUTknc1",
-  "name": "My workflow",
+  "name": "image-fx 文生图",
   "nodes": [
     {
       "parameters": {
-        "public": true,
-        "options": {
-          "responseMode": "responseNode"
-        }
+        "method": "POST",
+        "url": "https://aisandbox-pa.googleapis.com/v1:runImageFx",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"userInput\": {\n    \"candidatesCount\": 4,\n    \"prompts\": [\n      \"{{ $json.prompt }}\"\n    ],\n    \"seed\": {{ Math.floor(1e6 * Math.random()) }}\n  },\n  \"clientContext\": {\n    \"sessionId\": \";{{ DateTime.now().toMillis() }}\",\n    \"tool\": \"IMAGE_FX\"\n  },\n  \"modelInput\": {\n    \"modelNameType\": \"IMAGEN_3_1\"\n  },\n  \"aspectRatio\": \"{{ $json.aspectRatio }}\"\n}",
+        "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        80,
+        -80
+      ],
+      "id": "19fccc41-640d-471e-a572-1d87945d64a0",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "Bu7MjzxBx6CELOVa",
+          "name": "Bearer Auth - image-fx"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "encodedImage",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -480,
-        -32
+        528,
+        -80
       ],
-      "id": "08a9a8f1-2a8a-40be-81f1-e4b3b70fc234",
-      "name": "When chat message received",
-      "webhookId": "f18ad88a-44f3-474d-a930-4737d7cce97b"
+      "id": "58b1a758-232a-4c40-908a-f60c2c7ca9e4",
+      "name": "Convert to File"
     },
     {
       "parameters": {
-        "options": {
-          "systemMessage": "=",
-          "returnIntermediateSteps": true
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            }
+          ]
         }
       },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.1,
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
       "position": [
-        -256,
-        -32
+        -368,
+        -80
       ],
-      "id": "9dfc86b1-f455-4285-b428-611a1047b283",
-      "name": "AI Agent"
+      "id": "1d0b145e-ef83-4a71-b524-ad36f2c34d00",
+      "name": "When Executed by Another Workflow"
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "deepseek-ai/DeepSeek-R1-0528",
-          "mode": "list",
-          "cachedResultName": "deepseek-ai/DeepSeek-R1-0528"
+        "jsCode": "const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);\nconst ratios = {\n  \"1:1\": \"IMAGE_ASPECT_RATIO_SQUARE\",\n  \"9:16\": \"IMAGE_ASPECT_RATIO_PORTRAIT\",\n  \"16:9\": \"IMAGE_ASPECT_RATIO_LANDSCAPE\",\n  \"4:3\": \"IMAGE_ASPECT_RATIO_LANDSCAPE_FOUR_THREE\",\n  \"3:4\": \"IMAGE_ASPECT_RATIO_PORTRAIT_THREE_FOUR\"\n};\nfor (const item of $input.all()) {\n  const w = item.json.width;\n  const h = item.json.height;\n  const d = gcd(w, h);\n  const ratio = `${w / d}:${h / d}`;\n  item.json.ratio = ratio;\n  item.json.aspectRatio = ratios[ratio] ? ratios[ratio]: \"IMAGE_ASPECT_RATIO_SQUARE\"; \n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -144,
+        -80
+      ],
+      "id": "d64d4017-7615-44f9-9769-53f0e893f969",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://sm.ms/api/v2/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "multipart/form-data"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "smfile",
+              "inputDataFieldName": "data"
+            }
+          ]
         },
         "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
-        -272,
-        128
+        752,
+        -80
       ],
-      "id": "97f1aa1d-788b-4698-b9c0-400ccb57a031",
-      "name": "OpenAI Chat Model",
+      "id": "5f6a1272-5ce4-4d10-a33b-ad799b4c87be",
+      "name": "HTTP Request1",
       "credentials": {
-        "openAiApi": {
-          "id": "yrRfdSryvtbHFJNV",
-          "name": "OpenAi - https://one-hub.passerbywtj.us.kg"
+        "httpBearerAuth": {
+          "id": "6MNMBkSbYY1ANfDb",
+          "name": "Bearer Auth - siliconflow"
+        },
+        "httpHeaderAuth": {
+          "id": "4r0pqp4fMYEvLVCk",
+          "name": "Header Auth - SM.MS"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "814fa69e-0efe-4bd4-a613-072a5f11792f",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
         "options": {}
       },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.4,
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
       "position": [
-        144,
-        -32
+        976,
+        -80
       ],
-      "id": "1e22b48b-6bd4-48d4-afdb-e49378026ce0",
-      "name": "Respond to Webhook"
+      "id": "63473b3c-b143-4f0d-843b-a0bfd2e6be5f",
+      "name": "If"
     },
     {
-      "parameters": {},
-      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9f7a3fcd-a3ad-4fd6-a0ed-4c68f10322aa",
+              "name": "image",
+              "value": "={{ $json.data }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        -80
+      ],
+      "id": "db4f4d92-b9ad-41ce-be30-ea3783edf237",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "image",
+              "renameField": true,
+              "outputFieldName": "images"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        -128,
-        144
+        1648,
+        -80
       ],
-      "id": "00bb0920-a9f9-41be-9b10-242d9a389fbb",
-      "name": "MongoDB Chat Memory",
-      "credentials": {
-        "mongoDb": {
-          "id": "8YD8ZL8jLcVjsyse",
-          "name": "MongoDB - MongDB Cloud"
-        }
-      }
+      "id": "1a0c7840-9b5e-4505-b930-480220588514",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "70e02793-6492-446e-8179-fbc883bac509",
+              "leftValue": "={{ $json.image }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        1424,
+        -80
+      ],
+      "id": "f44b3b9f-dead-4b58-b487-73c27a1b4702",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "imagePanels[0].generatedImages",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        304,
+        -80
+      ],
+      "id": "99464688-3b61-4598-8ab3-559bcf79a448",
+      "name": "Split Out"
     }
   ],
   "connections": {
-    "When chat message received": {
+    "HTTP Request": {
       "main": [
         [
           {
-            "node": "AI Agent",
+            "node": "Split Out",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent": {
+    "When Executed by Another Workflow": {
       "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "Code",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "MongoDB Chat Memory": {
-      "ai_memory": [
+    "Code": {
+      "main": [
         [
           {
-            "node": "AI Agent",
-            "type": "ai_memory",
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
             "index": 0
           }
         ]
@@ -141,7 +370,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "19ea8bb3-bbf8-4c8a-8c19-9365c4d53d63",
+  "versionId": "a88d2913-c894-45f9-aaeb-bff2ecc6807e",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",
