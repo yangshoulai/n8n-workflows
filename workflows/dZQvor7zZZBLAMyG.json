@@ -1,0 +1,199 @@
+{
+  "id": "dZQvor7zZZBLAMyG",
+  "name": "sana 文生图",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            },
+            {
+              "name": "batch",
+              "type": "number"
+            },
+            {
+              "name": "negative_prompt"
+            },
+            {
+              "name": "nsfw",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -848,
+        -240
+      ],
+      "id": "78007f3d-659b-43d7-9479-f9a4da3261ae",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "spaceUrl": "https://sana.hanlab.ai",
+        "apiSelection": "manual",
+        "apiNameManual": "/run",
+        "inputParameters": "=[\n  \"{{ $json.prompt }}\",\n  \"{{ $json.negative_prompt }}\",\n  \"Photographic\",\n  true,\n  {{ $json.batch }},\n  0,\n  {{ $json.height }},\n  {{ $json.width }},\n  7,\n  1,\n  25,\n  true\n]",
+        "fileOptions": {},
+        "advancedOptions": {}
+      },
+      "type": "@activadee/n8n-nodes-gradio-client.gradioClient",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        -240
+      ],
+      "id": "4e6ee55d-8ae8-4ba7-9588-67bef41156ce",
+      "name": "Gradio Client",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "15e6ce75-3de4-431a-92c8-98c864428eac",
+              "name": "images",
+              "value": "={{ $json.length > 0 ? $json[0] : [] }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -400,
+        -240
+      ],
+      "id": "0745f02a-ff2f-4a4e-aa5e-6b5f5132996d",
+      "name": "Edit Fields",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "images",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        -240
+      ],
+      "id": "b1619dfb-aefb-44e0-ba39-753984c7f544",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json = item.json.image;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        -240
+      ],
+      "id": "77185da3-386c-4cef-afa1-3ca4e686fa48",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "images",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        272,
+        -240
+      ],
+      "id": "6b1e170b-c20a-4265-871c-65d34be9419f",
+      "name": "Aggregate"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Gradio Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gradio Client": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "93b608cc-2857-4cb2-8f8a-166235bf1ac0",
+  "owner": {
+    "type": "personal",
+    "projectId": "0cfCdy28RhDft3mL",
+    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "tXbrPLEAcjwVXk68",
+  "isArchived": false
+}

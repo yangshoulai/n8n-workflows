@@ -10,8 +10,8 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        0,
-        0
+        -320,
+        -24
       ],
       "id": "bcee98c5-5ae4-48e1-9a4c-a69250b19877",
       "name": "When Executed by Another Workflow"
@@ -53,8 +53,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        224,
-        0
+        128,
+        -96
       ],
       "id": "48047d7d-a457-4824-90c1-943eaf89d308",
       "name": "Postgres",
@@ -84,7 +84,7 @@
               "rightValue": "",
               "operator": {
                 "type": "string",
-                "operation": "exists",
+                "operation": "notExists",
                 "singleValue": true
               }
             }
@@ -96,8 +96,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        448,
-        0
+        352,
+        -96
       ],
       "id": "e41b9738-1432-4529-816f-5c931970ba57",
       "name": "If",
@@ -325,11 +325,11 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        672,
-        0
+        576,
+        -24
       ],
       "id": "e801f666-4843-4980-87eb-049e4cc7520e",
-      "name": "Postgres1",
+      "name": "Insert rows in a table",
       "notesInFlow": true,
       "credentials": {
         "postgres": {
@@ -338,6 +338,19 @@
         }
       },
       "notes": "插入壁纸"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -96,
+        -24
+      ],
+      "id": "561bd7f1-2595-4851-8aca-ed79d75a07b3",
+      "name": "Loop Over Items"
     }
   ],
   "connections": {
@@ -345,7 +358,7 @@
       "main": [
         [
           {
-            "node": "Postgres",
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -365,10 +378,33 @@
     },
     "If": {
       "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
         [],
         [
           {
-            "node": "Postgres1",
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -380,7 +416,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "bdf50adb-49b6-4609-987e-fb3c79bd4925",
+  "versionId": "a7ad7fff-dbb3-4829-9398-9816a3be7111",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",

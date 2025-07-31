@@ -9,11 +9,6 @@
         "authentication": "genericCredentialType",
         "genericAuthType": "httpBearerAuth",
         "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {}
-          ]
-        },
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"userInput\": {\n    \"candidatesCount\": 4,\n    \"prompts\": [\n      \"{{ $json.prompt }}\"\n    ],\n    \"seed\": {{ Math.floor(1e6 * Math.random()) }}\n  },\n  \"clientContext\": {\n    \"sessionId\": \";{{ DateTime.now().toMillis() }}\",\n    \"tool\": \"IMAGE_FX\"\n  },\n  \"modelInput\": {\n    \"modelNameType\": \"IMAGEN_3_1\"\n  },\n  \"aspectRatio\": \"{{ $json.aspectRatio }}\"\n}",
@@ -370,7 +365,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "a88d2913-c894-45f9-aaeb-bff2ecc6807e",
+  "versionId": "4a616381-2f0a-4aac-bddd-e1a55fab601f",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",

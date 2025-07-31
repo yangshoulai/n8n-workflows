@@ -200,7 +200,7 @@
       "typeVersion": 1,
       "position": [
         2048,
-        88
+        16
       ],
       "id": "98113451-5ddb-4f66-a340-2e4b99d11c31",
       "name": "Split Out"
@@ -333,6 +333,17 @@
       ],
       "id": "59b03b28-4673-4672-8ec0-22bbe081046b",
       "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        88
+      ],
+      "id": "a5a2db66-cd4c-437e-b998-a513b6e66650",
+      "name": "Limit"
     }
   ],
   "connections": {
@@ -373,7 +384,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "Limit",
             "type": "main",
             "index": 0
           }
@@ -463,13 +474,24 @@
           }
         ]
       ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "891fb086-67f7-4298-ba97-a78e109b5ceb",
+  "versionId": "03a1ae04-58a3-4066-8c56-c02f5064a1ec",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",
