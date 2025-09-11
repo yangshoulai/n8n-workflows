@@ -14,8 +14,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        256,
-        704
+        280,
+        692
       ],
       "id": "f07fbde8-5a6a-42a0-85f1-26dcf5debf14",
       "name": "AI Agent"
@@ -34,7 +34,7 @@
       "typeVersion": 1.2,
       "position": [
         224,
-        928
+        916
       ],
       "id": "90a07a20-7df6-406d-ac43-f0bff4e3a392",
       "name": "OpenAI Chat Model",
@@ -56,7 +56,7 @@
       "typeVersion": 1.2,
       "position": [
         0,
-        704
+        692
       ],
       "id": "3aec2d73-ca09-4d67-b544-1b3894c46e13",
       "name": "Telegram Trigger",
@@ -80,8 +80,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        880,
-        704
+        912,
+        544
       ],
       "id": "77934a0d-1eb2-4011-b92b-53b3abb76ffc",
       "name": "Send a text message",
@@ -102,23 +102,10 @@
       "typeVersion": 1.3,
       "position": [
         480,
-        928
+        916
       ],
       "id": "cc814cfb-d029-4a05-9bea-7dd9ce8d3460",
       "name": "Structured Output Parser"
-    },
-    {
-      "parameters": {
-        "jsCode": "let size = 1;\nlet results = [];\nfor(let i = 0; i < size; i++){\n  results.push({\n    prompt: $('AI Agent').first().json.output.positivePrompt,\n    width: $('AI Agent').first().json.output.width,\n    height: $('AI Agent').first().json.output.height,\n    nsfw: !!$('AI Agent').first().json.output.nsfw\n  });\n}\n\nreturn results;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1104,
-        704
-      ],
-      "id": "139f8418-97d3-4a0c-ad6c-50f775710a93",
-      "name": "Code1"
     },
     {
       "parameters": {
@@ -133,8 +120,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        576,
-        1136
+        560,
+        1124
       ],
       "id": "7ec14661-ab04-41ac-b9ea-d62e2941ebce",
       "name": "OpenAI Chat Model1",
@@ -154,7 +141,7 @@
       "typeVersion": 1,
       "position": [
         352,
-        928
+        916
       ],
       "id": "bcbe8131-6a03-47c4-8c01-07a82e889df4",
       "name": "MongoDB Chat Memory",
@@ -167,392 +154,12 @@
     },
     {
       "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "YsVnboMtvDcQH3i9",
-          "mode": "list",
-          "cachedResultName": "Dreamify 文生图"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "prompt": "={{ $('AI Agent').item.json.output.positivePrompt }}",
-            "width": "={{ $('AI Agent').item.json.output.width }}",
-            "height": "={{ $('AI Agent').item.json.output.height }}"
-          },
-          "matchingColumns": [
-            "prompt"
-          ],
-          "schema": [
-            {
-              "id": "prompt",
-              "displayName": "prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "width",
-              "displayName": "width",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "height",
-              "displayName": "height",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "mode": "each",
-        "options": {
-          "waitForSubWorkflow": true
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        1328,
-        128
-      ],
-      "id": "e7c20c90-4667-48e7-86d4-1a99b7d8bc8a",
-      "name": "使用Dreamify生图",
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "6VvctMKinvgz2g6F",
-          "mode": "list",
-          "cachedResultName": "pixwith.ai 文生图"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "prompt": "={{ $('AI Agent').item.json.output.positivePrompt }}",
-            "width": "={{ $('AI Agent').item.json.output.width }}",
-            "height": "={{ $('AI Agent').item.json.output.height }}",
-            "batch": "={{ 4 }}"
-          },
-          "matchingColumns": [
-            "prompt"
-          ],
-          "schema": [
-            {
-              "id": "prompt",
-              "displayName": "prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "width",
-              "displayName": "width",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "height",
-              "displayName": "height",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "batch",
-              "displayName": "batch",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "mode": "each",
-        "options": {
-          "waitForSubWorkflow": true
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        1328,
-        320
-      ],
-      "id": "ae629917-f2cc-41ff-a92f-e3a869e5af05",
-      "name": "使用pixwith.ai生图",
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 1,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    },
-                    "id": "7fbb7df9-a1b1-4af3-9ae2-4396ea0939ac"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "一张图片"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "b814b24c-1b06-4cea-8550-e99b8df71239",
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 2,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "两张图片"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "8e834a95-a594-4fdc-80b7-050af8955308",
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 3,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "三张图片"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "690bd011-4b35-4aad-a9a5-f491463f89f3",
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 4,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "四张图片"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "3ca029c4-eb94-4a86-b858-63fbeec12923",
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 5,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "五张图片"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "63f5f786-2014-4c55-8ed8-5509c4dc2445",
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 6,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "六张图片"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "b2b2c443-4b09-44bc-85b9-02b167401b45",
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 7,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "七张图片"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "ffab8194-5421-4659-bdec-9f03bc65ef98",
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 8,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "八张图片"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "184c092e-c009-4822-bfb3-1a775dc89b46",
-                    "leftValue": "={{ $json.images.length }}",
-                    "rightValue": 9,
-                    "operator": {
-                      "type": "number",
-                      "operation": "equals"
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "九张图片"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2,
-      "position": [
-        2896,
-        208
-      ],
-      "id": "844019fc-979c-46af-b537-5915b8ea097c",
-      "name": "Switch"
-    },
-    {
-      "parameters": {
         "operation": "sendMediaGroup",
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
         "media": {
           "media": [
             {
-              "media": "={{ $json.images[0].url }}",
+              "media": "={{ $json.url }}",
               "additionalFields": {}
             }
           ]
@@ -564,8 +171,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        3120,
-        -448
+        1648,
+        840
       ],
       "id": "e001d475-e299-454e-8af0-76164d5886d8",
       "name": "发送一张图片",
@@ -580,126 +187,41 @@
     },
     {
       "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "media": {
-          "media": [
+        "assignments": {
+          "assignments": [
             {
-              "media": "={{ $json.images[0].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[1].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[2].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[3].url }}",
-              "additionalFields": {}
+              "id": "9b158ceb-4da0-405c-be1b-98dc21fc0d20",
+              "name": "url",
+              "value": "={{ $json.output.match(/\\((http.*)\\)/)[1] }}",
+              "type": "string"
             }
           ]
         },
-        "additionalFields": {
-          "reply_to_message_id": "={{ $('Send a text message').item.json.result.message_id }}"
-        }
+        "options": {}
       },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        3120,
-        128
+        1424,
+        840
       ],
-      "id": "f9f65ef8-06f3-4269-86ef-f1ab955b637a",
-      "name": "发送四张图片",
-      "webhookId": "dbd1c517-7278-431b-957a-b8d65ce3b4c6",
-      "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
-        }
-      },
-      "onError": "continueRegularOutput"
+      "id": "ec06c9de-58e1-4ebe-8dc4-7272f2a92497",
+      "name": "Edit Fields"
     },
     {
       "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "media": {
-          "media": [
-            {
-              "media": "={{ $json.images[0].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[1].url }}",
-              "additionalFields": {}
-            }
-          ]
-        },
-        "additionalFields": {
-          "reply_to_message_id": "={{ $('Send a text message').item.json.result.message_id }}"
-        }
+        "promptType": "define",
+        "text": "={{ $json.output.positivePrompt }}",
+        "options": {}
       },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
       "position": [
-        3120,
-        -256
+        848,
+        840
       ],
-      "id": "c404c67b-8cf8-448a-aa0b-31e243d65d08",
-      "name": "发送两张图片",
-      "webhookId": "dbd1c517-7278-431b-957a-b8d65ce3b4c6",
-      "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "media": {
-          "media": [
-            {
-              "media": "={{ $json.images[0].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[1].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[2].url }}",
-              "additionalFields": {}
-            }
-          ]
-        },
-        "additionalFields": {
-          "reply_to_message_id": "={{ $('Send a text message').item.json.result.message_id }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        3120,
-        -64
-      ],
-      "id": "21d0cf0a-4d5e-4978-99fd-07b3f57259ba",
-      "name": "发送三张图片",
-      "webhookId": "dbd1c517-7278-431b-957a-b8d65ce3b4c6",
-      "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
-        }
-      },
-      "onError": "continueRegularOutput"
+      "id": "f2898e49-449f-4295-862b-d1d90197de2e",
+      "name": "AI Agent1"
     },
     {
       "parameters": {
@@ -712,13 +234,12 @@
           },
           "conditions": [
             {
-              "id": "ae49c1fe-0bd0-4b3f-8dc9-f1c29289f930",
-              "leftValue": "={{ $json.url }}",
-              "rightValue": "",
+              "id": "6223faeb-0539-4911-b32e-1f250b215836",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "/\\((http.*)\\)/",
               "operator": {
                 "type": "string",
-                "operation": "exists",
-                "singleValue": true
+                "operation": "regex"
               }
             }
           ],
@@ -729,763 +250,36 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        2000,
-        512
+        1200,
+        840
       ],
-      "id": "eb344ca6-010f-4b5b-b2bd-76167be7c8d7",
-      "name": "Filter"
+      "id": "4906a6e0-9c85-4616-ae82-23bffbafcdab",
+      "name": "Filter1"
     },
     {
       "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "destinationFieldName": "images",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        2672,
-        320
-      ],
-      "id": "17d15fb7-10ae-442d-b780-5d4664ad3a91",
-      "name": "Aggregate"
-    },
-    {
-      "parameters": {
-        "workflowId": {
+        "model": {
           "__rl": true,
-          "value": "p4HH3AqIHjUTknc1",
+          "value": "flux-1-dev",
           "mode": "list",
-          "cachedResultName": "image-fx 文生图"
+          "cachedResultName": "flux-1-dev"
         },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "width": "={{ $('AI Agent').item.json.output.width }}",
-            "height": "={{ $('AI Agent').item.json.output.height }}",
-            "prompt": "={{ $('AI Agent').item.json.output.positivePrompt }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "prompt",
-              "displayName": "prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string"
-            },
-            {
-              "id": "width",
-              "displayName": "width",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            },
-            {
-              "id": "height",
-              "displayName": "height",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "mode": "each",
-        "options": {
-          "waitForSubWorkflow": true
-        }
+        "options": {}
       },
-      "type": "n8n-nodes-base.executeWorkflow",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1328,
-        512
+        920,
+        1064
       ],
-      "id": "49682c34-42c3-4601-9968-f2f4ca17e362",
-      "name": "使用image-fx生图",
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "numberInputs": 6
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        1776,
-        448
-      ],
-      "id": "fa40868a-3463-4b05-a672-315e916ec9a5",
-      "name": "Merge"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "images",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        1552,
-        128
-      ],
-      "id": "46107da1-0fa6-4bc6-9fd5-c07b61015790",
-      "name": "Split Out1"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "images",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        1552,
-        320
-      ],
-      "id": "55490e3e-5734-4a4f-bda9-38cafa774797",
-      "name": "Split Out2"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "images",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        1552,
-        512
-      ],
-      "id": "4c53fe95-a21d-4939-aa10-e46269ef8e98",
-      "name": "Split Out3"
-    },
-    {
-      "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "media": {
-          "media": [
-            {
-              "media": "={{ $json.images[0].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[1].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[2].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[3].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[4].url }}",
-              "additionalFields": {}
-            }
-          ]
-        },
-        "additionalFields": {
-          "reply_to_message_id": "={{ $('Send a text message').item.json.result.message_id }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        3120,
-        320
-      ],
-      "id": "f8e9687a-d480-40f2-9810-dcff2132ad7c",
-      "name": "发送五张图片",
-      "webhookId": "dbd1c517-7278-431b-957a-b8d65ce3b4c6",
+      "id": "0294e73f-3200-4b66-9101-0f244f28b2c1",
+      "name": "OpenAI Chat Model2",
       "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
+        "openAiApi": {
+          "id": "02vK4rSQjc4dTMKe",
+          "name": "OpenAi - FLUX-DEV"
         }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "media": {
-          "media": [
-            {
-              "media": "={{ $json.images[0].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[1].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[2].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[3].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[4].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[5].url }}",
-              "additionalFields": {}
-            }
-          ]
-        },
-        "additionalFields": {
-          "reply_to_message_id": "={{ $('Send a text message').item.json.result.message_id }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        3120,
-        512
-      ],
-      "id": "6f3bc8f9-43e4-4c55-a93c-59401db0bd82",
-      "name": "发送六张图片",
-      "webhookId": "dbd1c517-7278-431b-957a-b8d65ce3b4c6",
-      "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "media": {
-          "media": [
-            {
-              "media": "={{ $json.images[0].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[1].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[2].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[3].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[4].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[5].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[6].url }}",
-              "additionalFields": {}
-            }
-          ]
-        },
-        "additionalFields": {
-          "reply_to_message_id": "={{ $('Send a text message').item.json.result.message_id }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        3120,
-        704
-      ],
-      "id": "618cc5db-f203-4ebc-b40f-aff0935a84b1",
-      "name": "发送七张图片",
-      "webhookId": "dbd1c517-7278-431b-957a-b8d65ce3b4c6",
-      "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "media": {
-          "media": [
-            {
-              "media": "={{ $json.images[0].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[1].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[2].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[3].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[4].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[5].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[6].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[7].url }}",
-              "additionalFields": {}
-            }
-          ]
-        },
-        "additionalFields": {
-          "reply_to_message_id": "={{ $('Send a text message').item.json.result.message_id }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        3120,
-        896
-      ],
-      "id": "5f617cae-266c-49c5-bc1e-39b746b36d96",
-      "name": "发送八张图片",
-      "webhookId": "dbd1c517-7278-431b-957a-b8d65ce3b4c6",
-      "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "sendMediaGroup",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "media": {
-          "media": [
-            {
-              "media": "={{ $json.images[0].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[1].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[2].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[3].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[4].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[5].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[6].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[7].url }}",
-              "additionalFields": {}
-            },
-            {
-              "media": "={{ $json.images[8].url }}",
-              "additionalFields": {}
-            }
-          ]
-        },
-        "additionalFields": {
-          "reply_to_message_id": "={{ $('Send a text message').item.json.result.message_id }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        3120,
-        1088
-      ],
-      "id": "4724f492-c90a-442d-83f5-35b9e843f516",
-      "name": "发送九张图片",
-      "webhookId": "dbd1c517-7278-431b-957a-b8d65ce3b4c6",
-      "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "maxItems": 9
-      },
-      "type": "n8n-nodes-base.limit",
-      "typeVersion": 1,
-      "position": [
-        2224,
-        512
-      ],
-      "id": "facd30aa-8c4e-4780-9303-1e3b698f47a3",
-      "name": "Limit"
-    },
-    {
-      "parameters": {
-        "batchSize": 9,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        2448,
-        512
-      ],
-      "id": "f9305293-03e0-492e-b98d-0d5bdb717a39",
-      "name": "Loop Over Items"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "images",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        1552,
-        704
-      ],
-      "id": "dab3acf5-f68f-4eff-919e-5bf437fd70cf",
-      "name": "Split Out"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "images",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        1552,
-        896
-      ],
-      "id": "9ea1420a-b527-4b24-b3fa-e605030d0ba2",
-      "name": "Split Out4"
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "nOApQWdWQsRI9mpS",
-          "mode": "list",
-          "cachedResultName": "deepai.org 文生图"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "width": "={{ $('AI Agent').item.json.output.width }}",
-            "height": "={{ $('AI Agent').item.json.output.height }}",
-            "batch": 4,
-            "prompt": "={{ $('AI Agent').item.json.output.positivePrompt }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "prompt",
-              "displayName": "prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string"
-            },
-            {
-              "id": "width",
-              "displayName": "width",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            },
-            {
-              "id": "height",
-              "displayName": "height",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            },
-            {
-              "id": "batch",
-              "displayName": "batch",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "mode": "each",
-        "options": {
-          "waitForSubWorkflow": true
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        1328,
-        896
-      ],
-      "id": "2d6edc8e-ec84-4a09-a276-2eba6615b787",
-      "name": "使用 deepai.org生图",
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "dH57oXshYbmAX8oW",
-          "mode": "list",
-          "cachedResultName": "desktophut.com 文生图"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "width": "={{ $('AI Agent').item.json.output.width }}",
-            "height": "={{ $('AI Agent').item.json.output.height }}",
-            "prompt": "={{ $('AI Agent').item.json.output.positivePrompt }}",
-            "negative_prompt": "={{ $('AI Agent').item.json.output.negativePrompt }}",
-            "nsfw": "={{ $('AI Agent').item.json.output.nsfw }}",
-            "batch": "={{ 4 }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "prompt",
-              "displayName": "prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string"
-            },
-            {
-              "id": "width",
-              "displayName": "width",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            },
-            {
-              "id": "height",
-              "displayName": "height",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            },
-            {
-              "id": "batch",
-              "displayName": "batch",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "negative_prompt",
-              "displayName": "negative_prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "nsfw",
-              "displayName": "nsfw",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "boolean",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "mode": "each",
-        "options": {
-          "waitForSubWorkflow": true
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        1328,
-        704
-      ],
-      "id": "b1b0bece-0b0d-455e-9590-e36acf4cc1ae",
-      "name": "使用 desktophut生图",
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "images",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        1552,
-        1088
-      ],
-      "id": "2d1de073-99e5-4565-845e-56c7505c8685",
-      "name": "Split Out5"
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "dZQvor7zZZBLAMyG",
-          "mode": "list",
-          "cachedResultName": "sana 文生图"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "width": "={{ $('AI Agent').item.json.output.width }}",
-            "height": "={{ $('AI Agent').item.json.output.height }}",
-            "prompt": "={{ $('AI Agent').item.json.output.positivePrompt }}",
-            "negative_prompt": "={{ $('AI Agent').item.json.output.negativePrompt }}",
-            "nsfw": "={{ $('AI Agent').item.json.output.nsfw }}",
-            "batch": "={{ 2 }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "prompt",
-              "displayName": "prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string"
-            },
-            {
-              "id": "width",
-              "displayName": "width",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            },
-            {
-              "id": "height",
-              "displayName": "height",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number"
-            },
-            {
-              "id": "batch",
-              "displayName": "batch",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "negative_prompt",
-              "displayName": "negative_prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "nsfw",
-              "displayName": "nsfw",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "boolean",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "mode": "each",
-        "options": {
-          "waitForSubWorkflow": true
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        1328,
-        1088
-      ],
-      "id": "ae3be788-4388-4cf3-a66b-7be1b02ca41b",
-      "name": "使用 sana 生图",
-      "onError": "continueRegularOutput"
+      }
     }
   ],
   "connections": {
@@ -1518,6 +312,11 @@
             "node": "Send a text message",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -1535,49 +334,7 @@
     },
     "Send a text message": {
       "main": [
-        [
-          {
-            "node": "Code1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code1": {
-      "main": [
-        [
-          {
-            "node": "使用 desktophut生图",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "使用image-fx生图",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "使用pixwith.ai生图",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "使用Dreamify生图",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "使用 deepai.org生图",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "使用 sana 生图",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "OpenAI Chat Model1": {
@@ -1602,29 +359,29 @@
         ]
       ]
     },
-    "使用Dreamify生图": {
+    "AI Agent1": {
       "main": [
         [
           {
-            "node": "Split Out1",
+            "node": "Filter1",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "使用pixwith.ai生图": {
+    "Filter1": {
       "main": [
         [
           {
-            "node": "Split Out2",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Switch": {
+    "Edit Fields": {
       "main": [
         [
           {
@@ -1632,262 +389,15 @@
             "type": "main",
             "index": 0
           }
-        ],
-        [
-          {
-            "node": "发送两张图片",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "发送三张图片",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "发送四张图片",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "发送五张图片",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "发送六张图片",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "发送七张图片",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "发送八张图片",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "发送九张图片",
-            "type": "main",
-            "index": 0
-          }
         ]
       ]
     },
-    "Filter": {
-      "main": [
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
         [
           {
-            "node": "Limit",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Aggregate": {
-      "main": [
-        [
-          {
-            "node": "Switch",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "使用image-fx生图": {
-      "main": [
-        [
-          {
-            "node": "Split Out3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Filter",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Split Out1": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Split Out2": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Split Out3": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 2
-          }
-        ]
-      ]
-    },
-    "Limit": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop Over Items": {
-      "main": [
-        [],
-        [
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "发送九张图片": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "发送八张图片": {
-      "main": [
-        []
-      ]
-    },
-    "发送七张图片": {
-      "main": [
-        []
-      ]
-    },
-    "发送六张图片": {
-      "main": [
-        []
-      ]
-    },
-    "发送五张图片": {
-      "main": [
-        []
-      ]
-    },
-    "发送四张图片": {
-      "main": [
-        []
-      ]
-    },
-    "Split Out": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 3
-          }
-        ]
-      ]
-    },
-    "Split Out4": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 4
-          }
-        ]
-      ]
-    },
-    "使用 deepai.org生图": {
-      "main": [
-        [
-          {
-            "node": "Split Out4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "使用 desktophut生图": {
-      "main": [
-        [
-          {
-            "node": "Split Out",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Split Out5": {
-      "main": [
-        [
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 5
-          }
-        ]
-      ]
-    },
-    "使用 sana 生图": {
-      "main": [
-        [
-          {
-            "node": "Split Out5",
-            "type": "main",
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1898,7 +408,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "19f738bd-e603-48c0-8fb5-6b8af6a113cf",
+  "versionId": "1315a289-a390-42a9-a32c-3611fe297339",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",

@@ -1,49 +1,7 @@
 {
   "id": "p4HH3AqIHjUTknc1",
-  "name": "image-fx 文生图",
+  "name": "FLUX-DEV 文生图",
   "nodes": [
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://aisandbox-pa.googleapis.com/v1:runImageFx",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpBearerAuth",
-        "sendHeaders": true,
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"userInput\": {\n    \"candidatesCount\": 4,\n    \"prompts\": [\n      \"{{ $json.prompt }}\"\n    ],\n    \"seed\": {{ Math.floor(1e6 * Math.random()) }}\n  },\n  \"clientContext\": {\n    \"sessionId\": \";{{ DateTime.now().toMillis() }}\",\n    \"tool\": \"IMAGE_FX\"\n  },\n  \"modelInput\": {\n    \"modelNameType\": \"IMAGEN_3_1\"\n  },\n  \"aspectRatio\": \"{{ $json.aspectRatio }}\"\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        80,
-        -80
-      ],
-      "id": "19fccc41-640d-471e-a572-1d87945d64a0",
-      "name": "HTTP Request",
-      "credentials": {
-        "httpBearerAuth": {
-          "id": "Bu7MjzxBx6CELOVa",
-          "name": "Bearer Auth - image-fx"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "toBinary",
-        "sourceProperty": "encodedImage",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.convertToFile",
-      "typeVersion": 1.1,
-      "position": [
-        528,
-        -80
-      ],
-      "id": "58b1a758-232a-4c40-908a-f60c2c7ca9e4",
-      "name": "Convert to File"
-    },
     {
       "parameters": {
         "workflowInputs": {
@@ -73,108 +31,53 @@
     },
     {
       "parameters": {
-        "jsCode": "const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);\nconst ratios = {\n  \"1:1\": \"IMAGE_ASPECT_RATIO_SQUARE\",\n  \"9:16\": \"IMAGE_ASPECT_RATIO_PORTRAIT\",\n  \"16:9\": \"IMAGE_ASPECT_RATIO_LANDSCAPE\",\n  \"4:3\": \"IMAGE_ASPECT_RATIO_LANDSCAPE_FOUR_THREE\",\n  \"3:4\": \"IMAGE_ASPECT_RATIO_PORTRAIT_THREE_FOUR\"\n};\nfor (const item of $input.all()) {\n  const w = item.json.width;\n  const h = item.json.height;\n  const d = gcd(w, h);\n  const ratio = `${w / d}:${h / d}`;\n  item.json.ratio = ratio;\n  item.json.aspectRatio = ratios[ratio] ? ratios[ratio]: \"IMAGE_ASPECT_RATIO_SQUARE\"; \n}\n\nreturn $input.all();"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -144,
-        -80
-      ],
-      "id": "d64d4017-7615-44f9-9769-53f0e893f969",
-      "name": "Code"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://sm.ms/api/v2/upload",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Content-Type",
-              "value": "multipart/form-data"
-            }
-          ]
-        },
-        "sendBody": true,
-        "contentType": "multipart-form-data",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "parameterType": "formBinaryData",
-              "name": "smfile",
-              "inputDataFieldName": "data"
-            }
-          ]
-        },
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
         "options": {}
       },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        752,
-        -80
-      ],
-      "id": "5f6a1272-5ce4-4d10-a33b-ad799b4c87be",
-      "name": "HTTP Request1",
-      "credentials": {
-        "httpBearerAuth": {
-          "id": "6MNMBkSbYY1ANfDb",
-          "name": "Bearer Auth - siliconflow"
-        },
-        "httpHeaderAuth": {
-          "id": "4r0pqp4fMYEvLVCk",
-          "name": "Header Auth - SM.MS"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "814fa69e-0efe-4bd4-a613-072a5f11792f",
-              "leftValue": "={{ $json.success }}",
-              "rightValue": "",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
+      "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        976,
+        -160,
         -80
       ],
-      "id": "63473b3c-b143-4f0d-843b-a0bfd2e6be5f",
-      "name": "If"
+      "id": "16124588-3531-411a-90bd-6cccdd7f4742",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "flux-1-dev",
+          "mode": "list",
+          "cachedResultName": "flux-1-dev"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -176,
+        96
+      ],
+      "id": "b905cc48-f519-45a3-a4a3-908b790bd12d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "02vK4rSQjc4dTMKe",
+          "name": "OpenAi - FLUX-DEV"
+        }
+      }
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "9f7a3fcd-a3ad-4fd6-a0ed-4c68f10322aa",
-              "name": "image",
-              "value": "={{ $json.data }}",
-              "type": "object"
+              "id": "9b158ceb-4da0-405c-be1b-98dc21fc0d20",
+              "name": "url",
+              "value": "={{ $json.output.match(/\\((http.*)\\)/)[1] }}",
+              "type": "string"
             }
           ]
         },
@@ -183,33 +86,11 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1200,
+        400,
         -80
       ],
-      "id": "db4f4d92-b9ad-41ce-be30-ea3783edf237",
+      "id": "fca88c60-926d-4aed-bb01-3280e4f815e4",
       "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "fieldsToAggregate": {
-          "fieldToAggregate": [
-            {
-              "fieldToAggregate": "image",
-              "renameField": true,
-              "outputFieldName": "images"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.aggregate",
-      "typeVersion": 1,
-      "position": [
-        1648,
-        -80
-      ],
-      "id": "1a0c7840-9b5e-4505-b930-480220588514",
-      "name": "Aggregate"
     },
     {
       "parameters": {
@@ -222,13 +103,12 @@
           },
           "conditions": [
             {
-              "id": "70e02793-6492-446e-8179-fbc883bac509",
-              "leftValue": "={{ $json.image }}",
-              "rightValue": "",
+              "id": "6223faeb-0539-4911-b32e-1f250b215836",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "/\\((http.*)\\)/",
               "operator": {
-                "type": "object",
-                "operation": "exists",
-                "singleValue": true
+                "type": "string",
+                "operation": "regex"
               }
             }
           ],
@@ -239,95 +119,37 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
       "position": [
-        1424,
+        192,
         -80
       ],
-      "id": "f44b3b9f-dead-4b58-b487-73c27a1b4702",
+      "id": "285fce99-6781-49d0-86a0-38b20355341f",
       "name": "Filter"
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "imagePanels[0].generatedImages",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitOut",
-      "typeVersion": 1,
-      "position": [
-        304,
-        -80
-      ],
-      "id": "99464688-3b61-4598-8ab3-559bcf79a448",
-      "name": "Split Out"
     }
   ],
   "connections": {
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Split Out",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "When Executed by Another Workflow": {
       "main": [
         [
           {
-            "node": "Code",
+            "node": "AI Agent",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code": {
-      "main": [
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
         [
           {
-            "node": "HTTP Request",
-            "type": "main",
+            "node": "AI Agent",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
       ]
     },
-    "Convert to File": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields": {
+    "AI Agent": {
       "main": [
         [
           {
@@ -342,18 +164,7 @@
       "main": [
         [
           {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Split Out": {
-      "main": [
-        [
-          {
-            "node": "Convert to File",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
@@ -365,7 +176,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "4a616381-2f0a-4aac-bddd-e1a55fab601f",
+  "versionId": "4d575f33-a8de-4abc-ae3a-ffe5e9b74e41",
   "owner": {
     "type": "personal",
     "projectId": "0cfCdy28RhDft3mL",
