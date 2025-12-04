@@ -1,19 +1,13 @@
 [
   {
-    "id": "nJfakLxpF2Z77G57",
-    "key": "CIVITAI_API_KEY",
-    "type": "string",
-    "value": ""
-  },
-  {
     "id": "Ucko7C2DpdxAs0EV",
     "key": "WALLHAVEN_API_KEY",
     "type": "string",
     "value": ""
   },
   {
-    "id": "yF2eW3Pvg58iemXe",
-    "key": "TG_CHAT_ID_TEST",
+    "id": "nJfakLxpF2Z77G57",
+    "key": "CIVITAI_API_KEY",
     "type": "string",
     "value": ""
   }

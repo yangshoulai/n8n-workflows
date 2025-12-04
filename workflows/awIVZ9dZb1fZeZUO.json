@@ -11,7 +11,7 @@
       "typeVersion": 1.1,
       "position": [
         -320,
-        -24
+        -32
       ],
       "id": "bcee98c5-5ae4-48e1-9a4c-a69250b19877",
       "name": "When Executed by Another Workflow"
@@ -62,8 +62,8 @@
       "notesInFlow": true,
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       },
       "notes": "查询壁纸"
@@ -326,15 +326,15 @@
       "typeVersion": 2.6,
       "position": [
         576,
-        -24
+        -32
       ],
       "id": "e801f666-4843-4980-87eb-049e4cc7520e",
       "name": "Insert rows in a table",
       "notesInFlow": true,
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       },
       "notes": "插入壁纸"
@@ -347,7 +347,7 @@
       "typeVersion": 3,
       "position": [
         -96,
-        -24
+        -32
       ],
       "id": "561bd7f1-2595-4851-8aca-ed79d75a07b3",
       "name": "Loop Over Items"
@@ -416,11 +416,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "a7ad7fff-dbb3-4829-9398-9816a3be7111",
+  "versionId": "cef8e588-7b4a-4e7b-8cd2-6dbcb522c9ab",
   "owner": {
     "type": "personal",
-    "projectId": "0cfCdy28RhDft3mL",
-    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "5s3PR4wTbF5gcmj3",

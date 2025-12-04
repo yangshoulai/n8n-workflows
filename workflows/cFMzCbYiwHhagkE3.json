@@ -27,8 +27,9 @@
         "operation": "select",
         "schema": {
           "__rl": true,
+          "value": "public",
           "mode": "list",
-          "value": "public"
+          "cachedResultName": "public"
         },
         "table": {
           "__rl": true,
@@ -55,15 +56,15 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        220,
+        224,
         0
       ],
       "id": "cd968dcb-f875-4d1e-903f-b269047d743b",
       "name": "查询所有订阅",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       }
     },
@@ -77,7 +78,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        440,
+        448,
         0
       ],
       "id": "4118906f-704b-49e2-90d9-4bc5ee85bbfb",
@@ -138,8 +139,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        660,
-        100
+        672,
+        112
       ],
       "id": "f057797d-e94d-49dc-a459-0ffd19fef1bf",
       "name": "Execute Workflow"
@@ -196,9 +197,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "68832687-68ee-4650-9c8e-dcfa1774ed62",
+  "versionId": "d3a73fd5-8fef-421f-832c-a81cc7cbc2e3",
   "owner": {
     "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "5s3PR4wTbF5gcmj3",

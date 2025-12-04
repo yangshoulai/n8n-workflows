@@ -12,8 +12,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -440,
-        935
+        -448,
+        920
       ],
       "id": "654a407c-148b-4b43-9429-9f4e8547ce8d",
       "name": "监听机器人消息",
@@ -163,7 +163,7 @@
       "typeVersion": 3.2,
       "position": [
         0,
-        893
+        872
       ],
       "id": "c1714da6-7402-40e0-a756-12652770763f",
       "name": "处理命令"
@@ -182,8 +182,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        220,
-        260
+        224,
+        272
       ],
       "id": "2011a1e2-8b90-4c90-942f-a20880867b4f",
       "name": "处理 /start",
@@ -227,15 +227,15 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        220,
-        460
+        224,
+        464
       ],
       "id": "abaae735-575b-425e-ac31-3ee06ab25e21",
       "name": "订阅记录",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       }
     },
@@ -267,8 +267,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        440,
-        460
+        448,
+        464
       ],
       "id": "5745d440-713a-4456-a011-d954e25e5dfc",
       "name": "判断是否已订阅"
@@ -284,8 +284,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        880,
-        360
+        896,
+        368
       ],
       "id": "931a01fc-14b1-43ca-9797-58c059ea3a23",
       "name": "订阅成功",
@@ -414,15 +414,15 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        660,
-        610
+        672,
+        608
       ],
       "id": "4098633a-4627-4ae1-a149-66637d824f8b",
       "name": "新增订阅",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       },
       "onError": "continueErrorOutput"
@@ -438,7 +438,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        880,
+        896,
         560
       ],
       "id": "b7e65766-ac08-406b-8e84-ad02647d6de4",
@@ -483,15 +483,15 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        220,
-        935
+        224,
+        928
       ],
       "id": "f4c6d9ea-db09-4b5c-8fa7-748fbc8cc7fc",
       "name": "订阅记录1",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       }
     },
@@ -523,8 +523,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        440,
-        935
+        448,
+        920
       ],
       "id": "888f3027-f19d-4d51-a494-ffc928b41f75",
       "name": "判断是否已订阅1"
@@ -540,8 +540,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        880,
-        1035
+        896,
+        1016
       ],
       "id": "2290bd4c-f1bb-4c12-a085-a849dfaa97a0",
       "name": "取消订阅成功",
@@ -675,15 +675,15 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        660,
-        860
+        672,
+        848
       ],
       "id": "2ffe27d9-8c56-4efa-af95-14e1faddd6be",
       "name": "取消订阅",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       },
       "onError": "continueErrorOutput"
@@ -699,8 +699,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        880,
-        810
+        896,
+        800
       ],
       "id": "4c996ca7-2597-4473-ae9f-7076a051de08",
       "name": "取消订阅失败",
@@ -723,16 +723,16 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        660,
-        310
+        672,
+        320
       ],
       "id": "55c23e2d-4546-42b8-8a1c-ff15cf544a2d",
       "name": "更新订阅",
       "alwaysOutputData": false,
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       },
       "onError": "continueErrorOutput"
@@ -790,8 +790,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        220,
-        1135
+        224,
+        1112
       ],
       "id": "814cfd26-6f8f-4d6e-8232-9d398ab48fdb",
       "name": "发送 NSFW 壁纸"
@@ -849,8 +849,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        220,
-        1335
+        224,
+        1304
       ],
       "id": "39e262bc-d9c6-4c10-8517-26edd09a1b93",
       "name": "发送 SFW 壁纸"
@@ -885,8 +885,8 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1,
       "position": [
-        -220,
-        935
+        -224,
+        920
       ],
       "id": "97400726-9d0c-4fd1-a399-1d29af6963c9",
       "name": "Execution Data"
@@ -1071,9 +1071,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "56424410-3be4-4887-8d80-07c28b8e37de",
+  "versionId": "2a985505-fa3a-42c9-9148-a130fb6afbf0",
   "owner": {
     "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "5s3PR4wTbF5gcmj3",

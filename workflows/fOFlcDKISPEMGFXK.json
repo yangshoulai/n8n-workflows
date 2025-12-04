@@ -53,7 +53,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        220,
+        224,
         0
       ],
       "id": "bbafe8e1-2be4-4dbb-9016-9b5887ebcde0",
@@ -62,8 +62,8 @@
       "notesInFlow": true,
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       },
       "notes": "查询壁纸"
@@ -96,7 +96,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        440,
+        448,
         0
       ],
       "id": "f0e31995-c63a-456f-afff-1d3f9f66b596",
@@ -325,7 +325,7 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        660,
+        672,
         0
       ],
       "id": "8c1bab7f-9c75-4366-a7a8-58790565c1eb",
@@ -333,8 +333,8 @@
       "notesInFlow": true,
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       },
       "notes": "插入壁纸"
@@ -380,9 +380,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "5d2f0861-24bd-4baf-b3a4-b9b44af41dba",
+  "versionId": "0a065e7c-9a1f-45d7-bf8a-39d55e0a890e",
   "owner": {
     "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "5s3PR4wTbF5gcmj3",

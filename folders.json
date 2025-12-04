@@ -1,18 +1,10 @@
 {
   "folders": [
     {
-      "id": "ver0BTPbVL6EbqRd",
-      "name": "托管应用保活",
-      "parentFolderId": null,
-      "homeProjectId": "0cfCdy28RhDft3mL",
-      "createdAt": "2025-06-15T15:27:52.172Z",
-      "updatedAt": "2025-06-15T15:27:52.172Z"
-    },
-    {
       "id": "5s3PR4wTbF5gcmj3",
       "name": "iwallpapers",
       "parentFolderId": null,
-      "homeProjectId": "0cfCdy28RhDft3mL",
+      "homeProjectId": "pskh8wmOtrNvczt8",
       "createdAt": "2025-06-15T16:16:29.284Z",
       "updatedAt": "2025-06-15T16:16:29.284Z"
     },
@@ -20,7 +12,7 @@
       "id": "tXbrPLEAcjwVXk68",
       "name": "人工智能",
       "parentFolderId": null,
-      "homeProjectId": "0cfCdy28RhDft3mL",
+      "homeProjectId": "pskh8wmOtrNvczt8",
       "createdAt": "2025-06-15T16:39:09.957Z",
       "updatedAt": "2025-06-15T16:39:09.957Z"
     }

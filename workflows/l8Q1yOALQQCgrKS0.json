@@ -18,8 +18,8 @@
       "name": "成功 - 更新 file_id",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       }
     },
@@ -87,8 +87,8 @@
       "name": "查询 SFW 壁纸",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       }
     },
@@ -108,8 +108,8 @@
       "name": "查询 NSFW 壁纸",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       }
     },
@@ -364,8 +364,8 @@
       "name": "查询壁纸",
       "credentials": {
         "postgres": {
-          "id": "GhYByP9bpg1zvCiZ",
-          "name": "Postgres - Neon"
+          "id": "E8sSOvQ08v4CZXDR",
+          "name": "Postgres - Neon - iwallpapers"
         }
       }
     },
@@ -612,11 +612,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "790b3481-d6d4-49cf-bdf9-205eef1f42fd",
+  "versionId": "887a12f3-c3ba-47aa-9ae5-4c7752af3c02",
   "owner": {
     "type": "personal",
-    "projectId": "0cfCdy28RhDft3mL",
-    "projectName": "寿来 杨 <shoulai.yang@gmail.com>",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
   },
   "parentFolderId": "5s3PR4wTbF5gcmj3",
