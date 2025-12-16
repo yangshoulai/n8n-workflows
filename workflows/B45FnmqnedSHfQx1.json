@@ -1,0 +1,598 @@
+{
+  "id": "B45FnmqnedSHfQx1",
+  "name": "HuggingFace Space API With Tokens",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "apiUrl"
+            },
+            {
+              "name": "apiName"
+            },
+            {
+              "name": "apiBody",
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -976,
+        -296
+      ],
+      "id": "25159485-6ebd-4d88-a745-5cada9f21a9c",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "Ji9fEO5o63kYo6l8",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/Ji9fEO5o63kYo6l8",
+          "cachedResultName": "人工智能 — HuggingFace Space API"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "spaceUrl": "={{ $('入口参数').item.json.apiUrl }}",
+            "apiName": "={{ $('入口参数').item.json.apiName }}",
+            "accessToken": "={{ $json.token === 'default' ? '' : $json.token }}",
+            "body": "={{ $('入口参数').item.json.apiBody }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "spaceUrl",
+              "displayName": "spaceUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "apiName",
+              "displayName": "apiName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "accessToken",
+              "displayName": "accessToken",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "body",
+              "displayName": "body",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "array",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        -464
+      ],
+      "id": "7ecec9f4-c8af-4ae0-bad3-2c66704d3aca",
+      "name": "Call 'HuggingFace Space API'"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a23f8e77-c44e-4d78-a4c9-a1496d78dcd6",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1264,
+        -464
+      ],
+      "id": "ff702a19-b896-4d51-8fa2-d5f64da235a0",
+      "name": "判断是否成功"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3cbcec4a-8889-43ca-b648-d8f9d1f72e06",
+              "name": "key_tokens",
+              "value": "=hf:tokens:{{ new Intl.DateTimeFormat(\"en-CA\").format(new Date()).replace(/-/g, \"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -752,
+        -296
+      ],
+      "id": "ca760b23-a4e8-4b8c-bf3c-5b1ef44f86b3",
+      "name": "计算 Access Token Key"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "tokens",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "keyType": "hash",
+        "options": {
+          "dotNotation": false
+        }
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -296
+      ],
+      "id": "a0a41983-9e17-4a0f-8c61-2bca568b2f71",
+      "name": "获取 Redis 中缓存的 Tokens",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5cf957d7-e19e-4ac3-b350-bea6276b7f4c",
+              "leftValue": "={{ Object.keys($json.tokens).length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -304,
+        -368
+      ],
+      "id": "21e41fb5-931a-4824-bb00-0e77f4496b4a",
+      "name": "判断Tokens 是否存在"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "value": "={{ JSON.stringify($json) }}",
+        "keyType": "hash",
+        "expire": true,
+        "ttl": 86400
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        144,
+        -272
+      ],
+      "id": "f7702366-5687-4254-9260-76b54bfdf7ed",
+      "name": "设置 Redis Tokens",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "tokens",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "keyType": "hash",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        368,
+        -272
+      ],
+      "id": "9014d583-3f6d-42bd-9492-aa7e09d5c960",
+      "name": "重新获取 Redis Tokens",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n  for(const t in item.json.tokens){\n    if(item.json.tokens[t] !== 0 && item.json.tokens[t] !== '0'){\n      return [{\"token\": t}];\n    }\n  }\n}\n\nreturn [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        -368
+      ],
+      "id": "7d55775a-2eba-439f-b097-8ede87d8fbdc",
+      "name": "获取可用的 Token",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3eaef21d-f7b8-45f5-b9fc-f2c63b5c5b6d",
+              "leftValue": "={{ $json.token }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        816,
+        -368
+      ],
+      "id": "f4840814-ed32-4a67-b175-3a08c0cfed07",
+      "name": "判断是否有可用 Token"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "value": "={{ $json.tokens }}",
+        "keyType": "hash",
+        "expire": true,
+        "ttl": 86400
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        -296
+      ],
+      "id": "0f79aa25-c855-45fb-a121-6e73d4a9234c",
+      "name": "设置 Token 失效",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  if($('获取可用的 Token').first().json.token in item.json.tokens){\n    item.json.tokens[$('获取可用的 Token').first().json.token] = 0;\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1712,
+        -464
+      ],
+      "id": "0bd1ec80-3318-4ce0-a64f-a99a0202228c",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "tokens",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "keyType": "hash",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        -464
+      ],
+      "id": "da2cfeb9-002e-4d2d-b744-2a776f3732a8",
+      "name": "重新获取 Redis Tokens1",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77602389-15af-41b0-b55b-71eead0d3c92",
+              "name": "data",
+              "value": "={{ null }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        -272
+      ],
+      "id": "026a59d3-dd32-4250-baee-c93cc7c61a29",
+      "name": "返回空结果"
+    },
+    {
+      "parameters": {
+        "jsCode": "const tokenMap = {'default': 1};\nfor(const token of $vars.HUGGINGFACE_ACCESS_TOKENS.split(\",\")){\n  tokenMap[token] = 1;\n}\n\nreturn [tokenMap];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -272
+      ],
+      "id": "67211059-4520-4c66-8102-f671d49979ce",
+      "name": "计算 Token Map"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "计算 Access Token Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'HuggingFace Space API'": {
+      "main": [
+        [
+          {
+            "node": "判断是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否成功": {
+      "main": [
+        [],
+        [
+          {
+            "node": "重新获取 Redis Tokens1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算 Access Token Key": {
+      "main": [
+        [
+          {
+            "node": "获取 Redis 中缓存的 Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取 Redis 中缓存的 Tokens": {
+      "main": [
+        [
+          {
+            "node": "判断Tokens 是否存在",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断Tokens 是否存在": {
+      "main": [
+        [
+          {
+            "node": "获取可用的 Token",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "计算 Token Map",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "设置 Redis Tokens": {
+      "main": [
+        [
+          {
+            "node": "重新获取 Redis Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "重新获取 Redis Tokens": {
+      "main": [
+        [
+          {
+            "node": "获取可用的 Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取可用的 Token": {
+      "main": [
+        [
+          {
+            "node": "判断是否有可用 Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否有可用 Token": {
+      "main": [
+        [
+          {
+            "node": "Call 'HuggingFace Space API'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "返回空结果",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "设置 Token 失效",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "重新获取 Redis Tokens1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "设置 Token 失效": {
+      "main": [
+        [
+          {
+            "node": "获取 Redis 中缓存的 Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算 Token Map": {
+      "main": [
+        [
+          {
+            "node": "设置 Redis Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "12859184-4526-4f6f-8ed7-6963cc58f173",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

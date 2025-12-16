@@ -1,0 +1,14 @@
+{
+  "id": "MoID1kVtzJVwCdbQ",
+  "name": "yangshoulai.pro@gmail.com",
+  "type": "huggingFaceApi",
+  "data": {
+    "apiKey": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "isGlobal": false
+}

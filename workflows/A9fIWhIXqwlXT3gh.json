@@ -1,0 +1,200 @@
+{
+  "id": "A9fIWhIXqwlXT3gh",
+  "name": "EasyImg 文件上传",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "base64EncodedFile"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -80,
+        -208
+      ],
+      "id": "9f363a6a-ab87-4627-83e5-5d31502bb173",
+      "name": "参数入口"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "base64EncodedFile",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        144,
+        -208
+      ],
+      "id": "d42c6791-d08a-4bc7-b446-d9d84cc9db0d",
+      "name": "转文件"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8c9265b3-d0e0-4817-b6b0-208f90e5d92a",
+              "name": "imageUrl",
+              "value": "=https://easyimg.yangshoulai.site{{ $json.data.url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        -208
+      ],
+      "id": "e6f29a2e-46a4-4614-9d0e-763c618443d7",
+      "name": "访问链接"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "13940159-e23a-49c4-9b59-f1074304c174",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "aa0b553c-cfb7-4ad4-96a5-cbf34a387060",
+              "leftValue": "={{ $json.data.url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        592,
+        -208
+      ],
+      "id": "e84f1709-30ec-4919-bb60-a2ec5811b899",
+      "name": "是否成功"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://easyimg:3000/api/upload/private",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "sk-89a89687a7f2437faba751069b96294a"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        368,
+        -208
+      ],
+      "id": "744f5422-d47e-4fb6-8d96-c022c206e7cc",
+      "name": "上传 EasyImg"
+    }
+  ],
+  "connections": {
+    "参数入口": {
+      "main": [
+        [
+          {
+            "node": "转文件",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "转文件": {
+      "main": [
+        [
+          {
+            "node": "上传 EasyImg",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否成功": {
+      "main": [
+        [
+          {
+            "node": "访问链接",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "上传 EasyImg": {
+      "main": [
+        [
+          {
+            "node": "是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "3f90c7b5-4489-4b87-bacf-1314bda3db96",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "CeDrMLh1iRUlzFhI",
+  "isArchived": false
+}

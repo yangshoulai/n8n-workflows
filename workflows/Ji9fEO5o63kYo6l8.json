@@ -1,0 +1,283 @@
+{
+  "id": "Ji9fEO5o63kYo6l8",
+  "name": "HuggingFace Space API",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "spaceUrl"
+            },
+            {
+              "name": "apiName"
+            },
+            {
+              "name": "accessToken"
+            },
+            {
+              "name": "body",
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -144
+      ],
+      "id": "2e23ef94-b392-4cdf-86d8-d2a29a29ea1e",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.spaceUrl.endsWith('/') ? $json.spaceUrl : $son.spaceUrl + '/' }}gradio_api/call{{ $json.apiName.startsWith('/') ? $json.apiName : '/'+$json.apiName }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json['accessToken'] }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "data",
+              "value": "={{ $json.body }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -128,
+        -144
+      ],
+      "id": "c47daeb0-28b6-4ca9-9939-6de4ae050bdb",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bca6720d-942e-4c47-b661-764ed1ea8247",
+              "leftValue": "={{ $json.body.event_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "6cd3d6f7-21fa-4358-82cf-bc30b653af9e",
+              "leftValue": "={{ $json.statusCode }}",
+              "rightValue": 200,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        96,
+        -144
+      ],
+      "id": "97409178-dae9-4d7e-a1bf-2a6e373a1d4f",
+      "name": "判断调用是否成功"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json.data;\nconst lines = data.split('\\n');\nlet isCompleteEvent = false;\nfor (const line of lines) {\n    if (line.startsWith('event:')) {\n      if (line.substring(6).trim() === 'complete') {\n        isCompleteEvent = true;\n      } else if (line.substring(6).trim() === 'error') {\n        isCompleteEvent = false;\n      } else {\n        isCompleteEvent = false; // Reset if it's another event type\n      }\n    } else if (line.startsWith('data:') && isCompleteEvent) {\n      const jsonData = line.substring(5).trim();\n      try {\n        return [{data: JSON.parse(jsonData)}];\n      } catch (e) {\n        \n      }\n    }\n  }\n\nreturn [{data: null}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        -144
+      ],
+      "id": "06127bd2-f8d9-4f43-8dc8-01db25651136",
+      "name": "解析报文",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "url": "={{ $('入口参数').item.json.spaceUrl.endsWith('/') ? $('入口参数').item.json.spaceUrl : $('入口参数').item.json.spaceUrl + '/' }}gradio_api/call{{ $('入口参数').item.json.apiName.startsWith('/') ? $('入口参数').item.json.apiName : '/'+$('入口参数').item.json.apiName }}/{{ $json.body.event_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('入口参数').item.json.accessToken }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        320,
+        -144
+      ],
+      "id": "d927f5cf-eef1-4867-80c8-6cea3c864f9c",
+      "name": "HTTP Request Event"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5feb4cf5-4d04-4eb9-8451-384bf6e42371",
+              "leftValue": "={{ $json.statusCode }}",
+              "rightValue": 200,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "ff3136c8-5eca-4fe4-8302-d62acaa3033e",
+              "leftValue": "={{ $json.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        544,
+        -144
+      ],
+      "id": "aa78fb85-bca0-458a-97c4-1d8b04051db2",
+      "name": "判断 Event 调用是否成功"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "判断调用是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断调用是否成功": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "解析报文": {
+      "main": [
+        []
+      ]
+    },
+    "HTTP Request Event": {
+      "main": [
+        [
+          {
+            "node": "判断 Event 调用是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断 Event 调用是否成功": {
+      "main": [
+        [
+          {
+            "node": "解析报文",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "b1e387a7-83e2-45b3-a3e8-965a5042e297",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

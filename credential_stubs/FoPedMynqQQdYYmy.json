@@ -1,0 +1,15 @@
+{
+  "id": "FoPedMynqQQdYYmy",
+  "name": "Highlight 2 API",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "isGlobal": false
+}

@@ -1,0 +1,462 @@
+{
+  "id": "3zwbrUgs3gxkY3N8",
+  "name": "ModelScope 免费 AI 绘画",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -576,
+        -152
+      ],
+      "id": "b7d66334-8c1b-4fe6-ad55-9226f0d5eb51",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "706f567f-2f81-4969-83bf-03da515f0a24",
+              "leftValue": "={{ $json.task_status }}",
+              "rightValue": "SUCCEED",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "02583a17-0b56-4b2a-ad63-e6a8af67a37c",
+              "leftValue": "={{ $json.output_images }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        992,
+        -224
+      ],
+      "id": "80c8e251-8f44-40a3-ad75-63db0c6d6a57",
+      "name": "判断是否成功"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7efc32a0-0153-4471-9435-fb7e8d51bc99",
+              "leftValue": "={{ $json.task_status }}",
+              "rightValue": "=SUCCEED",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "3bdc2aa6-14b4-4229-a7dd-9fc2d47bc775",
+              "leftValue": "={{ $json.task_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -128,
+        -152
+      ],
+      "id": "1ab35964-966d-477b-b865-97720e831061",
+      "name": "判断图片生成接口调用是否成功"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        544,
+        -224
+      ],
+      "id": "0be036ab-a4fb-4856-b2d2-783bcb614083",
+      "name": "等待一会儿",
+      "webhookId": "6c71b808-4482-4744-b777-7ea2a510f6ac"
+    },
+    {
+      "parameters": {
+        "url": "=https://api-inference.modelscope.cn/v1/tasks/{{ $('调用生成图片接口').item.json.task_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer ms-c4eb6740-c511-4066-83ca-1ad706048056"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-ModelScope-Task-Type",
+              "value": "image_generation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"model\": \"Tongyi-MAI/Z-Image-Turbo\",\n\"prompt\": \"{{ $json.prompt }}\",\n\"size\": \"{{$json.width}}x{{ $json.height }}\",\n\"steps\": 9,\n\"seed\": {{ Math.floor(Math.random() * 2147483647) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        768,
+        -224
+      ],
+      "id": "a75e5587-72a0-40a4-856b-592718077507",
+      "name": "查询任务接口"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api-inference.modelscope.cn/v1/images/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer ms-c4eb6740-c511-4066-83ca-1ad706048056"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-ModelScope-Async-Mode",
+              "value": "true"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n\"model\": \"Tongyi-MAI/Z-Image-Turbo\",\n\"prompt\": \"{{ $json.prompt }}\",\n\"size\": \"{{$json.width}}x{{ $json.height }}\",\n\"steps\": 20,\n\"seed\": {{ Math.floor(Math.random() * 2147483647) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -352,
+        -152
+      ],
+      "id": "e5679f64-dd0c-4a19-aa55-4e8cedf11f19",
+      "name": "调用生成图片接口"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "640cb97f-ec48-484d-a756-e6a92a6f681b",
+              "name": "check_times",
+              "value": 0,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        -152
+      ],
+      "id": "548ae932-f398-4c6d-9a73-94e70f120e90",
+      "name": "查询结果次数"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "cfe9f330-f0dc-4d91-aed6-4133e70d1259",
+              "leftValue": "={{ $json.task_status }}",
+              "rightValue": "FAILED",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1216,
+        -128
+      ],
+      "id": "0d92fdaa-7516-4405-aca6-31dc52fd5502",
+      "name": "判断任务是否还在处理中"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "77665d89-73e9-4e87-a50c-b8bb07fb1996",
+              "leftValue": "={{ $json.check_times }}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        320,
+        -152
+      ],
+      "id": "09d5dbf6-7c76-4c86-a11e-076c8a167232",
+      "name": "检查结果不超过 50 次"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "51072a57-76e8-4720-b454-ef83e784dd91",
+              "name": "check_times",
+              "value": "={{ $('检查结果不超过 50 次').item.json.check_times + 1 }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        -56
+      ],
+      "id": "607f6bf7-4fa1-4fad-a1a6-8a94a20ee4e1",
+      "name": "检查次数+1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.output_images[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1216,
+        -320
+      ],
+      "id": "098368f7-6ef3-472d-828e-e40475cda5de",
+      "name": "HTTP Request"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "调用生成图片接口",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否成功": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "判断任务是否还在处理中",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断图片生成接口调用是否成功": {
+      "main": [
+        [
+          {
+            "node": "查询结果次数",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "等待一会儿": {
+      "main": [
+        [
+          {
+            "node": "查询任务接口",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用生成图片接口": {
+      "main": [
+        [
+          {
+            "node": "判断图片生成接口调用是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询任务接口": {
+      "main": [
+        [
+          {
+            "node": "判断是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询结果次数": {
+      "main": [
+        [
+          {
+            "node": "检查结果不超过 50 次",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断任务是否还在处理中": {
+      "main": [
+        [
+          {
+            "node": "检查次数+1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "检查结果不超过 50 次": {
+      "main": [
+        [
+          {
+            "node": "等待一会儿",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "检查次数+1": {
+      "main": [
+        [
+          {
+            "node": "检查结果不超过 50 次",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "e3e295d4-a17c-403d-83ea-971c03f2139c",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

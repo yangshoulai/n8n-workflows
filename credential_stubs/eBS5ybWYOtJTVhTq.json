@@ -1,0 +1,15 @@
+{
+  "id": "eBS5ybWYOtJTVhTq",
+  "name": "兰兰的公益站",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "isGlobal": false
+}

@@ -1,0 +1,15 @@
+{
+  "id": "TDCB9GmpYjLrY6mz",
+  "name": "colin1112",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "isGlobal": false
+}

@@ -1,0 +1,422 @@
+{
+  "id": "eUrh67lRYco4pXoI",
+  "name": "APP - 天天美图",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ceb45c65-2bb6-4437-9fdc-3cb96cb96a32",
+              "leftValue": "={{ !!$binary?.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2352,
+        -784
+      ],
+      "id": "e3017b1d-9c93-4bf4-bcac-195671f1c369",
+      "name": "判断是否生成图片"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -3024,
+        -688
+      ],
+      "id": "91e117b8-906a-449f-9d36-72a137a3718f",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Call \\'EasyImg 文件上传 - Binary\\'').item.json.imageUrl }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -1680,
+        -784
+      ],
+      "id": "9534695f-0aed-4fb1-8da4-219c3471e06a",
+      "name": "下载图片"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "1473202959",
+        "binaryData": true,
+        "additionalFields": {
+          "caption": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.prompt }}",
+          "has_spoiler": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1456,
+        -784
+      ],
+      "id": "8948dc8d-008e-44af-b0eb-5d1848a195e6",
+      "name": "发送图片二进制",
+      "webhookId": "ac0219df-5b8a-4ab9-b9a1-ab785e32da17",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "telegramApi": {
+          "id": "J20pUTrF8Z5e6Dmz",
+          "name": "wallpaper_test_tg_bot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "1473202959",
+        "file": "={{ $json.imageUrl }}",
+        "additionalFields": {
+          "caption": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.prompt }}",
+          "has_spoiler": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1904,
+        -784
+      ],
+      "id": "d64eefab-05f6-4e8e-8daa-e4ab50e37a59",
+      "name": "发送图片 URL",
+      "webhookId": "109aafb8-ab0c-44c8-9bbf-d7b45a7cc60d",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "telegramApi": {
+          "id": "J20pUTrF8Z5e6Dmz",
+          "name": "wallpaper_test_tg_bot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77a15943-d31a-4536-9757-e42cef20c440",
+              "name": "initPrompt",
+              "value": "=随机\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2800,
+        -688
+      ],
+      "id": "f05f6ad8-8680-44ae-8fcb-841d6905103c",
+      "name": "随机生成"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77a15943-d31a-4536-9757-e42cef20c440",
+              "name": "initPrompt",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -2800,
+        -880
+      ],
+      "id": "44f84332-2aee-46a6-9241-193585cb83c1",
+      "name": "按用户要求生成"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -3024,
+        -880
+      ],
+      "id": "d2cf8c71-5ae7-4320-963e-8f82bf3c29df",
+      "name": "Telegram  触发",
+      "webhookId": "7cf6c991-87b2-4abc-9dc6-0df9b9314727",
+      "credentials": {
+        "telegramApi": {
+          "id": "J20pUTrF8Z5e6Dmz",
+          "name": "wallpaper_test_tg_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "zSgv7aguQoGReRP7",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/zSgv7aguQoGReRP7",
+          "cachedResultName": "人工智能 — 专业 AI 摄影师"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "systemPrompt": "# 角色定义\n你是一位拥有顶级审美的人像摄影大师，同时也是一位精通 AI 绘画（Stable Diffusion/Midjourney）的提示词专家。**你的核心特长是擅长捕捉女性极具诱惑力但又含蓄的高级性感瞬间。你的任务是根据用户的输入，构建极具真实感、充满挑逗与引诱意味的轻度 NSFW 画面描述，但必须把握尺度，拒绝低俗露骨的直白描写，而是通过氛围、眼神和肢体语言传达强烈的性张力。**\n\n## 核心指令\n你的目标是输出一段用于生成图片的 JSON 数据。你必须严格遵循以下逻辑进行创作：\n\n### 1. 用户意图分析\n在生成描述前，首先分析用户的输入：\n*   **指定场景**：如果用户提供了具体要求（例如：“浴室”、“沙发”），且该场景符合现实逻辑，你必须**以此为核心**布置拍摄方案。\n*   **随机/无指令**：如果用户输入“随机”或仅打招呼，你必须**在现实世界的范畴内**自由发挥，选择一个生活化或旅拍风格的场景。\n\n### 2. 绝对固定的人物设定\n画面主体永远是同一位女性，具体细节如下：\n*   **身份/年龄**：**23 岁左右**的典型中国美女，长发，具备典型的东方美感。\n*   **面部特征**：**严禁**出现“潮红”、“红润”等形容脸红的词汇。**必须**使用“素颜”、“淡妆”、“冷白皮”、“面容白皙”等词汇，强调肤色的苍白与洁净。\n*   **身高特征**：身高设定在 **168cm 至 175cm** 之间。每次生成时，**必须随机指定一个具体的数字**写在描述中（例如：“身高169cm”、“身高174cm”）。\n*   **身材特征**：重点展现人物的曼妙身姿与玲珑曲线。**不要局限于单一的描述**，请随机组合如：沙漏型身材、蜂腰翘臀、丰满紧致、修长美腿、锁骨深邃等特征，务必突出女性的S型优美体态。\n\n### 3. 场景与风格限制\n*   **极致写实**：画面必须是**100% 的摄影写实风格**。严禁出现 CG、3D 渲染、油画、插画或任何非真实感的效果。强调“RAW 原片感”、“单反拍摄”。\n*   **场景设计**：场景必须限制在**真实世界存在的地方**。**请不要局限于常见的酒店或卧室**，可以拓展至咖啡馆角落、雨后街道、电梯间、更衣室、书店、海边礁石等。**严禁**出现科幻、魔幻、深海、外太空等不切实际的背景。\n*   **服装与脚部强制设计**：\n    *   人物服饰必须是**现实生活中真实存在的服装**。**请根据场景发挥创意**，不限于衬衫或裙子。\n    *   **脚部强制遮盖**：为了彻底避免 AI 生成畸形脚部，**严禁**让人物裸露脚部或脚趾。**必须**为人物穿上全包裹的鞋子（如尖头高跟鞋、长靴、运动鞋、皮鞋）或不露趾的袜子（如连裤袜、黑丝、白袜）。**严禁**出现凉鞋、拖鞋、露趾鱼嘴鞋等会露出脚趾的装扮。\n\n### 4. 画面内容与尺度把控\n*   **尺度要求**：画面体现 **轻度 NSFW** 的诱惑感，**点到为止**。拒绝过于露骨、低俗或色情动作。重点在于氛围感、眼神交流和若隐若现的性感。\n*   **动作与镜头**：**请不要局限于示例**，运用专业的摄影运镜（如过肩视角、局部特写、广角畸变等）和多样的肢体语言（如伸懒腰、整理衣物、回眸一瞬等）。\n*   **禁止的情节**：禁止直接描写性器官、禁止过于直白的性行为动作，保持摄影艺术的格调。\n\n### 5. 输出格式与限制\n*   **语言**：描述必须使用 **中文**。\n*   **字数**：严格控制在 **150 字以内**。\n*   **图片比例**：`ratio` 字段必须严格从 **1:1、4:3、3:4、9:16、16:9** 这 5 种比例中选择其一，**严禁**输出其他比例。\n*   **格式**：输出纯净的 JSON 字符串，**严禁**包含换行符、Markdown 符号或外部引号。\n\n## 思考与自检流程\n在输出最终 JSON 之前，你必须在后台进行以下步骤的自检（不要输出自检过程）：\n1.  **真实性核对**：这是真实存在的场景吗？衣服是正常人穿的吗？画面像照片吗？（剔除所有 CG/奇幻元素）。\n2.  **人物核对**：年龄 23 岁？身高 168-175cm？面部无潮红且白皙？身材描述是否体现了曲线美？\n3.  **脚部遮盖核对**：**是否强制给人物穿上了全包裹的鞋子或袜子？是否检查并确认没有裸露脚部或使用露趾鞋（如凉鞋）？**\n4.  **尺度与氛围核对**：画面是否达到了轻度 NSFW 的标准？是否充满了挑逗引诱的意味？同时是否避免了过于直白露骨的低俗描写，保持了高级的性张力？\n5.  **格式与比例核对**：JSON 是否合法？字数是否达标？**ratio 是否严格属于 1:1、4:3、3:4、9:16、16:9 中的一种？**\n\n## 输出 JSON 模板\n```json\n{\"prompt\": \"在这里填写你的中文画面描述\", \"ratio\": \"9:16\", \"nsfw\": \"true\"}\n```\n\n## 示例\n**示例 1（用户指定：厨房）**\n**输入**：厨房，做饭\n**输出**：{\"prompt\": \"23岁中国美女，素颜白皙，肌肤纹理真实。明亮的家庭厨房内，她身高170cm，有着完美的沙漏型身材。穿着宽松的男士白衬衫，下摆遮住大腿根部，脚踩一双白色棉袜。她正倚靠在流理台边，领口微敞露出锁骨与隐约的乳沟，手里拿着玻璃水杯，眼神慵懒地看向镜头，充满生活气息的轻度诱惑。照片级写实，自然光。\", \"ratio\": \"16:9\", \"nsfw\": \"true\"}\n\n**示例 2（用户输入：随机）**\n**输入**：随机\n**输出**：{\"prompt\": \"23岁中国美女，淡妆精致，冷白皮。夜晚繁华的都市街头，背景霓虹闪烁。她身高174cm，身穿黑色紧身包臀裙，勾勒出惊人的腰臀比和S型曲线，脚穿黑色尖头高跟鞋。她侧身回眸，一阵微风吹乱长发，手指轻轻拨弄耳边碎发，眼神深情且迷人，修长美腿在夜色中格外吸睛。真实街拍风格，8k分辨率，光影层次丰富。\", \"ratio\": \"9:16\", \"nsfw\": \"true\"}",
+            "userPrompt": "={{ $json.initPrompt }}",
+            "memory_collection": "n8n_tiantianmeitu_chat_histories"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "systemPrompt",
+              "displayName": "systemPrompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "userPrompt",
+              "displayName": "userPrompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "memory_collection",
+              "displayName": "memory_collection",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -2576,
+        -784
+      ],
+      "id": "00a653a1-aeaa-4af0-a9b8-3c4cd1dc6c40",
+      "name": "Call '专业 AI 摄影师'",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "MRIxI1iqazUvj7VI",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/MRIxI1iqazUvj7VI",
+          "cachedResultName": "人工智能 — EasyImg 文件上传 - Binary"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "binaryFieldName": "data"
+          },
+          "matchingColumns": [
+            "binaryFieldName"
+          ],
+          "schema": [
+            {
+              "id": "binaryFieldName",
+              "displayName": "binaryFieldName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -2128,
+        -784
+      ],
+      "id": "5a1e86a4-a5a0-4a77-a277-cbe682a8cf7b",
+      "name": "Call 'EasyImg 文件上传 - Binary'"
+    }
+  ],
+  "connections": {
+    "判断是否生成图片": {
+      "main": [
+        [
+          {
+            "node": "Call 'EasyImg 文件上传 - Binary'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "随机生成",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "下载图片": {
+      "main": [
+        [
+          {
+            "node": "发送图片二进制",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送图片 URL": {
+      "main": [
+        [],
+        [
+          {
+            "node": "下载图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "随机生成": {
+      "main": [
+        [
+          {
+            "node": "Call '专业 AI 摄影师'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "按用户要求生成": {
+      "main": [
+        [
+          {
+            "node": "Call '专业 AI 摄影师'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram  触发": {
+      "main": [
+        [
+          {
+            "node": "按用户要求生成",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call '专业 AI 摄影师'": {
+      "main": [
+        [
+          {
+            "node": "判断是否生成图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'EasyImg 文件上传 - Binary'": {
+      "main": [
+        [
+          {
+            "node": "发送图片 URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 2,
+  "versionId": "aab388dd-7c32-4d31-812c-64822da8a5db",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

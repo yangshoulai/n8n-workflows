@@ -1,0 +1,18 @@
+{
+  "id": "rDCAHUftwkuS8kvn",
+  "name": "S3 account",
+  "type": "s3",
+  "data": {
+    "endpoint": "",
+    "accessKeyId": "",
+    "secretAccessKey": "",
+    "forcePathStyle": true,
+    "ignoreSSLIssues": true
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "isGlobal": false
+}

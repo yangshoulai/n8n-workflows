@@ -1,0 +1,16 @@
+{
+  "id": "giaVjVEmat6wxOIj",
+  "name": "公益站签到",
+  "icon": {
+    "type": "icon",
+    "value": "layers"
+  },
+  "description": "",
+  "type": "team",
+  "owner": {
+    "type": "team",
+    "teamId": "giaVjVEmat6wxOIj",
+    "teamName": "公益站签到"
+  },
+  "variableStubs": []
+}

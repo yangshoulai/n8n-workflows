@@ -1,0 +1,840 @@
+{
+  "id": "2AXB4vZV38Fjim58",
+  "name": "Z-Image-Turbo 生图",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "GLJnUF3APTaLrV51",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/GLJnUF3APTaLrV51",
+          "cachedResultName": "人工智能 — Z-Image 免费 AI 绘画"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $('入口参数').item.json.width }}",
+            "height": "={{ $('入口参数').item.json.height }}",
+            "prompt": "={{ $('入口参数').item.json.prompt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        176,
+        -64
+      ],
+      "id": "5d3d322a-c91c-406d-8330-4e963f84056d",
+      "name": "Call 'Z-Image 免费 AI 绘画'",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "ZocP9ze2Zm2thHTl",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/ZocP9ze2Zm2thHTl",
+          "cachedResultName": "人工智能 — Dreamifly 免费 AI 绘画"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $('入口参数').item.json.width }}",
+            "height": "={{ $('入口参数').item.json.height }}",
+            "prompt": "={{ $('入口参数').item.json.prompt }}",
+            "model": "Z-Image-Turbo",
+            "images": "=[]"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "images",
+              "displayName": "images",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "array",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        -64
+      ],
+      "id": "f844dfd9-9b38-47ad-b1a6-04f4b8126787",
+      "name": "Call 'Dreamifly 免费 AI 绘画'",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "3zwbrUgs3gxkY3N8",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/3zwbrUgs3gxkY3N8",
+          "cachedResultName": "人工智能 — ModelScope 免费 AI 绘画"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $('入口参数').item.json.width }}",
+            "height": "={{ $('入口参数').item.json.height }}",
+            "prompt": "={{ $('入口参数').item.json.prompt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -272,
+        8
+      ],
+      "id": "ed577802-53f7-44d8-9943-33b0b14724c6",
+      "name": "Call 'ModelScope 免费 AI 绘画'",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f6f71b8a-aba9-4d57-bc5f-4e61d72cdbf8",
+              "leftValue": "={{ $('入口参数').item.json.nsfw }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -496,
+        -64
+      ],
+      "id": "d706a5fa-dbdd-4af2-8109-0b6af90515ad",
+      "name": "判断是否 SFW"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            },
+            {
+              "name": "nsfw",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -2064,
+        -64
+      ],
+      "id": "ff519f65-ff18-4df1-ba6b-7ee8bfa26df6",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ceb45c65-2bb6-4437-9fdc-3cb96cb96a32",
+              "leftValue": "={{ !!$binary?.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -720,
+        -64
+      ],
+      "id": "8e9a5619-022d-466c-9634-5477b35e412b",
+      "name": "判断 Gitee 是否生成图片"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ceb45c65-2bb6-4437-9fdc-3cb96cb96a32",
+              "leftValue": "={{ !!$binary?.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1168,
+        -64
+      ],
+      "id": "1952228f-a5f3-44f7-b086-6722cc1df6ca",
+      "name": "判断 HuggingFace 是否生成图片"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ceb45c65-2bb6-4437-9fdc-3cb96cb96a32",
+              "leftValue": "={{ !!$binary?.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -48,
+        8
+      ],
+      "id": "992efffb-8a8e-4020-a8d3-d9a0c6c0e83b",
+      "name": "判断 ModelScope 是否生成图片"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ceb45c65-2bb6-4437-9fdc-3cb96cb96a32",
+              "leftValue": "={{ !!$binary?.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        400,
+        -64
+      ],
+      "id": "d33f1620-92b0-4d22-924d-f919d9336970",
+      "name": "判断 Z-Image 是否生成图片"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "noKaVV90RLZnSRu9",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/noKaVV90RLZnSRu9",
+          "cachedResultName": "人工智能 — Gitee 免费 AI 绘画 With Tokens"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $('入口参数').item.json.width }}",
+            "height": "={{ $('入口参数').item.json.height }}",
+            "prompt": "={{ $('入口参数').item.json.prompt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -944,
+        -64
+      ],
+      "id": "ab6b69f3-a3c2-4a54-8b9e-03d9081b2a15",
+      "name": "Call 'Gitee 免费 AI 绘画 With Tokens'",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "Qd2I4bRMS8bzjIhM",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/Qd2I4bRMS8bzjIhM",
+          "cachedResultName": "人工智能 — DX001 免费 AI 绘画"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $('入口参数').item.json.width }}",
+            "height": "={{ $('入口参数').item.json.height }}",
+            "prompt": "={{ $('入口参数').item.json.prompt }}",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDUiLCJleHAiOjE3NjYyMTA4NTl9.yAJ_qkGo2mXYeb6nzre94Vb-UJ9rKuNrrkUm55Qgh1g"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "token",
+              "displayName": "token",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -1840,
+        -64
+      ],
+      "id": "223ffef1-34fb-498b-8fec-97b6fc5912de",
+      "name": "Call 'DX001 免费 AI 绘画'",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ceb45c65-2bb6-4437-9fdc-3cb96cb96a32",
+              "leftValue": "={{ !!$binary?.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1616,
+        -64
+      ],
+      "id": "7a24c9e6-b8ff-4b94-9388-ac6eea3edc6a",
+      "name": "判断 DX001 免费 AI 绘画 是否生成图片"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qwUufy7UyDrqRoc0",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/qwUufy7UyDrqRoc0",
+          "cachedResultName": "人工智能 — HuggingFace Z-Image-Turbo 生图"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $('入口参数').item.json.width }}",
+            "height": "={{ $('入口参数').item.json.height }}",
+            "prompt": "={{ $('入口参数').item.json.prompt }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -1392,
+        -64
+      ],
+      "id": "ae461fcd-376b-4297-a7d3-1ceb530921d8",
+      "name": "Call 'HuggingFace Z-Image-Turbo 生图'",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Call 'Z-Image 免费 AI 绘画'": {
+      "main": [
+        [
+          {
+            "node": "判断 Z-Image 是否生成图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Dreamifly 免费 AI 绘画'": {
+      "main": [
+        []
+      ]
+    },
+    "Call 'ModelScope 免费 AI 绘画'": {
+      "main": [
+        [
+          {
+            "node": "判断 ModelScope 是否生成图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否 SFW": {
+      "main": [
+        [
+          {
+            "node": "Call 'ModelScope 免费 AI 绘画'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call 'Z-Image 免费 AI 绘画'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "Call 'DX001 免费 AI 绘画'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断 Gitee 是否生成图片": {
+      "main": [
+        [],
+        [
+          {
+            "node": "判断是否 SFW",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断 HuggingFace 是否生成图片": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Call 'Gitee 免费 AI 绘画 With Tokens'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断 ModelScope 是否生成图片": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Call 'Z-Image 免费 AI 绘画'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断 Z-Image 是否生成图片": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Call 'Dreamifly 免费 AI 绘画'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Gitee 免费 AI 绘画 With Tokens'": {
+      "main": [
+        [
+          {
+            "node": "判断 Gitee 是否生成图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'DX001 免费 AI 绘画'": {
+      "main": [
+        [
+          {
+            "node": "判断 DX001 免费 AI 绘画 是否生成图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断 DX001 免费 AI 绘画 是否生成图片": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Call 'HuggingFace Z-Image-Turbo 生图'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'HuggingFace Z-Image-Turbo 生图'": {
+      "main": [
+        [
+          {
+            "node": "判断 HuggingFace 是否生成图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "81f93b9b-8fdd-4609-99cc-7cb28e9b2f7e",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

@@ -1,0 +1,539 @@
+{
+  "id": "Qd2I4bRMS8bzjIhM",
+  "name": "DX001 免费 AI 绘画",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            },
+            {
+              "name": "token"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        -344
+      ],
+      "id": "80957433-b367-4dc0-88ee-ad3f77c95339",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://image.dx001.ggff.net:8880/api/tasks/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "=Bearer {{ $json.token }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"{{ $json.prompt }}\",\n  \"width\": {{ $json.width }},\n  \"height\": {{ $json.height }},\n  \"steps\": 20\n}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -736,
+        -344
+      ],
+      "id": "8fcb8248-6980-4078-9a64-49cdbce90bf4",
+      "name": "调用绘画接口"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "78ce0a70-e4de-4d71-852a-92990c8dd81e",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "9931daf1-0574-43cf-a1fe-c2e6d26cb08f",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -512,
+        -344
+      ],
+      "id": "1443de11-da1d-4a02-b785-aea0461df621",
+      "name": "判断是否成功"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "faaba3b2-ba8c-4590-b9ea-60f52f2939cb",
+              "name": "check_times",
+              "value": "={{ ($json.check_times || 0) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        -344
+      ],
+      "id": "204e87b3-1b8f-4207-a36c-5536d84fb838",
+      "name": "检查任务次数"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2ac7d95c-d625-4ce3-949b-91a5265d3f72",
+              "leftValue": "={{ $json.check_times }}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -64,
+        -344
+      ],
+      "id": "f6faf081-8132-4abf-9a9f-18afb64a0874",
+      "name": "判断是否继续"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        160,
+        -416
+      ],
+      "id": "cdee95f5-ce76-4cb3-bea6-6591001b0919",
+      "name": "Wait",
+      "webhookId": "4030c7ff-3e5e-46ed-816c-33c1d7f6981b"
+    },
+    {
+      "parameters": {
+        "url": "http://image.dx001.ggff.net:8880/api/tasks/?page=1&page_size=10",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "=Bearer {{ $('入口参数').item.json.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        384,
+        -416
+      ],
+      "id": "9fab7679-8a3d-4866-8e71-f9f23d13bf46",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  for(const r of item.json.items){\n    if(r.id === $('判断是否成功').first().json.id){\n      return [r];\n    }\n  }\n}\n\nreturn [{}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        -416
+      ],
+      "id": "554bc975-2f4a-423c-b68c-4b5853b58588",
+      "name": "获取任务信息"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dc912c6a-e475-49f1-a597-b81a2654e3b3",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        832,
+        -416
+      ],
+      "id": "e8bf5b29-1ed4-4cee-997b-9d35e1b3a530",
+      "name": "判断是否成功获得任务状态"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ee9059a1-bbc3-4346-bc2e-0a5294dcb2c7",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "pending",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "d2640609-2856-466a-bd28-52a20cf3c07a",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "processing",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1056,
+        -416
+      ],
+      "id": "fe2a6b12-393c-477b-b43d-07cb2b460aad",
+      "name": "判断是否继续检查"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4afa700-700b-4232-95ab-e6d99c1c0412",
+              "name": "check_times",
+              "value": "={{ $('检查任务次数').item.json.check_times + 1}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        -248
+      ],
+      "id": "ecddc49f-dc28-441e-a59e-c9ced8f6f576",
+      "name": "检查次数+1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "cea8a53e-707e-4b2e-8e78-47cc812400a9",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "done",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "4aada471-4fb5-4a28-9f96-d7ed3d7495b8",
+              "leftValue": "={{ $json.result_url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1280,
+        -464
+      ],
+      "id": "162ccf58-d875-4763-a379-16aa0d7de2e5",
+      "name": "判断任务是否完成"
+    },
+    {
+      "parameters": {
+        "url": "=http://image.dx001.ggff.net:8880{{ $json.result_url }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "={{ $('入口参数').item.json.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1504,
+        -464
+      ],
+      "id": "3a1048b5-3594-41f2-98d1-63b300fa45e5",
+      "name": "下载图片"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "调用绘画接口",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用绘画接口": {
+      "main": [
+        [
+          {
+            "node": "判断是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否成功": {
+      "main": [
+        [
+          {
+            "node": "检查任务次数",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "检查任务次数": {
+      "main": [
+        [
+          {
+            "node": "判断是否继续",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否继续": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "获取任务信息",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取任务信息": {
+      "main": [
+        [
+          {
+            "node": "判断是否成功获得任务状态",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否成功获得任务状态": {
+      "main": [
+        [
+          {
+            "node": "判断是否继续检查",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否继续检查": {
+      "main": [
+        [
+          {
+            "node": "判断任务是否完成",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "检查次数+1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "检查次数+1": {
+      "main": [
+        [
+          {
+            "node": "判断是否继续",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断任务是否完成": {
+      "main": [
+        [
+          {
+            "node": "下载图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "下载图片": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "3c7f6a24-51cb-473e-b93a-4ae60e8e57f5",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

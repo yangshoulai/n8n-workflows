@@ -1,0 +1,466 @@
+{
+  "id": "zSgv7aguQoGReRP7",
+  "name": "专业 AI 摄影师",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "2AXB4vZV38Fjim58",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/2AXB4vZV38Fjim58",
+          "cachedResultName": "人工智能 — Z-Image-Turbo 生图"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $json.output.width }}",
+            "height": "={{ $json.output.height }}",
+            "prompt": "={{ $json.output.prompt }}",
+            "nsfw": "={{ $json.output.nsfw }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "nsfw",
+              "displayName": "nsfw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -1648,
+        -912
+      ],
+      "id": "b2399c35-5e59-4e9f-8560-e3b72d978f6a",
+      "name": "Call 'Z-Image-Turbo 生图'"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nfor (const item of $input.all()) {\n  if(item.json.output.ratio === '16:9'){\n    item.json.output.width = 2048;\n    item.json.output.height = 1152;\n  } else if (item.json.output.ratio === '9:16') {\n    item.json.output.width = 1152;\n    item.json.output.height = 2048;\n  } else if (item.json.output.ratio === '4:3') {\n    item.json.output.width = 2048;\n    item.json.output.height = 1536;\n  } else if (item.json.output.ratio === '4:3') {\n    item.json.output.width = 1536;\n    item.json.output.height = 2048;\n  } else {\n    item.json.output.width = 2048;\n    item.json.output.height = 2048;\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2096,
+        -912
+      ],
+      "id": "94c1a853-a1e2-4657-83e3-5b9c56ba142d",
+      "name": "计算分辨率"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.userPrompt }}\n**注意**：避免生成和前面相似的图片 ",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "={{ $json.systemPrompt }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -2752,
+        -912
+      ],
+      "id": "45534dac-1709-4ab1-a335-d10ae984c667",
+      "name": "图片描述",
+      "retryOnFail": true,
+      "waitBetweenTries": 20
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "deepseek-r1",
+          "mode": "list",
+          "cachedResultName": "deepseek-r1"
+        },
+        "responsesApiEnabled": false,
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -2848,
+        -688
+      ],
+      "id": "944b0c87-c1e6-4636-a56c-4b3daeb9d1e8",
+      "name": "主要模型",
+      "credentials": {
+        "openAiApi": {
+          "id": "6QtS7ma73ZKRZmQX",
+          "name": "yangshoulai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "qwen3-235b-a22b-2507-thinking",
+          "mode": "list",
+          "cachedResultName": "qwen3-235b-a22b-2507-thinking"
+        },
+        "responsesApiEnabled": false,
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -2720,
+        -688
+      ],
+      "id": "fb44c406-ad9a-4865-b5cc-b26d6ad42afc",
+      "name": "备用模型",
+      "credentials": {
+        "openAiApi": {
+          "id": "6QtS7ma73ZKRZmQX",
+          "name": "yangshoulai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "d2eae6e06ff94c67942a06299c59ea4c",
+        "collectionName": "={{$json.memory_collection}}_{{ new Intl.DateTimeFormat(\"en-CA\").format(new Date()).replace(/-/g, \"\") }}",
+        "databaseName": "cloud",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryMongoDbChat",
+      "typeVersion": 1,
+      "position": [
+        -2592,
+        -688
+      ],
+      "id": "2415c60b-9383-4b14-ab60-a86b2519e012",
+      "name": "记忆",
+      "credentials": {
+        "mongoDb": {
+          "id": "gHBWS9s71yffZkq8",
+          "name": "腾讯云"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"prompt\": \"长发微卷、身穿黑色蕾丝吊带裙的20岁左右中国女孩，在灯光昏暗的复古酒店走廊，正回眸轻咬嘴唇，眼神充满挑逗。\",\n  \"ratio\": \"9:16\",\n  \"nsfw\": true\n}",
+        "autoFix": true,
+        "customizeRetryPrompt": true,
+        "prompt": "Instructions:\n--------------\n{instructions}\n如果任务中包含格式`<think>模型思考内容</think>`的内容，你需要剔除它。\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -2464,
+        -688
+      ],
+      "id": "32e1e36f-14b8-4cf1-8dc9-da674a66a6a9",
+      "name": "结构化输出"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "qwen3-235b-a22b-2507-instruct",
+          "mode": "list",
+          "cachedResultName": "qwen3-235b-a22b-2507-instruct"
+        },
+        "responsesApiEnabled": false,
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -2384,
+        -480
+      ],
+      "id": "5bfbab20-5440-4c03-abf3-d1068f30d722",
+      "name": "大模型识别结构化输出",
+      "credentials": {
+        "openAiApi": {
+          "id": "6QtS7ma73ZKRZmQX",
+          "name": "yangshoulai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "prompt",
+              "value": "={{ $json.output.prompt }}"
+            },
+            {
+              "key": "ratio",
+              "value": "={{ $json.output.ratio }}"
+            },
+            {
+              "key": "width",
+              "value": "={{ $json.output.width }}"
+            },
+            {
+              "key": "height",
+              "value": "={{ $json.output.height }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1.1,
+      "position": [
+        -1872,
+        -912
+      ],
+      "id": "1d24181d-6a10-4b0e-8e98-4e9969eb9535",
+      "name": "保存图片提示词信息"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "systemPrompt"
+            },
+            {
+              "name": "userPrompt"
+            },
+            {
+              "name": "memory_collection"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -3072,
+        -912
+      ],
+      "id": "849379f0-f6de-4435-a31a-f51c411db78f",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "79da6a91-27ed-4af7-ba9a-72f2fbd62719",
+              "name": "prompt",
+              "value": "={{ $('计算分辨率').item.json.output.prompt }}",
+              "type": "string"
+            },
+            {
+              "id": "7042f5fa-1fb6-4b83-899c-e51f593fe41a",
+              "name": "ratio",
+              "value": "={{ $('计算分辨率').item.json.output.ratio }}",
+              "type": "string"
+            },
+            {
+              "id": "41b0b4d0-4f30-44d3-aa10-4cf53875b784",
+              "name": "nsfw",
+              "value": "={{ $('计算分辨率').item.json.output.nsfw }}",
+              "type": "boolean"
+            },
+            {
+              "id": "30e03cc7-67bf-42bb-822c-d52e5a968c5f",
+              "name": "width",
+              "value": "={{ $('计算分辨率').item.json.output.width }}",
+              "type": "number"
+            },
+            {
+              "id": "cb159803-e69b-44b8-9aa8-670601fec7de",
+              "name": "height",
+              "value": "={{ $('计算分辨率').item.json.output.height }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1424,
+        -912
+      ],
+      "id": "82521d30-a3f1-42d1-9401-e5311919ad3b",
+      "name": "Edit Fields"
+    }
+  ],
+  "connections": {
+    "Call 'Z-Image-Turbo 生图'": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算分辨率": {
+      "main": [
+        [
+          {
+            "node": "保存图片提示词信息",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "图片描述": {
+      "main": [
+        [
+          {
+            "node": "计算分辨率",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "主要模型": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "图片描述",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "备用模型": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "图片描述",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "记忆": {
+      "ai_memory": [
+        [
+          {
+            "node": "图片描述",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "结构化输出": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "图片描述",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "大模型识别结构化输出": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "结构化输出",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "保存图片提示词信息": {
+      "main": [
+        [
+          {
+            "node": "Call 'Z-Image-Turbo 生图'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "图片描述",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "d11671b8-9ff1-448e-8808-52cb27396d8d",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

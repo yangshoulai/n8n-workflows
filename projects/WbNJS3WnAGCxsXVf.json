@@ -1,0 +1,16 @@
+{
+  "id": "WbNJS3WnAGCxsXVf",
+  "name": "人工智能",
+  "icon": {
+    "type": "icon",
+    "value": "layers"
+  },
+  "description": "",
+  "type": "team",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "variableStubs": []
+}

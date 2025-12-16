@@ -1,0 +1,281 @@
+{
+  "id": "ZocP9ze2Zm2thHTl",
+  "name": "Dreamifly 免费 AI 绘画",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            },
+            {
+              "name": "model"
+            },
+            {
+              "name": "images",
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -464,
+        -112
+      ],
+      "id": "4d44f82a-db03-4150-a0da-14002ee386bb",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "from datetime import datetime, timedelta, timezone\n\nfor item in _input.all():\n  item.json.time = datetime.now(timezone(timedelta(hours=0))).strftime(\"%Y%m%d%H%M\")\nreturn _input.all()"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        -112
+      ],
+      "id": "5b9c61a5-e46c-411f-b855-531e21345218",
+      "name": "获取时间"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://dreamifly.com/api/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "authorization",
+              "value": "=Bearer {{ $json.auth }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Cookie",
+              "value": "__Secure-better-auth.session_token=4GK8ltkJThZOdtu44ReRJjq8r29NVYF5.jKDSbb9XrngkFLftqxTWNnVaVThI%2BxRCU2FD%2FRoiJmQ%3D"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"{{ $('入口参数').item.json.prompt }}\",\n  \"width\": {{ $json.width }},\n  \"height\": {{ $json.height }},\n  \"steps\": 20,\n  \"seed\": {{Math.floor(1e8 * Math.random())}},\n  \"batch_size\": 1,\n  \"model\": \"{{ $('入口参数').item.json.model }}\",\n  \"images\": {{ JSON.stringify($('入口参数').item.json.images) }}\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        432,
+        -112
+      ],
+      "id": "a80cc52c-8d9f-469c-96f1-b59610e403ea",
+      "name": "调用绘画接口"
+    },
+    {
+      "parameters": {
+        "value": "={{ '6h^&+h4567mk&&9-%@'+$json.time }}",
+        "dataPropertyName": "auth"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        -112
+      ],
+      "id": "218f7375-3cf3-4091-98b2-1b41c6167fa8",
+      "name": "生成认证 CODE"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "78ce0a70-e4de-4d71-852a-92990c8dd81e",
+              "leftValue": "={{ $json.imageUrl }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        656,
+        -112
+      ],
+      "id": "d0ed94b5-92c8-4d3d-b924-f533d6f6505a",
+      "name": "判断是否成功"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c0eec528-0c55-4a61-9753-f79ab70ac249",
+              "name": "imageUrl",
+              "value": "={{ $json.imageUrl.replace('data:image/png;base64,', '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        -112
+      ],
+      "id": "eb02f958-1864-4a2a-aeac-256a33b063fc",
+      "name": "处理图片 BASE64"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nfor (const item of $input.all()) {\n  if(item.json.width * 9 === item.json.height * 16){\n    item.json.width = 1368;\n    item.json.height = 768;\n  } else if(item.json.width * 16 === item.json.height * 9){\n    item.json.height = 1368;\n    item.json.width = 768;\n  } else {\n     item.json.height = 1024;\n     item.json.width = 1024;\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        -112
+      ],
+      "id": "58df05a1-04ec-47c8-a0a1-19ebf07e8ca3",
+      "name": "计算分辨率"
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "imageUrl",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1104,
+        -112
+      ],
+      "id": "97079712-4c26-4e16-8678-6eff91d15231",
+      "name": "Convert to File"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "获取时间",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取时间": {
+      "main": [
+        [
+          {
+            "node": "生成认证 CODE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "生成认证 CODE": {
+      "main": [
+        [
+          {
+            "node": "计算分辨率",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用绘画接口": {
+      "main": [
+        [
+          {
+            "node": "判断是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否成功": {
+      "main": [
+        [
+          {
+            "node": "处理图片 BASE64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "处理图片 BASE64": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算分辨率": {
+      "main": [
+        [
+          {
+            "node": "调用绘画接口",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "ff753014-808b-45f8-b199-a896f2f813f0",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

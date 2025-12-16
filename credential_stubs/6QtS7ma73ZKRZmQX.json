@@ -1,0 +1,15 @@
+{
+  "id": "6QtS7ma73ZKRZmQX",
+  "name": "yangshoulai",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "isGlobal": false
+}

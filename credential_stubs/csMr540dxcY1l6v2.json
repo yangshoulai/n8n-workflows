@@ -1,0 +1,17 @@
+{
+  "id": "csMr540dxcY1l6v2",
+  "name": "Redis Cloud",
+  "type": "redis",
+  "data": {
+    "password": "",
+    "host": "",
+    "port": 18239
+  },
+  "ownedBy": {
+    "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "isGlobal": false
+}

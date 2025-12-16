@@ -1,0 +1,243 @@
+{
+  "id": "hbICBWKpqXwlFDR5",
+  "name": "图片修正",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "imageUrl"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -512,
+        0
+      ],
+      "id": "7c759d35-1ed6-4e51-83ed-c1ba3a7270ec",
+      "name": "参数节点"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4b0658d7-5c3e-4a46-88f3-8302f46a2726",
+              "leftValue": "={{ $json.imageUrl }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -288,
+        0
+      ],
+      "id": "41253f28-d7a2-4c4d-a980-599ad13538f6",
+      "name": "判断是否输入图片"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.imageUrl }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "7600b06a-3ef8-4935-adcb-2a427605f128",
+      "name": "下载图片"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        160,
+        0
+      ],
+      "id": "5f4fb005-38e0-40ab-bbae-1ca10d8b3a88",
+      "name": "图片转 BASE64"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "ZocP9ze2Zm2thHTl",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/ZocP9ze2Zm2thHTl",
+          "cachedResultName": "人工智能 — Dreamifly 免费 AI 绘画"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $('参数节点').item.json.width }}",
+            "height": "={{ $('参数节点').item.json.height }}",
+            "model": "Qwen-Image-Edit",
+            "images": "={{ [$json.data] }}",
+            "prompt": "请扮演一位世界顶级的商业修图师和人像摄影专家，对我上传的这张图片进行精细化的智能编辑与重绘。请严格遵循以下指令：1.【解剖学修正与畸形修复（最高优先级）】严格审查人物的身体结构，精准识别并修复画面中不和谐的变异部分，重点消除多余的肢体或器官（如三只手、三条腿、三只眼、扭曲的手指等），确保四肢、五官和躯干符合完美的人体解剖学标准。2.【构图完整性与镜头调整】智能识别人物面部在画面中的位置，如果人物的脸部或头部被画面边缘截断，请务必对镜头视角进行智能拉伸（Outpainting/Zoom out），自动填充边缘缺失的背景，确保人物面部完整、清晰地出现在画面中。3.【魅力增强与氛围营造】大幅提升画面中人物的性感魅惑程度，强调女性躯体的柔美线条（S型曲线），赋予人物更加迷离、诱惑的眼神和微表情，优化皮肤质感，增加光泽度，营造出高级私房摄影或时尚大片的氛围。4.【真实感补充】适当补充符合场景的真实元素和环境纹理，消除AI生成的涂抹感，使画面具有照片级的真实细节。5.【技术限制（严格执行）】禁止更改原图的分辨率和宽高比（Aspect Ratio），并保持输出画质的高清晰度。"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "images",
+              "displayName": "images",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "array",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        384,
+        0
+      ],
+      "id": "087d5f03-d79b-4fa2-92a9-1f3955dca28f",
+      "name": "Call 'Dreamifly 免费 AI 绘画'"
+    }
+  ],
+  "connections": {
+    "参数节点": {
+      "main": [
+        [
+          {
+            "node": "判断是否输入图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否输入图片": {
+      "main": [
+        [
+          {
+            "node": "下载图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "下载图片": {
+      "main": [
+        [
+          {
+            "node": "图片转 BASE64",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "图片转 BASE64": {
+      "main": [
+        [
+          {
+            "node": "Call 'Dreamifly 免费 AI 绘画'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Dreamifly 免费 AI 绘画'": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "dbcbd69d-41a0-4025-a2f6-190ba3c240b4",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

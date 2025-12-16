@@ -1,0 +1,15 @@
+{
+  "id": "vWtUFeIUf3IQd6gf",
+  "name": "包子公益",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "isGlobal": false
+}

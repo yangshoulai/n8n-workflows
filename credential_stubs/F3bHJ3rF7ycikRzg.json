@@ -1,0 +1,15 @@
+{
+  "id": "F3bHJ3rF7ycikRzg",
+  "name": "KFC API",
+  "type": "openAiApi",
+  "data": {
+    "apiKey": "",
+    "url": ""
+  },
+  "ownedBy": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "isGlobal": false
+}

@@ -1,0 +1,601 @@
+{
+  "id": "noKaVV90RLZnSRu9",
+  "name": "Gitee 免费 AI 绘画 With Tokens",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -976,
+        -344
+      ],
+      "id": "d7212597-aad7-41e0-b5c9-86b3bbeb766c",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a23f8e77-c44e-4d78-a4c9-a1496d78dcd6",
+              "leftValue": "={{ !!$binary?.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1264,
+        -512
+      ],
+      "id": "871148de-5bc5-4c7b-aa33-b8fdb714dee9",
+      "name": "判断是否成功"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3cbcec4a-8889-43ca-b648-d8f9d1f72e06",
+              "name": "key_tokens",
+              "value": "=gitee:tokens:{{ new Intl.DateTimeFormat(\"en-CA\").format(new Date()).replace(/-/g, \"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -752,
+        -344
+      ],
+      "id": "9e7c0a56-9588-42e6-9db3-08e42c98ec33",
+      "name": "计算 Access Token Key"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "tokens",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "keyType": "hash",
+        "options": {
+          "dotNotation": false
+        }
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -344
+      ],
+      "id": "d08368a8-29f4-4c87-a164-603f430ec722",
+      "name": "获取 Redis 中缓存的 Tokens",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5cf957d7-e19e-4ac3-b350-bea6276b7f4c",
+              "leftValue": "={{ Object.keys($json.tokens).length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -304,
+        -416
+      ],
+      "id": "85eaa093-0106-40cc-a33b-b64c02ce5177",
+      "name": "判断Tokens 是否存在"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "value": "={{ JSON.stringify($json) }}",
+        "keyType": "hash",
+        "expire": true,
+        "ttl": 86400
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        144,
+        -320
+      ],
+      "id": "41b63863-05d0-479e-b242-6b2d7338a1f1",
+      "name": "设置 Redis Tokens",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "tokens",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "keyType": "hash",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        368,
+        -320
+      ],
+      "id": "f2e2604b-6125-471c-b6ae-8916fe1159ba",
+      "name": "重新获取 Redis Tokens",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n  for(const t in item.json.tokens){\n    if(item.json.tokens[t] !== 0 && item.json.tokens[t] !== '0'){\n      return [{\"token\": t}];\n    }\n  }\n}\n\nreturn [];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        -416
+      ],
+      "id": "812498e8-504b-410f-83fb-e73779819ab1",
+      "name": "获取可用的 Token",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3eaef21d-f7b8-45f5-b9fc-f2c63b5c5b6d",
+              "leftValue": "={{ $json.token }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        816,
+        -416
+      ],
+      "id": "3acd86c8-697a-49af-b91f-18d24a1b59ea",
+      "name": "判断是否有可用 Token"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "value": "={{ $json.tokens }}",
+        "keyType": "hash",
+        "expire": true,
+        "ttl": 86400
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1936,
+        -344
+      ],
+      "id": "df1b9eaa-b08a-4ea6-ad04-add03ec22deb",
+      "name": "设置 Token 失效",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  if($('获取可用的 Token').first().json.token in item.json.tokens){\n    item.json.tokens[$('获取可用的 Token').first().json.token] = 0;\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1712,
+        -512
+      ],
+      "id": "960ece97-a44f-4d7e-9585-cb33e3639461",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "tokens",
+        "key": "={{ $('计算 Access Token Key').item.json.key_tokens }}",
+        "keyType": "hash",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        -512
+      ],
+      "id": "a923c53e-d8d6-4041-80f0-ea64526e5935",
+      "name": "重新获取 Redis Tokens1",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "77602389-15af-41b0-b55b-71eead0d3c92",
+              "name": "data",
+              "value": "={{ null }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        -320
+      ],
+      "id": "239b1e00-3057-4077-aea7-abc68e41b385",
+      "name": "返回空结果"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "orhoguZmc1tlXssf",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/orhoguZmc1tlXssf",
+          "cachedResultName": "人工智能 — Gitee 免费 AI 绘画"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "height": "={{ $('入口参数').item.json.height }}",
+            "width": "={{ $('入口参数').item.json.width }}",
+            "prompt": "={{ $('入口参数').item.json.prompt }}",
+            "token": "={{ $json.token }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "token",
+              "displayName": "token",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        -512
+      ],
+      "id": "27a61632-6aa3-4116-8dfc-d37f2ba1aa0f",
+      "name": "Call 'Gitee 免费 AI 绘画'",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const tokenMap = {'default': 1};\nfor(const token of $vars.GITEE_ACCESS_TOKENS.split(\",\")){\n  tokenMap[token] = 1;\n}\n\nreturn [tokenMap];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -320
+      ],
+      "id": "db97c745-b94b-4082-88c6-5c8141561d84",
+      "name": "计算 Token Map"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "计算 Access Token Key",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否成功": {
+      "main": [
+        [],
+        [
+          {
+            "node": "重新获取 Redis Tokens1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算 Access Token Key": {
+      "main": [
+        [
+          {
+            "node": "获取 Redis 中缓存的 Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取 Redis 中缓存的 Tokens": {
+      "main": [
+        [
+          {
+            "node": "判断Tokens 是否存在",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断Tokens 是否存在": {
+      "main": [
+        [
+          {
+            "node": "获取可用的 Token",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "计算 Token Map",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "设置 Redis Tokens": {
+      "main": [
+        [
+          {
+            "node": "重新获取 Redis Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "重新获取 Redis Tokens": {
+      "main": [
+        [
+          {
+            "node": "获取可用的 Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取可用的 Token": {
+      "main": [
+        [
+          {
+            "node": "判断是否有可用 Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否有可用 Token": {
+      "main": [
+        [
+          {
+            "node": "Call 'Gitee 免费 AI 绘画'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "返回空结果",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "设置 Token 失效",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "重新获取 Redis Tokens1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "设置 Token 失效": {
+      "main": [
+        [
+          {
+            "node": "获取 Redis 中缓存的 Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Gitee 免费 AI 绘画'": {
+      "main": [
+        [
+          {
+            "node": "判断是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算 Token Map": {
+      "main": [
+        [
+          {
+            "node": "设置 Redis Tokens",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "triggerCount": 0,
+  "versionId": "6d4a968b-5448-4981-addb-541f7fd90e93",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "人工智能"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}
