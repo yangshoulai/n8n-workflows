@@ -74,7 +74,9 @@
         -912
       ],
       "id": "b2399c35-5e59-4e9f-8560-e3b72d978f6a",
-      "name": "Call 'Z-Image-Turbo 生图'"
+      "name": "Call 'Z-Image-Turbo 生图'",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -83,7 +85,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2096,
+        -1872,
         -912
       ],
       "id": "94c1a853-a1e2-4657-83e3-5b9c56ba142d",
@@ -169,8 +171,8 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "d2eae6e06ff94c67942a06299c59ea4c",
-        "collectionName": "={{$json.memory_collection}}_{{ new Intl.DateTimeFormat(\"en-CA\").format(new Date()).replace(/-/g, \"\") }}",
+        "sessionKey": "={{$json.memory_collection}}_{{ new Intl.DateTimeFormat(\"en-CA\").format(new Date()).replace(/-/g, \"\") }}",
+        "collectionName": "=n8n_ttmt_chat_histories",
         "databaseName": "cloud",
         "contextWindowLength": 10
       },
@@ -232,38 +234,6 @@
           "name": "yangshoulai"
         }
       }
-    },
-    {
-      "parameters": {
-        "dataToSave": {
-          "values": [
-            {
-              "key": "prompt",
-              "value": "={{ $json.output.prompt }}"
-            },
-            {
-              "key": "ratio",
-              "value": "={{ $json.output.ratio }}"
-            },
-            {
-              "key": "width",
-              "value": "={{ $json.output.width }}"
-            },
-            {
-              "key": "height",
-              "value": "={{ $json.output.height }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.executionData",
-      "typeVersion": 1.1,
-      "position": [
-        -1872,
-        -912
-      ],
-      "id": "1d24181d-6a10-4b0e-8e98-4e9969eb9535",
-      "name": "保存图片提示词信息"
     },
     {
       "parameters": {
@@ -336,7 +306,51 @@
         -912
       ],
       "id": "82521d30-a3f1-42d1-9401-e5311919ad3b",
-      "name": "Edit Fields"
+      "name": "返回数据"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7ca36fa0-a711-4109-ac74-f8e25ad1b17f",
+              "leftValue": "={{ $json.output.prompt }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "a6764089-697f-4f43-8a47-47c66e151248",
+              "leftValue": "={{ $json.output.prompt }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2096,
+        -912
+      ],
+      "id": "cabb1651-7958-4a29-85c6-6738ca5c50f9",
+      "name": "If"
     }
   ],
   "connections": {
@@ -344,7 +358,7 @@
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "返回数据",
             "type": "main",
             "index": 0
           }
@@ -355,7 +369,7 @@
       "main": [
         [
           {
-            "node": "保存图片提示词信息",
+            "node": "Call 'Z-Image-Turbo 生图'",
             "type": "main",
             "index": 0
           }
@@ -366,7 +380,7 @@
       "main": [
         [
           {
-            "node": "计算分辨率",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -428,22 +442,22 @@
         ]
       ]
     },
-    "保存图片提示词信息": {
+    "入口参数": {
       "main": [
         [
           {
-            "node": "Call 'Z-Image-Turbo 生图'",
+            "node": "图片描述",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "入口参数": {
+    "If": {
       "main": [
         [
           {
-            "node": "图片描述",
+            "node": "计算分辨率",
             "type": "main",
             "index": 0
           }
@@ -455,11 +469,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "d11671b8-9ff1-448e-8808-52cb27396d8d",
+  "versionId": "2d830848-6e3f-4307-a150-f6cb80861adc",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "teamName": "天天美图"
   },
   "parentFolderId": "EObsJ1pbLs4voBnl",
   "isArchived": false

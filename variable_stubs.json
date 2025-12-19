@@ -1,5 +1,11 @@
 [
   {
+    "id": "FjPogqKjeSyQvIKS",
+    "key": "TG_CHAT_ID_CHANNEL_MTL",
+    "type": "string",
+    "value": ""
+  },
+  {
     "id": "jkfOwujhozfemkjk",
     "key": "GITEE_ACCESS_TOKENS",
     "type": "string",

@@ -11,15 +11,15 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1104,
-        304
+        1120,
+        288
       ],
       "id": "bf6951f2-7755-4e35-8d4a-e666377b40bf",
       "name": "成功 - 更新 file_id",
       "credentials": {
         "postgres": {
           "id": "E8sSOvQ08v4CZXDR",
-          "name": "Postgres - Neon - iwallpapers"
+          "name": "iwallpapers"
         }
       }
     },
@@ -35,7 +35,7 @@
       "typeVersion": 1.2,
       "position": [
         672,
-        304
+        336
       ],
       "id": "41e649b4-4585-4aa3-b924-cbbde3995832",
       "name": "失败 - 没有合适壁纸",
@@ -43,7 +43,7 @@
       "credentials": {
         "telegramApi": {
           "id": "ezmgnqCsNvQ2IQet",
-          "name": "Telegram - @iwallpapers_bot"
+          "name": "@iwallpapers_bot"
         }
       }
     },
@@ -58,8 +58,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1328,
-        112
+        1344,
+        48
       ],
       "id": "319fab41-6109-4e45-82a0-43a814ba6564",
       "name": "失败 - 壁纸发送异常",
@@ -67,7 +67,7 @@
       "credentials": {
         "telegramApi": {
           "id": "ezmgnqCsNvQ2IQet",
-          "name": "Telegram - @iwallpapers_bot"
+          "name": "@iwallpapers_bot"
         }
       }
     },
@@ -81,14 +81,14 @@
       "typeVersion": 2.6,
       "position": [
         0,
-        0
+        48
       ],
       "id": "4a72335f-9ace-4e15-89c4-07c924835f53",
       "name": "查询 SFW 壁纸",
       "credentials": {
         "postgres": {
           "id": "E8sSOvQ08v4CZXDR",
-          "name": "Postgres - Neon - iwallpapers"
+          "name": "iwallpapers"
         }
       }
     },
@@ -102,14 +102,14 @@
       "typeVersion": 2.6,
       "position": [
         0,
-        208
+        240
       ],
       "id": "4d87657c-e9b7-41da-9562-c1ba1b712ac2",
       "name": "查询 NSFW 壁纸",
       "credentials": {
         "postgres": {
           "id": "E8sSOvQ08v4CZXDR",
-          "name": "Postgres - Neon - iwallpapers"
+          "name": "iwallpapers"
         }
       }
     },
@@ -142,7 +142,7 @@
       "typeVersion": 2.2,
       "position": [
         224,
-        208
+        240
       ],
       "id": "91271f2f-dc3d-4d3e-af5c-088dfca8d36a",
       "name": "是否存在合适壁纸"
@@ -176,7 +176,7 @@
       "typeVersion": 2.2,
       "position": [
         672,
-        112
+        144
       ],
       "id": "742fddb9-97c3-407e-8a6f-9db1f9c1f240",
       "name": "是否存在 file_id"
@@ -197,7 +197,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        880,
+        896,
         0
       ],
       "id": "a414b6e0-a82d-4348-8930-defc38592acf",
@@ -206,7 +206,7 @@
       "credentials": {
         "telegramApi": {
           "id": "ezmgnqCsNvQ2IQet",
-          "name": "Telegram - @iwallpapers_bot"
+          "name": "@iwallpapers_bot"
         }
       },
       "onError": "continueErrorOutput"
@@ -225,8 +225,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        880,
-        208
+        896,
+        240
       ],
       "id": "7d355ded-f5a5-4268-9d93-4aa79defb318",
       "name": "发送壁纸 - src",
@@ -234,21 +234,21 @@
       "credentials": {
         "telegramApi": {
           "id": "ezmgnqCsNvQ2IQet",
-          "name": "Telegram - @iwallpapers_bot"
+          "name": "@iwallpapers_bot"
         }
       },
       "onError": "continueErrorOutput"
     },
     {
       "parameters": {
-        "language": "python",
-        "pythonCode": "def _escape_markdown(text: str) -> str:\n    \"\"\"转义 Markdown 特殊字符\"\"\"\n    escape_chars = r\"_*[]()~`>#+-=|{}.!\"\n    return \"\".join(f\"\\\\{c}\" if c in escape_chars else c for c in str(text))\n\ndef _is_valid_tag(tag: str) -> bool:\n    \"\"\"检查标签是否有效（只包含英文、数字、-、_）\n    Args:\n        tag: 标签\n    \"\"\"\n    return all(c.isalnum() or c in \"-_\" for c in tag)\ndef _format_file_size(size_in_bytes: int) -> str:\n    \"\"\"格式化文件大小\n\n    Args:\n        size_in_bytes: 文件大小（字节）\n    \"\"\"\n    if size_in_bytes >= 1024 * 1024:  # >= 1MB\n        return f\"{size_in_bytes / (1024 * 1024):.1f} MB\"\n    else:\n        return f\"{size_in_bytes / 1024:.0f} KB\"\n\ndef _format_caption(wallpaper) -> str:\n    \"\"\"格式化壁纸描述信息\n\n    Args:\n        wallpaper: 壁纸对象\n    \"\"\"\n    resolution = _escape_markdown(f\"{wallpaper.width} × {wallpaper.height}\")\n    file_size = _escape_markdown(_format_file_size(wallpaper.size))\n\n    # 过滤并转义标签\n    valid_tags = [tag for tag in wallpaper.tags if _is_valid_tag(tag.replace(\" \", \"_\").replace(\"-\", \"_\"))]\n    tags = (\n        \" \".join([f\"\\\\#{_escape_markdown(tag.replace(' ', '_').replace('-', '_'))}\" for tag in valid_tags])\n        if valid_tags\n        else \"无标签\"\n    )\n\n    source_link = f\"[{_escape_markdown(wallpaper.source)}]({_escape_markdown(wallpaper.source_src)})\"\n    author_link = f\"[{_escape_markdown(wallpaper.author)}]({_escape_markdown(wallpaper.author_url)})\"\n\n    caption = (\n        f\"📸 *精选壁纸* {('_' + wallpaper.description + '_') if wallpaper.description else ''}\\n\\n\"\n        f\"🔗 _来源_：{source_link}\\n\"\n        f\"👨‍🎨 _作者_：{author_link}\\n\"\n        f\"📏 _分辨率_：`{resolution}`\\n\"\n        f\"💾 _大小_：`{file_size}`\\n\"\n        f\"🏷️ _标签_：{tags}\"\n    )\n    return caption\n\n\n# Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor item in _input.all():\n  item.json.caption = _format_caption(item.json)\n\nreturn _input.all()"
+        "language": "pythonNative",
+        "pythonCode": "def _escape_markdown(text: str) -> str:\n    \"\"\"转义 Markdown 特殊字符\"\"\"\n    escape_chars = r\"_*[]()~`>#+-=|{}.!\"\n    return \"\".join(f\"\\\\{c}\" if c in escape_chars else c for c in str(text))\n\ndef _is_valid_tag(tag: str) -> bool:\n    \"\"\"检查标签是否有效（只包含英文、数字、-、_）\n    Args:\n        tag: 标签\n    \"\"\"\n    return all(c.isalnum() or c in \"-_\" for c in tag)\ndef _format_file_size(size_in_bytes: int) -> str:\n    \"\"\"格式化文件大小\n\n    Args:\n        size_in_bytes: 文件大小（字节）\n    \"\"\"\n    if size_in_bytes >= 1024 * 1024:  # >= 1MB\n        return f\"{size_in_bytes / (1024 * 1024):.1f} MB\"\n    else:\n        return f\"{size_in_bytes / 1024:.0f} KB\"\n\ndef _format_caption(wallpaper) -> str:\n    \"\"\"格式化壁纸描述信息\n\n    Args:\n        wallpaper: 壁纸对象\n    \"\"\"\n    resolution = _escape_markdown(f\"{wallpaper['width']} × {wallpaper['height']}\")\n    file_size = _escape_markdown(_format_file_size(wallpaper['size']))\n\n    # 过滤并转义标签\n    valid_tags = [tag for tag in wallpaper['tags'] if _is_valid_tag(tag.replace(\" \", \"_\").replace(\"-\", \"_\"))]\n    tags = (\n        \" \".join([f\"\\\\#{_escape_markdown(tag.replace(' ', '_').replace('-', '_'))}\" for tag in valid_tags])\n        if valid_tags\n        else \"无标签\"\n    )\n\n    source_link = f\"[{_escape_markdown(wallpaper['source'])}]({_escape_markdown(wallpaper['source_src'])})\"\n    author_link = f\"[{_escape_markdown(wallpaper['author'])}]({_escape_markdown(wallpaper['author_url'])})\"\n\n    caption = (\n        f\"📸 *精选壁纸* {('_' + wallpaper['description'] + '_') if wallpaper['description'] else ''}\\n\\n\"\n        f\"🔗 _来源_：{source_link}\\n\"\n        f\"👨‍🎨 _作者_：{author_link}\\n\"\n        f\"📏 _分辨率_：`{resolution}`\\n\"\n        f\"💾 _大小_：`{file_size}`\\n\"\n        f\"🏷️ _标签_：{tags}\"\n    )\n    return caption\n\n\n# Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor item in _items:\n  item['json']['caption'] = _format_caption(item['json'])\n\nreturn _items"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         448,
-        112
+        144
       ],
       "id": "6e34dd3a-0a8a-4ab4-88bb-e19278253719",
       "name": "格式化字幕"
@@ -276,7 +276,7 @@
       "typeVersion": 1.1,
       "position": [
         -448,
-        208
+        240
       ],
       "id": "4f803b04-7580-4f09-a483-83c001a48a43",
       "name": "入口"
@@ -343,7 +343,7 @@
       "typeVersion": 3.2,
       "position": [
         -224,
-        208
+        224
       ],
       "id": "d3c44c5a-70d7-474e-a480-0e9fc605dd90",
       "name": "Switch"
@@ -358,14 +358,14 @@
       "typeVersion": 2.6,
       "position": [
         0,
-        400
+        432
       ],
       "id": "5e857d51-bcd5-4551-96f0-0bfdd30e6a23",
       "name": "查询壁纸",
       "credentials": {
         "postgres": {
           "id": "E8sSOvQ08v4CZXDR",
-          "name": "Postgres - Neon - iwallpapers"
+          "name": "iwallpapers"
         }
       }
     },
@@ -398,7 +398,7 @@
       "typeVersion": 2.2,
       "position": [
         448,
-        304
+        336
       ],
       "id": "d63e572a-9c85-44f8-8615-17d33494a291",
       "name": "If"
@@ -431,8 +431,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1104,
-        112
+        1120,
+        48
       ],
       "id": "3954492e-5e98-4efe-9eaa-2a2b0d5d63ae",
       "name": "If1"
@@ -612,7 +612,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "887a12f3-c3ba-47aa-9ae5-4c7752af3c02",
+  "versionId": "d9509dc0-df8f-4c56-89ef-5a66e2552b23",
   "owner": {
     "type": "personal",
     "projectId": "pskh8wmOtrNvczt8",

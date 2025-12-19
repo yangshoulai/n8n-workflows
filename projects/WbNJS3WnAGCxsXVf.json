@@ -1,6 +1,6 @@
 {
   "id": "WbNJS3WnAGCxsXVf",
-  "name": "人工智能",
+  "name": "天天美图",
   "icon": {
     "type": "icon",
     "value": "layers"
@@ -10,7 +10,7 @@
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "teamName": "天天美图"
   },
   "variableStubs": []
 }

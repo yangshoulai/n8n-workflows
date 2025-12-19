@@ -14,7 +14,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        288,
+        280,
         384
       ],
       "id": "f07fbde8-5a6a-42a0-85f1-26dcf5debf14",
@@ -24,9 +24,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "grok-4",
+          "value": "deepseek-r1",
           "mode": "list",
-          "cachedResultName": "grok-4"
+          "cachedResultName": "deepseek-r1"
         },
         "options": {
           "responseFormat": "text",
@@ -43,8 +43,8 @@
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "b46gcBHDwNGJBlZT",
-          "name": "OpenAi - kkyyzz"
+          "id": "6QtS7ma73ZKRZmQX",
+          "name": "yangshoulai"
         }
       }
     },
@@ -84,7 +84,7 @@
       "typeVersion": 1.2,
       "position": [
         848,
-        288
+        384
       ],
       "id": "77934a0d-1eb2-4011-b92b-53b3abb76ffc",
       "name": "Send a text message",
@@ -114,9 +114,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1-mini",
+          "value": "qwen2.5-72b-instruct",
           "mode": "list",
-          "cachedResultName": "gpt-4.1-mini"
+          "cachedResultName": "qwen2.5-72b-instruct"
         },
         "options": {}
       },
@@ -130,8 +130,8 @@
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
-          "id": "b46gcBHDwNGJBlZT",
-          "name": "OpenAi - kkyyzz"
+          "id": "6QtS7ma73ZKRZmQX",
+          "name": "yangshoulai"
         }
       }
     },
@@ -152,91 +152,6 @@
         "mongoDb": {
           "id": "8YD8ZL8jLcVjsyse",
           "name": "MongoDB - MongDB Cloud"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "YsVnboMtvDcQH3i9",
-          "mode": "list",
-          "cachedResultName": "Dreamify 文生图"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "width": "={{ $json.output.width }}",
-            "height": "={{ $json.output.height }}",
-            "prompt": "={{ $json.output.positivePrompt }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "prompt",
-              "displayName": "prompt",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "width",
-              "displayName": "width",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            },
-            {
-              "id": "height",
-              "displayName": "height",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "number",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2,
-      "position": [
-        848,
-        480
-      ],
-      "id": "f55bbf8b-7a57-4117-bf55-0fe107b46689",
-      "name": "Call 'Dreamify 文生图'"
-    },
-    {
-      "parameters": {
-        "operation": "sendPhoto",
-        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "binaryData": true,
-        "additionalFields": {}
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        1072,
-        480
-      ],
-      "id": "e5dc7d16-fddc-4a28-ba7c-f7733324efff",
-      "name": "Send a photo message",
-      "webhookId": "6908ceaf-37b2-4423-8997-67f6dc19351a",
-      "credentials": {
-        "telegramApi": {
-          "id": "4LCo3T7FwwkMMw9u",
-          "name": "Telegram - @wallpaper_test_tg_bot"
         }
       }
     }
@@ -267,11 +182,6 @@
     "AI Agent": {
       "main": [
         [
-          {
-            "node": "Call 'Dreamify 文生图'",
-            "type": "main",
-            "index": 0
-          },
           {
             "node": "Send a text message",
             "type": "main",
@@ -317,30 +227,18 @@
           }
         ]
       ]
-    },
-    "Call 'Dreamify 文生图'": {
-      "main": [
-        [
-          {
-            "node": "Send a photo message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "2e7bee13-17ce-4de4-bce5-0fd94866f2fb",
+  "versionId": "9959c137-8515-4f5f-ade8-7f189a25859b",
   "owner": {
-    "type": "personal",
-    "projectId": "pskh8wmOtrNvczt8",
-    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
-    "personalEmail": "shoulai.yang@gmail.com"
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "天天美图"
   },
-  "parentFolderId": "tXbrPLEAcjwVXk68",
+  "parentFolderId": null,
   "isArchived": false
 }

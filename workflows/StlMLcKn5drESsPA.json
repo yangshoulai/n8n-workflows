@@ -5,13 +5,14 @@
     {
       "parameters": {
         "operation": "delete",
-        "collection": "={{ $json.collections }}{{ $json.yesterday }}"
+        "collection": "=n8n_ttmt_chat_histories",
+        "query": "={\"sessionId\": \"{{ $json.collections }}_{{ $json.date }}\"}"
       },
       "type": "n8n-nodes-base.mongoDb",
       "typeVersion": 1.2,
       "position": [
-        -256,
-        0
+        -416,
+        112
       ],
       "id": "19cfb294-3525-4eda-b33a-7013bd66a9f5",
       "name": "Delete documents",
@@ -25,13 +26,13 @@
     {
       "parameters": {
         "language": "pythonNative",
-        "pythonCode": "from datetime import datetime, timedelta\n\nyesterday = datetime.now() - timedelta(days=1)\nyyyymmdd = yesterday.strftime('%Y%m%d')\n\nreturn [{\"yesterday\": yyyymmdd}]"
+        "pythonCode": "from datetime import datetime, timedelta\n\nyesterday = datetime.now() - timedelta(days=1)\nyyyymmdd = yesterday.strftime('%Y%m%d')\n\nreturn [{\"date\": yyyymmdd}]"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -928,
-        96
+        -1088,
+        -128
       ],
       "id": "f5127946-9524-40c3-bed9-6b3e3d66cd2d",
       "name": "计算昨天日期"
@@ -43,7 +44,7 @@
             {
               "id": "debf6f19-a9d9-4228-9d15-5e601740f2a1",
               "name": "collections",
-              "value": "=[\"n8n_wallpaper_master_chat_histories_\", \"n8n_tiantianmeitu_chat_histories\"]",
+              "value": "=[\"ttmt_wallpaper_mater\", \"ttmt\",\"ttmtnsfw\", \"ttmtsf\"]",
               "type": "array"
             }
           ]
@@ -54,8 +55,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -704,
-        0
+        -864,
+        112
       ],
       "id": "9b664388-6285-44e9-9147-213ff8bea971",
       "name": "需要删除的 Mongodb 集合"
@@ -64,14 +65,14 @@
       "parameters": {
         "fieldToSplitOut": "collections",
         "include": "selectedOtherFields",
-        "fieldsToInclude": "yesterday",
+        "fieldsToInclude": "date",
         "options": {}
       },
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        -480,
-        0
+        -640,
+        112
       ],
       "id": "01cc51b1-c06c-4264-b6e2-a46cfd223f7f",
       "name": "Split Out"
@@ -81,6 +82,7 @@
         "rule": {
           "interval": [
             {
+              "field": "hours",
               "triggerAtMinute": 30
             }
           ]
@@ -89,33 +91,86 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -1152,
-        96
+        -1312,
+        16
       ],
       "id": "850ed481-84b4-4ff9-bd7f-a0d3494d1bff",
       "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "resource": "folder",
-        "operation": "delete",
-        "bucketName": "n8n",
-        "folderKey": "={{ $json.yesterday }}"
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.date = new Intl.DateTimeFormat(\"en-CA\").format(new Date()).replace(/-/g, \"\") ;\n}\n\nreturn $input.all();"
       },
-      "type": "n8n-nodes-base.s3",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1088,
+        160
+      ],
+      "id": "e4af9a1a-8773-4aa3-b43b-2e9d556a20e2",
+      "name": "计算今天日期"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "={{ $json.token }}:{{ $json.date }}"
+      },
+      "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        -704,
-        192
+        -416,
+        -80
       ],
-      "id": "ad2d7849-0629-40e7-8108-779399f4cc40",
-      "name": "删除 MinIO 昨天文件",
+      "id": "79af9b49-f495-4704-89ed-a6db065217fe",
+      "name": "删除 Redis Tokens",
       "credentials": {
-        "s3": {
-          "id": "rDCAHUftwkuS8kvn",
-          "name": "S3 account"
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "debf6f19-a9d9-4228-9d15-5e601740f2a1",
+              "name": "tokens",
+              "value": "=[\"hf:tokens\", \"gitee:tokens\"]",
+              "type": "array"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -864,
+        -80
+      ],
+      "id": "7c903259-4984-45ea-b097-8315dbf89ad9",
+      "name": "需要删除的 Redis Tokens 集合"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "tokens",
+        "include": "selectedOtherFields",
+        "fieldsToInclude": "date",
+        "options": {
+          "destinationFieldName": "token"
+        }
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        -80
+      ],
+      "id": "9c4dad2b-7416-4193-8ac2-023c1e737fb0",
+      "name": "Split Out1"
     }
   ],
   "connections": {
@@ -128,7 +183,7 @@
             "index": 0
           },
           {
-            "node": "删除 MinIO 昨天文件",
+            "node": "需要删除的 Redis Tokens 集合",
             "type": "main",
             "index": 0
           }
@@ -164,6 +219,49 @@
             "node": "计算昨天日期",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "计算今天日期",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算今天日期": {
+      "main": [
+        [
+          {
+            "node": "需要删除的 Mongodb 集合",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "需要删除的 Redis Tokens 集合",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "需要删除的 Redis Tokens 集合": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "删除 Redis Tokens",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -173,11 +271,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "6f301ae4-2a03-4654-9295-78c51faa4907",
+  "versionId": "2b630543-ed1e-4e9c-b726-4da55c860957",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "teamName": "天天美图"
   },
   "parentFolderId": "f06nSbAhuAEZN6y2",
   "isArchived": false

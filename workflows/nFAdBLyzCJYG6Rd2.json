@@ -7,8 +7,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        0,
-        240
+        -672,
+        284
       ],
       "id": "f5282a78-13c7-466c-bc8c-96899381ba9d",
       "name": "When clicking ‘Execute workflow’"
@@ -16,12 +16,12 @@
     {
       "parameters": {
         "operation": "delete",
-        "key": "hf:tokens:20251216"
+        "key": "hf:tokens:20251217"
       },
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        288,
+        -384,
         -144
       ],
       "id": "7ab95c6f-6fc6-4634-9837-7605f2ee47d2",
@@ -36,12 +36,12 @@
     {
       "parameters": {
         "operation": "delete",
-        "key": "gitee:tokens:20251216"
+        "key": "gitee:tokens:20251217"
       },
       "type": "n8n-nodes-base.redis",
       "typeVersion": 1,
       "position": [
-        288,
+        -384,
         48
       ],
       "id": "909f548c-290c-4ab0-81d4-ab9eb3078fd1",
@@ -56,13 +56,14 @@
     {
       "parameters": {
         "operation": "delete",
-        "collection": "n8n_tiantianmeitu_chat_histories_20251216"
+        "collection": "n8n_ttmt_chat_histories",
+        "query": "={\"sessionId\": \"ttmt_wallpaper_master_{{ $json.date }}\"}"
       },
       "type": "n8n-nodes-base.mongoDb",
       "typeVersion": 1.2,
       "position": [
-        288,
-        240
+        -96,
+        572
       ],
       "id": "cee304d9-ccfc-4da7-9656-8ccf4dcc8f42",
       "name": "删除壁纸大师记忆",
@@ -80,8 +81,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3,
       "position": [
-        224,
-        736
+        -448,
+        1156
       ],
       "id": "a685287d-f7b9-48eb-b2b1-47a2df8d3488",
       "name": "AI Agent"
@@ -99,8 +100,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        304,
-        960
+        -376,
+        1380
       ],
       "id": "0fbec2f2-db34-4363-b4d8-c2e84f52c31c",
       "name": "OpenAI Chat Model",
@@ -119,8 +120,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        288,
-        432
+        -384,
+        240
       ],
       "id": "6328b0c4-317a-4227-b9ad-822b3aeeb53c",
       "name": "HTTP Request"
@@ -137,8 +138,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        576,
-        336
+        -96,
+        188
       ],
       "id": "f8f24930-a1f4-47ff-8d5f-ad28b5d92c4a",
       "name": "Send a photo message",
@@ -187,11 +188,88 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        576,
-        528
+        -96,
+        380
       ],
       "id": "1187ac93-b302-4313-94f2-ed1e5350498b",
       "name": "Call 'EasyImg 文件上传 - Binary'"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "from datetime import datetime, timedelta\n\nyesterday = datetime.now() - timedelta(days=0)\nyyyymmdd = yesterday.strftime('%Y%m%d')\n\nreturn [{\"date\": yyyymmdd}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        860
+      ],
+      "id": "2a148cf9-19e0-4cd9-aa6c-24af2267d97a",
+      "name": "计算日期"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "collection": "n8n_ttmt_chat_histories",
+        "query": "={\"sessionId\": \"ttmt_{{ $json.date }}\"}"
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        764
+      ],
+      "id": "bdb301fc-7b23-47c9-8134-ac227bb449fb",
+      "name": "删除 天天美图记忆",
+      "credentials": {
+        "mongoDb": {
+          "id": "gHBWS9s71yffZkq8",
+          "name": "腾讯云"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "collection": "n8n_ttmt_chat_histories",
+        "query": "={\"sessionId\": \"ttmtnsfw_{{ $json.date }}\"}"
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        956
+      ],
+      "id": "1c452889-8d6f-4c6e-bdb4-5408f463e2db",
+      "name": "删除 天天美图 NSFW 记忆",
+      "credentials": {
+        "mongoDb": {
+          "id": "gHBWS9s71yffZkq8",
+          "name": "腾讯云"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "collection": "n8n_ttmt_chat_histories",
+        "query": "={\"sessionId\": \"ttmtsf_{{ $json.date }}\"}"
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        1148
+      ],
+      "id": "2dc80bd0-eb28-4227-ad61-828a7cef6a0d",
+      "name": "删除 天天美图 私房 记忆",
+      "credentials": {
+        "mongoDb": {
+          "id": "gHBWS9s71yffZkq8",
+          "name": "腾讯云"
+        }
+      }
     }
   ],
   "connections": {
@@ -209,17 +287,17 @@
             "index": 0
           },
           {
-            "node": "删除壁纸大师记忆",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "AI Agent",
             "type": "main",
             "index": 0
           },
           {
             "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "计算日期",
             "type": "main",
             "index": 0
           }
@@ -257,17 +335,43 @@
           }
         ]
       ]
+    },
+    "计算日期": {
+      "main": [
+        [
+          {
+            "node": "删除壁纸大师记忆",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "删除 天天美图记忆",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "删除 天天美图 NSFW 记忆",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "删除 天天美图 私房 记忆",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "07681718-6b84-4ffa-843c-4031262d598b",
+  "versionId": "24aed3e9-f4c2-41c2-bdbc-a5cafdd3d4d3",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "teamName": "天天美图"
   },
   "parentFolderId": null,
   "isArchived": false

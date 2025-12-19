@@ -1,96 +1,16 @@
 {
   "tags": [
     {
-      "id": "37r56d7QF4Z1Iv1k",
-      "name": "n8n"
+      "id": "665lt17B6ksJ4AvB",
+      "name": "Telegram Bot"
     },
     {
-      "id": "gw0QmrN3jEN1J7Du",
-      "name": "wallpaper"
+      "id": "xpMROVepg9CtsWlY",
+      "name": "Z-Image-Turbo"
     },
     {
-      "id": "nEui8NO6V3a5hMut",
-      "name": "iwallpapers"
-    },
-    {
-      "id": "4hHYQ8Udn6n4RER3",
-      "name": "telegram"
-    },
-    {
-      "id": "dGAQOVe0Ky0cExcB",
-      "name": "wallhaven"
-    },
-    {
-      "id": "gfAmv6FLMbG1bDt8",
-      "name": "wallhere"
-    },
-    {
-      "id": "1QYEuiRtjdyfvJm0",
-      "name": "bot"
-    },
-    {
-      "id": "4jGWTHrHiYoy3e5q",
-      "name": "1Y Beauties"
-    },
-    {
-      "id": "T2WqpSHFONPmV2eK",
-      "name": "aigc"
-    },
-    {
-      "id": "CzopXiQRFrAmbFnk",
-      "name": "text2img"
-    },
-    {
-      "id": "fxbqLZzsBDbCfaSk",
-      "name": "mongodb"
-    },
-    {
-      "id": "eEmfL1XnWze94eNn",
-      "name": "redis"
-    },
-    {
-      "id": "HX91sBMJ1WgHlatP",
-      "name": "upstash"
-    },
-    {
-      "id": "C4tz4Oifp06pOFEo",
-      "name": "sm.ms"
-    },
-    {
-      "id": "NfpWFOl4Ilnk74rk",
-      "name": "测试"
-    },
-    {
-      "id": "ihO0qAcTP0w8PcTF",
-      "name": "cloudflare"
-    },
-    {
-      "id": "jOK0l1uCxvJ7zJ8C",
-      "name": "Stable Diffusion"
-    },
-    {
-      "id": "Leao4ANSdBAGu26a",
-      "name": "API"
-    },
-    {
-      "id": "QafRNLAxx047S8NH",
-      "name": "Postgresql"
-    },
-    {
-      "id": "pf7a3IS889GlrTtS",
-      "name": "supabase"
-    },
-    {
-      "id": "J10QWUvqhdiOibaz",
-      "name": "SD"
-    },
-    {
-      "id": "OwpwWLu2J07ixMds",
-      "name": "huggingface"
-    },
-    {
-      "id": "30QR8Xlnb4dtomfO",
-      "name": "ImageFx"
+      "id": "Qe3sPFaeiSQJFWY0",
+      "name": "Text2Img"
     }
   ],
   "mappings": [
@@ -199,68 +119,52 @@
       "tagId": "NfpWFOl4Ilnk74rk"
     },
     {
-      "workflowId": "dXRBkc4yDaj8MQwH",
-      "tagId": "T2WqpSHFONPmV2eK"
+      "workflowId": "eUrh67lRYco4pXoI",
+      "tagId": "665lt17B6ksJ4AvB"
     },
     {
-      "workflowId": "dXRBkc4yDaj8MQwH",
-      "tagId": "jOK0l1uCxvJ7zJ8C"
+      "workflowId": "eUrh67lRYco4pXoI",
+      "tagId": "xpMROVepg9CtsWlY"
     },
     {
-      "workflowId": "dXRBkc4yDaj8MQwH",
-      "tagId": "J10QWUvqhdiOibaz"
+      "workflowId": "eUrh67lRYco4pXoI",
+      "tagId": "Qe3sPFaeiSQJFWY0"
     },
     {
-      "workflowId": "l8Q1yOALQQCgrKS0",
-      "tagId": "4hHYQ8Udn6n4RER3"
+      "workflowId": "qmJ0tEjqkFEJ4YBT",
+      "tagId": "665lt17B6ksJ4AvB"
     },
     {
-      "workflowId": "l8Q1yOALQQCgrKS0",
-      "tagId": "nEui8NO6V3a5hMut"
+      "workflowId": "qmJ0tEjqkFEJ4YBT",
+      "tagId": "xpMROVepg9CtsWlY"
     },
     {
-      "workflowId": "l8Q1yOALQQCgrKS0",
-      "tagId": "gw0QmrN3jEN1J7Du"
+      "workflowId": "qmJ0tEjqkFEJ4YBT",
+      "tagId": "Qe3sPFaeiSQJFWY0"
     },
     {
-      "workflowId": "p87HpqvmEs4jMeuh",
-      "tagId": "nEui8NO6V3a5hMut"
+      "workflowId": "YcOaejwWRDB46QGv",
+      "tagId": "665lt17B6ksJ4AvB"
     },
     {
-      "workflowId": "p87HpqvmEs4jMeuh",
-      "tagId": "gfAmv6FLMbG1bDt8"
+      "workflowId": "YcOaejwWRDB46QGv",
+      "tagId": "xpMROVepg9CtsWlY"
     },
     {
-      "workflowId": "DklJQkytfc1pDpqV",
-      "tagId": "nEui8NO6V3a5hMut"
+      "workflowId": "YcOaejwWRDB46QGv",
+      "tagId": "Qe3sPFaeiSQJFWY0"
     },
     {
-      "workflowId": "DklJQkytfc1pDpqV",
-      "tagId": "dGAQOVe0Ky0cExcB"
+      "workflowId": "VusDACHxA33Ob5XA",
+      "tagId": "665lt17B6ksJ4AvB"
     },
     {
-      "workflowId": "awIVZ9dZb1fZeZUO",
-      "tagId": "nEui8NO6V3a5hMut"
+      "workflowId": "VusDACHxA33Ob5XA",
+      "tagId": "Qe3sPFaeiSQJFWY0"
     },
     {
-      "workflowId": "kz1F8tv1fszMoUFx",
-      "tagId": "nEui8NO6V3a5hMut"
-    },
-    {
-      "workflowId": "kz1F8tv1fszMoUFx",
-      "tagId": "1QYEuiRtjdyfvJm0"
-    },
-    {
-      "workflowId": "cFMzCbYiwHhagkE3",
-      "tagId": "nEui8NO6V3a5hMut"
-    },
-    {
-      "workflowId": "cFMzCbYiwHhagkE3",
-      "tagId": "4hHYQ8Udn6n4RER3"
-    },
-    {
-      "workflowId": "fOFlcDKISPEMGFXK",
-      "tagId": "nEui8NO6V3a5hMut"
+      "workflowId": "VusDACHxA33Ob5XA",
+      "tagId": "xpMROVepg9CtsWlY"
     }
   ]
 }

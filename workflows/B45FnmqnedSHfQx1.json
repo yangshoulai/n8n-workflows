@@ -114,11 +114,11 @@
           "conditions": [
             {
               "id": "a23f8e77-c44e-4d78-a4c9-a1496d78dcd6",
-              "leftValue": "={{ $json.data[0].url }}",
+              "leftValue": "={{ $json.data }}",
               "rightValue": "",
               "operator": {
-                "type": "string",
-                "operation": "exists",
+                "type": "array",
+                "operation": "notEmpty",
                 "singleValue": true
               }
             }
@@ -328,7 +328,7 @@
       "typeVersion": 1,
       "position": [
         1936,
-        -312
+        -408
       ],
       "id": "0f79aa25-c855-45fb-a121-6e73d4a9234c",
       "name": "设置 Token 失效",
@@ -347,7 +347,7 @@
       "typeVersion": 2,
       "position": [
         1712,
-        -480
+        -576
       ],
       "id": "0bd1ec80-3318-4ce0-a64f-a99a0202228c",
       "name": "Code in JavaScript"
@@ -364,7 +364,7 @@
       "typeVersion": 1,
       "position": [
         1488,
-        -480
+        -576
       ],
       "id": "da2cfeb9-002e-4d2d-b744-2a776f3732a8",
       "name": "重新获取 Redis Tokens1",
@@ -410,20 +410,6 @@
       ],
       "id": "67211059-4520-4c66-8102-f671d49979ce",
       "name": "计算 Token Map"
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.data[0].url }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        1488,
-        -672
-      ],
-      "id": "50af35d7-dd08-470a-9e48-c98e8557e29a",
-      "name": "下载图片"
     }
   ],
   "connections": {
@@ -451,13 +437,7 @@
     },
     "判断是否成功": {
       "main": [
-        [
-          {
-            "node": "下载图片",
-            "type": "main",
-            "index": 0
-          }
-        ],
+        [],
         [
           {
             "node": "重新获取 Redis Tokens1",
@@ -604,15 +584,19 @@
     }
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "any",
+    "availableInMCP": false
   },
   "triggerCount": 0,
-  "versionId": "45a55eb7-0a0f-4cf3-a854-b7b19fea10b3",
+  "versionId": "1ac02108-5ee9-4e06-bb4d-d570e5104cde",
   "owner": {
-    "type": "team",
-    "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
   },
-  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "parentFolderId": "EUQ7E9WiVLrAnuU7",
   "isArchived": false
 }

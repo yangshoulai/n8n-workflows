@@ -39,7 +39,7 @@
     {
       "parameters": {
         "language": "pythonNative",
-        "pythonCode": "from datetime import datetime, timedelta, timezone\n\nfor item in _input.all():\n  item.json.time = datetime.now(timezone(timedelta(hours=0))).strftime(\"%Y%m%d%H%M\")\nreturn _input.all()"
+        "pythonCode": "from datetime import datetime, timedelta, timezone\n\nfor item in _items:\n  item['json']['time'] = datetime.now(timezone(timedelta(hours=0))).strftime(\"%Y%m%d%H%M\")\nreturn _items"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -270,11 +270,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "ff753014-808b-45f8-b199-a896f2f813f0",
+  "versionId": "aab7ae89-b656-421d-9c66-021d40ed7438",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "teamName": "天天美图"
   },
   "parentFolderId": "EObsJ1pbLs4voBnl",
   "isArchived": false

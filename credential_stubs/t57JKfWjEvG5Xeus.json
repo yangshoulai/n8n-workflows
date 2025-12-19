@@ -1,10 +1,9 @@
 {
-  "id": "Ycyejqx40cA6Dy2Y",
-  "name": "NewAPI - yangshoulai",
-  "type": "openAiApi",
+  "id": "t57JKfWjEvG5Xeus",
+  "name": "@ttmtsf_bot",
+  "type": "telegramApi",
   "data": {
-    "apiKey": "",
-    "url": ""
+    "accessToken": ""
   },
   "ownedBy": {
     "type": "personal",

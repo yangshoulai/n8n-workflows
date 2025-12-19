@@ -64,7 +64,7 @@
       "credentials": {
         "postgres": {
           "id": "E8sSOvQ08v4CZXDR",
-          "name": "Postgres - Neon - iwallpapers"
+          "name": "iwallpapers"
         }
       }
     },
@@ -90,6 +90,7 @@
           "__rl": true,
           "value": "l8Q1yOALQQCgrKS0",
           "mode": "list",
+          "cachedResultUrl": "/workflow/l8Q1yOALQQCgrKS0",
           "cachedResultName": "发送壁纸"
         },
         "workflowInputs": {
@@ -197,7 +198,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "d3a73fd5-8fef-421f-832c-a81cc7cbc2e3",
+  "versionId": "97a4c505-a248-4be8-b9dc-400eafcb99cf",
   "owner": {
     "type": "personal",
     "projectId": "pskh8wmOtrNvczt8",

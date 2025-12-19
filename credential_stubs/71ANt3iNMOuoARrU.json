@@ -1,13 +1,9 @@
 {
-  "id": "rDCAHUftwkuS8kvn",
-  "name": "腾讯云 Minio",
-  "type": "s3",
+  "id": "71ANt3iNMOuoARrU",
+  "name": "@ttmtsfw_bot",
+  "type": "telegramApi",
   "data": {
-    "endpoint": "",
-    "accessKeyId": "",
-    "secretAccessKey": "",
-    "forcePathStyle": true,
-    "ignoreSSLIssues": true
+    "accessToken": ""
   },
   "ownedBy": {
     "type": "personal",

@@ -1,12 +1,15 @@
 {
   "id": "HcRpLQ8AC9QYmUDr",
-  "name": "Google Gemini(PaLM) Api - shoulai.yang@gmail.com",
+  "name": "@shoulai.yang@gmail.com",
   "type": "googlePalmApi",
   "data": {
     "apiKey": ""
   },
   "ownedBy": {
     "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
     "personalEmail": "shoulai.yang@gmail.com"
-  }
+  },
+  "isGlobal": false
 }

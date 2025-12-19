@@ -9,14 +9,6 @@
       "updatedAt": "2025-06-15T16:16:29.284Z"
     },
     {
-      "id": "tXbrPLEAcjwVXk68",
-      "name": "人工智能",
-      "parentFolderId": null,
-      "homeProjectId": "pskh8wmOtrNvczt8",
-      "createdAt": "2025-06-15T16:39:09.957Z",
-      "updatedAt": "2025-06-15T16:39:09.957Z"
-    },
-    {
       "id": "f06nSbAhuAEZN6y2",
       "name": "定时任务",
       "parentFolderId": null,
@@ -25,20 +17,44 @@
       "updatedAt": "2025-12-14T13:15:34.435Z"
     },
     {
-      "id": "CeDrMLh1iRUlzFhI",
-      "name": "文件服务",
-      "parentFolderId": null,
-      "homeProjectId": "WbNJS3WnAGCxsXVf",
-      "createdAt": "2025-12-14T14:42:52.924Z",
-      "updatedAt": "2025-12-14T14:42:52.924Z"
-    },
-    {
       "id": "EObsJ1pbLs4voBnl",
       "name": "绘画服务",
       "parentFolderId": null,
       "homeProjectId": "WbNJS3WnAGCxsXVf",
       "createdAt": "2025-12-14T14:43:22.974Z",
       "updatedAt": "2025-12-14T14:43:22.974Z"
+    },
+    {
+      "id": "JTF9CnBaMX9ngezi",
+      "name": "通用流程",
+      "parentFolderId": null,
+      "homeProjectId": "pskh8wmOtrNvczt8",
+      "createdAt": "2025-12-19T03:08:55.033Z",
+      "updatedAt": "2025-12-19T03:08:55.033Z"
+    },
+    {
+      "id": "kOAooG2cBl8Xevpe",
+      "name": "文件服务",
+      "parentFolderId": "JTF9CnBaMX9ngezi",
+      "homeProjectId": "pskh8wmOtrNvczt8",
+      "createdAt": "2025-12-19T03:09:33.917Z",
+      "updatedAt": "2025-12-19T03:09:33.917Z"
+    },
+    {
+      "id": "EUQ7E9WiVLrAnuU7",
+      "name": "HuggingFace",
+      "parentFolderId": "JTF9CnBaMX9ngezi",
+      "homeProjectId": "pskh8wmOtrNvczt8",
+      "createdAt": "2025-12-19T03:12:32.913Z",
+      "updatedAt": "2025-12-19T03:12:32.913Z"
+    },
+    {
+      "id": "kKzCEKAFcKMSJLCb",
+      "name": "错误处理",
+      "parentFolderId": "JTF9CnBaMX9ngezi",
+      "homeProjectId": "pskh8wmOtrNvczt8",
+      "createdAt": "2025-12-19T03:15:03.904Z",
+      "updatedAt": "2025-12-19T03:15:03.904Z"
     }
   ]
 }

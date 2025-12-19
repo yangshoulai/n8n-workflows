@@ -1,0 +1,70 @@
+{
+  "id": "Y8yqM2jq5lsYpreo",
+  "name": "保存错误信息 - Redis",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -16
+      ],
+      "id": "b23b3b58-bd8b-46a5-bfb8-fada82dfe076",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=n8n:error:workflow:{{ $json.workflow.id }}:execution:{{ $json.execution.id }}",
+        "value": "={{JSON.stringify($json)}}",
+        "keyType": "string",
+        "expire": true,
+        "ttl": 86400
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -16
+      ],
+      "id": "4dd07176-3f8a-49f1-b97b-3745c79186ca",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "any"
+  },
+  "triggerCount": 0,
+  "versionId": "33de28f8-148b-457c-b5d0-f9b1c25f1c20",
+  "owner": {
+    "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "kKzCEKAFcKMSJLCb",
+  "isArchived": false
+}

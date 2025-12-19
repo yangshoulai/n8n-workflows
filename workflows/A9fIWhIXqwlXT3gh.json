@@ -186,15 +186,19 @@
     }
   },
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "any",
+    "availableInMCP": false
   },
   "triggerCount": 0,
   "versionId": "3f90c7b5-4489-4b87-bacf-1314bda3db96",
   "owner": {
-    "type": "team",
-    "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
   },
-  "parentFolderId": "CeDrMLh1iRUlzFhI",
+  "parentFolderId": "kOAooG2cBl8Xevpe",
   "isArchived": false
 }

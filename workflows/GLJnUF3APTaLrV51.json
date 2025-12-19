@@ -33,6 +33,15 @@
       "parameters": {
         "method": "POST",
         "url": "https://zimage.run/api/z-image/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Cookie",
+              "value": "_ga=GA1.1.819832591.1764644075; _clck=10b5a1h%5E2%5Eg1y%5E0%5E2162; g_state={\"i_l\":0,\"i_ll\":1766019965664,\"i_b\":\"MYz3RiqdSD7YzE4GGInaVvaQ0weMwP8Xyhxf/RWg5TI\",\"i_e\":{\"enable_itp_optimization\":8}}; __Secure-better-auth.session_token=TQOe5aF4tLY37fW65mKQOgBUtSRd4w9O.ztqnyYAoWGCX4jtLEowN3AIPbBao40lky1Vhf96o2SQ%3D; _ga_RGVM8DLZWP=GS2.1.s1766019934$o15$g1$t1766019990$j4$l0$h0; _clsk=eymv9t%5E1766019991072%5E5%5E1%5Ev.clarity.ms%2Fcollect"
+            }
+          ]
+        },
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"prompt\": \"{{ $('入口参数').item.json.prompt }}\",\n  \"width\": {{ $('入口参数').item.json.width }},\n  \"height\": {{ $('入口参数').item.json.height }}\n}",
@@ -447,11 +456,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "4ba1d413-f272-496f-b7c0-754b86cb8660",
+  "versionId": "5f877987-d256-47b7-989a-776e6a08afb2",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "teamName": "天天美图"
   },
   "parentFolderId": "EObsJ1pbLs4voBnl",
   "isArchived": false

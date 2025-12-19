@@ -138,7 +138,7 @@
     },
     {
       "parameters": {
-        "url": "={{ $json.imageUrl }}",
+        "url": "={{ $json.data[0].url }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -149,20 +149,6 @@
       ],
       "id": "35353073-0639-4377-bbcf-68fcfd41a91f",
       "name": "HTTP Request"
-    },
-    {
-      "parameters": {
-        "operation": "binaryToPropery",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1.1,
-      "position": [
-        144,
-        -704
-      ],
-      "id": "09170152-1711-46bc-a424-4d6ed770b9f3",
-      "name": "Extract from File"
     }
   ],
   "connections": {
@@ -213,17 +199,6 @@
     },
     "HTTP Request": {
       "main": [
-        [
-          {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File": {
-      "main": [
         []
       ]
     }
@@ -232,11 +207,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "3e2681f2-431b-4be0-aea6-112272f87a95",
+  "versionId": "ec4cdb41-4f88-4981-b847-bf23a7d0ca74",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "teamName": "天天美图"
   },
   "parentFolderId": "EObsJ1pbLs4voBnl",
   "isArchived": false
