@@ -9,7 +9,7 @@
           "value": "2AXB4vZV38Fjim58",
           "mode": "list",
           "cachedResultUrl": "/workflow/2AXB4vZV38Fjim58",
-          "cachedResultName": "人工智能 — Z-Image-Turbo 生图"
+          "cachedResultName": "天天美图 — Z-Image-Turbo 生图"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -17,7 +17,8 @@
             "width": "={{ $json.output.width }}",
             "height": "={{ $json.output.height }}",
             "prompt": "={{ $json.output.prompt }}",
-            "nsfw": "={{ $json.output.nsfw }}"
+            "nsfw": "={{ $json.output.nsfw }}",
+            "ratio": "={{ $json.output.ratio }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -59,6 +60,16 @@
               "display": true,
               "canBeUsedToMatch": true,
               "type": "boolean",
+              "removed": false
+            },
+            {
+              "id": "ratio",
+              "displayName": "ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
               "removed": false
             }
           ],
@@ -116,9 +127,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "deepseek-r1",
+          "value": "glm-4.7",
           "mode": "list",
-          "cachedResultName": "deepseek-r1"
+          "cachedResultName": "glm-4.7"
         },
         "responsesApiEnabled": false,
         "options": {
@@ -144,9 +155,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "qwen3-235b-a22b-2507-thinking",
+          "value": "gemini-2.5-flash",
           "mode": "list",
-          "cachedResultName": "qwen3-235b-a22b-2507-thinking"
+          "cachedResultName": "gemini-2.5-flash"
         },
         "responsesApiEnabled": false,
         "options": {
@@ -285,14 +296,20 @@
             {
               "id": "30e03cc7-67bf-42bb-822c-d52e5a968c5f",
               "name": "width",
-              "value": "={{ $('计算分辨率').item.json.output.width }}",
+              "value": "={{ $json.width || $('计算分辨率').item.json.output.width }}",
               "type": "number"
             },
             {
               "id": "cb159803-e69b-44b8-9aa8-670601fec7de",
               "name": "height",
-              "value": "={{ $('计算分辨率').item.json.output.height }}",
+              "value": "={{ $json.height || $('计算分辨率').item.json.output.height }}",
               "type": "number"
+            },
+            {
+              "id": "269fdb20-ae5d-46ce-bd87-4d5478dda2da",
+              "name": "provider",
+              "value": "={{ $json.provider }}",
+              "type": "string"
             }
           ]
         },
@@ -469,7 +486,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "2d830848-6e3f-4307-a150-f6cb80861adc",
+  "versionId": "670ed2d5-da37-4e40-a157-ca61dbb2f861",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

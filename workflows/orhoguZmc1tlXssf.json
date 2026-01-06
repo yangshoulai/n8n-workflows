@@ -87,7 +87,7 @@
         "specifyBody": "json",
         "jsonBody": "={\n  \"prompt\": \"{{ $json.prompt }}\",\n  \"model\": \"z-image-turbo\",\n  \"size\": \"{{$json.width}}x{{ $json.height }}\",\n  \"num_inference_steps\": 20\n} ",
         "options": {
-          "timeout": 120000
+          "timeout": 180000
         }
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -159,11 +159,11 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "b4049531-a645-4dba-b588-0d52e8eb8291",
+  "versionId": "f6fcbf30-b2d7-4f9c-bb1d-94c6c3e6d0dd",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
-    "teamName": "人工智能"
+    "teamName": "天天美图"
   },
   "parentFolderId": "EObsJ1pbLs4voBnl",
   "isArchived": false

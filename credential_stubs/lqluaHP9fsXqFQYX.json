@@ -1,0 +1,20 @@
+{
+  "id": "lqluaHP9fsXqFQYX",
+  "name": "天天美图",
+  "type": "postgres",
+  "data": {
+    "host": "",
+    "database": "",
+    "user": "",
+    "password": "",
+    "maxConnections": 10,
+    "ssl": ""
+  },
+  "ownedBy": {
+    "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "isGlobal": false
+}

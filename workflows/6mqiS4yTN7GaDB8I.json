@@ -1,0 +1,700 @@
+{
+  "id": "6mqiS4yTN7GaDB8I",
+  "name": "Z-Image-Run 免费 AI 绘画",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            },
+            {
+              "name": "ratio"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        -416
+      ],
+      "id": "83fc0b57-8c9b-4c49-9380-0651eb409f38",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://z-image.run/api/task/image/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "visitor-id",
+              "value": "={{ $json.visitorId }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"type\": \"text-to-image\",\n  \"prompt\": \"{{ $json.prompt }}\",\n  \"num\": 1,\n  \"ratio\": \"{{ $json.ratio }}\",\n  \"model\": \"z-image\"\n}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -64,
+        -488
+      ],
+      "id": "bae7dae1-d913-4e3e-be09-a08bc6070165",
+      "name": "调用绘画接口"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "78ce0a70-e4de-4d71-852a-92990c8dd81e",
+              "leftValue": "={{ $json.code }}",
+              "rightValue": 200,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "9931daf1-0574-43cf-a1fe-c2e6d26cb08f",
+              "leftValue": "={{ $json.data.taskId }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        160,
+        -488
+      ],
+      "id": "b0e14257-e89f-4f5c-9bd5-23502a0167a1",
+      "name": "判断是否成功"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "faaba3b2-ba8c-4590-b9ea-60f52f2939cb",
+              "name": "check_times",
+              "value": "={{ ($json.check_times || 0) }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        -536
+      ],
+      "id": "d5332f82-da8a-4737-aefe-c8d08db58634",
+      "name": "检查任务次数"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2ac7d95c-d625-4ce3-949b-91a5265d3f72",
+              "leftValue": "={{ $json.check_times }}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        608,
+        -536
+      ],
+      "id": "ed86333f-b27d-4c33-bb42-88ec344e20d7",
+      "name": "判断是否继续"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        -608
+      ],
+      "id": "b969797c-de90-4b30-b0ea-c44c4c71d8ce",
+      "name": "Wait",
+      "webhookId": "a9499e12-c0ad-4513-8224-4a259da6d252"
+    },
+    {
+      "parameters": {
+        "url": "https://z-image.run/api/task/recent?type=text-to-image&page=1&pageSize=5",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "visitor-id",
+              "value": "={{ $('Crypto').item.json.visitorId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1056,
+        -608
+      ],
+      "id": "ea2dab18-a508-44a7-99e5-879a5d5774f5",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  for(const r of item.json.data.items){\n    if(r.taskId === $('调用绘画接口').first().json.data.taskId){\n      return [r];\n    }\n  }\n}\n\nreturn [{}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1280,
+        -608
+      ],
+      "id": "46fbedfd-56cd-44cb-b08f-5b9eae382a37",
+      "name": "获取任务信息"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dc912c6a-e475-49f1-a597-b81a2654e3b3",
+              "leftValue": "={{ $json.taskId }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1504,
+        -608
+      ],
+      "id": "11a7b783-3985-49ba-a404-396f37a9fd8e",
+      "name": "判断是否成功获得任务状态"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ee9059a1-bbc3-4346-bc2e-0a5294dcb2c7",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "pending",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "6120a3f0-f380-419b-b3c8-abd950bab6cf",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "running",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1728,
+        -608
+      ],
+      "id": "3ea35d4a-7c3d-47fb-b504-af3a96b8f724",
+      "name": "判断是否继续检查"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4afa700-700b-4232-95ab-e6d99c1c0412",
+              "name": "check_times",
+              "value": "={{ $('检查任务次数').item.json.check_times + 1}}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1952,
+        -440
+      ],
+      "id": "7d7ab142-138f-4260-b4e3-94722ed47eaf",
+      "name": "检查次数+1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "cea8a53e-707e-4b2e-8e78-47cc812400a9",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "4aada471-4fb5-4a28-9f96-d7ed3d7495b8",
+              "leftValue": "={{ $json.returnValue.images }}",
+              "rightValue": "",
+              "operator": {
+                "type": "array",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1952,
+        -656
+      ],
+      "id": "1c5a5bcc-5b9a-427d-b8fd-5431b77b22b1",
+      "name": "判断任务是否完成"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.returnValue.images[0] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2176,
+        -656
+      ],
+      "id": "3de1a0c1-c513-4bb2-bb69-f4bffd31d7b8",
+      "name": "下载图片"
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "visitorId"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -488
+      ],
+      "id": "fc6e3177-f1e4-426d-94be-d67b127ae0f2",
+      "name": "Crypto"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a07978f4-7d48-406f-ad18-fbcdcd7d6923",
+              "name": "retry_times",
+              "value": 0,
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -736,
+        -416
+      ],
+      "id": "3dcc1954-b897-44af-87c8-5d41b345af65",
+      "name": "设置重试次数"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6e35acd2-c730-451b-9ac6-84f0bd16ea88",
+              "leftValue": "={{ $json.retry_times }}",
+              "rightValue": 3,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -512,
+        -416
+      ],
+      "id": "2d0a81bc-5f8a-49dc-9721-57197f23e2cb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8d51a1e8-cd9f-4994-bb8e-69b8f5abee2f",
+              "name": "retry_times",
+              "value": "={{ $('If').item.json.retry_times + 1 }}",
+              "type": "number"
+            },
+            {
+              "id": "245fbbaa-2b4b-4af1-b8a6-f132fb0fd574",
+              "name": "prompt",
+              "value": "={{ $('If').item.json.prompt }}",
+              "type": "string"
+            },
+            {
+              "id": "9756b9ef-eec7-4a38-bfbd-0fd4040b1820",
+              "name": "width",
+              "value": "={{ $('If').item.json.width }}",
+              "type": "number"
+            },
+            {
+              "id": "391e78f6-809a-4978-8ec2-065c3c2bcce3",
+              "name": "height",
+              "value": "={{ $('If').item.json.height }}",
+              "type": "number"
+            },
+            {
+              "id": "0fc9d18e-d36b-4014-8553-17035bee379e",
+              "name": "ratio",
+              "value": "={{ $('If').item.json.ratio }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        -320
+      ],
+      "id": "00e0aa78-f67a-4e6b-a4f8-d45bcf9ddf69",
+      "name": "重试次数+1"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "设置重试次数",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用绘画接口": {
+      "main": [
+        [
+          {
+            "node": "判断是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否成功": {
+      "main": [
+        [
+          {
+            "node": "检查任务次数",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "重试次数+1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "检查任务次数": {
+      "main": [
+        [
+          {
+            "node": "判断是否继续",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否继续": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "获取任务信息",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取任务信息": {
+      "main": [
+        [
+          {
+            "node": "判断是否成功获得任务状态",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否成功获得任务状态": {
+      "main": [
+        [
+          {
+            "node": "判断是否继续检查",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否继续检查": {
+      "main": [
+        [
+          {
+            "node": "判断任务是否完成",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "检查次数+1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "检查次数+1": {
+      "main": [
+        [
+          {
+            "node": "判断是否继续",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断任务是否完成": {
+      "main": [
+        [
+          {
+            "node": "下载图片",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "下载图片": {
+      "main": [
+        []
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "调用绘画接口",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "设置重试次数": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "重试次数+1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "triggerCount": 0,
+  "versionId": "d39c3e4d-39ef-40fe-90b7-7eec095fd8bf",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "天天美图"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

@@ -1,0 +1,464 @@
+{
+  "id": "PhO3mBDRZvck8gXu",
+  "name": "Gitee 免费 AI 绘画 With Tokens",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "width",
+              "type": "number"
+            },
+            {
+              "name": "height",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1568,
+        304
+      ],
+      "id": "4b7e2579-40ab-40fa-862b-9b0dc3aa1d84",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "jsCode": "const keys = [];\nconst d = new Intl.DateTimeFormat(\"en-CA\").format(new Date()).replace(/-/g, \"\");\nfor(const token of $vars.GITEE_ACCESS_TOKENS.split(\",\")){\n    const k = {\n      \"token\": token,\n      \"key\": 'gitee:token:'+d+':'+token,\n      \"statusKey\": 'gitee:token:'+d+':'+token+':status'\n    };\n    keys.push({key: k});\n}\n\nfor (let i = keys.length - 1; i > 0; i--) {\n  const j = Math.floor(Math.random() * (i + 1));\n  [keys[i], keys[j]] = [keys[j], keys[i]];\n}\n\nreturn keys;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1344,
+        304
+      ],
+      "id": "21ffbf70-beaa-4b59-bac0-617b31fe6c30",
+      "name": "计算 AcessToken Keys"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1120,
+        304
+      ],
+      "id": "6e1b4127-bb9e-4933-a1cf-6d659ee4d0ae",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "=status",
+        "key": "={{ $json.key.statusKey }}",
+        "keyType": "string",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -896,
+        -80
+      ],
+      "id": "eac76895-97b9-42ee-83fd-f18561e4428d",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8d9926fe-6e9c-40b5-a952-c8b7490d4895",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "disabled",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -672,
+        -80
+      ],
+      "id": "2995794e-86d8-49c2-9aec-1c106a6f5c2d",
+      "name": "判断 Key 是否可用"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a1576f4e-af4d-467a-9746-20d79a5b568a",
+              "leftValue": "={{ !!$binary?.data }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -224,
+        -80
+      ],
+      "id": "360261d4-24be-455b-9df1-e18ed2ed3a56",
+      "name": "判断图片是否生成"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "32a1eedc-e984-4614-8588-4e3718d6dfc7",
+              "leftValue": "={{ $json.error.message }}",
+              "rightValue": "429",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "97e3225c-932a-4882-8aec-605e6cafa1f6",
+              "leftValue": "={{ $json.error.message }}",
+              "rightValue": "quota",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "6364e03f-94a5-4f15-a782-3ac306bca815",
+              "leftValue": "={{ $json.error.message }}",
+              "rightValue": "credit",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -224,
+        112
+      ],
+      "id": "9c679dc2-c111-47ce-abe6-5a324f6634c9",
+      "name": "是否需要禁用当前使用的 Token"
+    },
+    {
+      "parameters": {
+        "operation": "incr",
+        "key": "={{ $('Loop Over Items').item.json.key.key }}",
+        "expire": true,
+        "ttl": 86400
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -272
+      ],
+      "id": "d0b883e4-735f-4b0a-bde4-7d29a4b2ecc6",
+      "name": "Token 使用次数+1",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $('Loop Over Items').item.json.key.statusKey }}",
+        "value": "disabled",
+        "keyType": "string",
+        "expire": true,
+        "ttl": 43200
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        0,
+        192
+      ],
+      "id": "7dd396dd-e7c8-431d-b432-cfcac071fc77",
+      "name": "禁用当前 Token",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "orhoguZmc1tlXssf",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/orhoguZmc1tlXssf",
+          "cachedResultName": "天天美图 — Gitee 免费 AI 绘画"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "width": "={{ $('入口参数').item.json.width }}",
+            "height": "={{ $('入口参数').item.json.height }}",
+            "prompt": "={{ $('入口参数').item.json.prompt }}",
+            "token": "={{ $('Loop Over Items').item.json.key.token }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "width",
+              "displayName": "width",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "height",
+              "displayName": "height",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "number",
+              "removed": false
+            },
+            {
+              "id": "token",
+              "displayName": "token",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        -80
+      ],
+      "id": "89b8b382-80d3-4032-a0dd-09701b7d05ae",
+      "name": "Call 'Gitee 免费 AI 绘画'",
+      "alwaysOutputData": false,
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "计算 AcessToken Keys",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算 AcessToken Keys": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis": {
+      "main": [
+        [
+          {
+            "node": "判断 Key 是否可用",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断 Key 是否可用": {
+      "main": [
+        [
+          {
+            "node": "Call 'Gitee 免费 AI 绘画'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断图片是否生成": {
+      "main": [
+        [],
+        []
+      ]
+    },
+    "是否需要禁用当前使用的 Token": {
+      "main": [
+        [
+          {
+            "node": "禁用当前 Token",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "禁用当前 Token": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Gitee 免费 AI 绘画'": {
+      "main": [
+        [
+          {
+            "node": "判断图片是否生成",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Token 使用次数+1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "是否需要禁用当前使用的 Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Token 使用次数+1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "triggerCount": 0,
+  "versionId": "416ac622-f532-47e5-822a-ab46052d209e",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "天天美图"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

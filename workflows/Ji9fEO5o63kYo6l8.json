@@ -26,7 +26,7 @@
       "typeVersion": 1.1,
       "position": [
         -352,
-        -144
+        -240
       ],
       "id": "2e23ef94-b392-4cdf-86d8-d2a29a29ea1e",
       "name": "入口参数"
@@ -70,7 +70,7 @@
       "typeVersion": 4.3,
       "position": [
         -128,
-        -144
+        -240
       ],
       "id": "c47daeb0-28b6-4ca9-9939-6de4ae050bdb",
       "name": "HTTP Request"
@@ -113,20 +113,20 @@
       "typeVersion": 2.3,
       "position": [
         96,
-        -144
+        -240
       ],
       "id": "97409178-dae9-4d7e-a1bf-2a6e373a1d4f",
       "name": "判断调用是否成功"
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.first().json.data;\nconst lines = data.split('\\n');\nlet isCompleteEvent = false;\nfor (const line of lines) {\n    if (line.startsWith('event:')) {\n      if (line.substring(6).trim() === 'complete') {\n        isCompleteEvent = true;\n      } else if (line.substring(6).trim() === 'error') {\n        isCompleteEvent = false;\n      } else {\n        isCompleteEvent = false; // Reset if it's another event type\n      }\n    } else if (line.startsWith('data:') && isCompleteEvent) {\n      const jsonData = line.substring(5).trim();\n      try {\n        return [{data: JSON.parse(jsonData)}];\n      } catch (e) {\n        \n      }\n    }\n  }\n\nreturn [{data: null}];"
+        "jsCode": "const data = $input.first().json.data;\nlet error = null;\nconst lines = data.split('\\n');\nlet isCompleteEvent = false;\nfor (const line of lines) {\n    if (line.startsWith('event:')) {\n      if (line.substring(6).trim() === 'complete') {\n        isCompleteEvent = true;\n      } else if (line.substring(6).trim() === 'error') {\n        isCompleteEvent = false;\n        error = 'quota'\n      } else {\n        isCompleteEvent = false; // Reset if it's another event type\n      }\n    } else if (line.startsWith('data:') && isCompleteEvent) {\n      const jsonData = line.substring(5).trim();\n      try {\n        return [{data: JSON.parse(jsonData)}];\n      } catch (e) {\n        error = 'invalid json data'\n      }\n    }\n  }\n\nreturn [{data: null, message: error}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         768,
-        -144
+        -240
       ],
       "id": "06127bd2-f8d9-4f43-8dc8-01db25651136",
       "name": "解析报文",
@@ -157,7 +157,7 @@
       "typeVersion": 4.3,
       "position": [
         320,
-        -144
+        -240
       ],
       "id": "d927f5cf-eef1-4867-80c8-6cea3c864f9c",
       "name": "HTTP Request Event"
@@ -200,10 +200,67 @@
       "typeVersion": 2.3,
       "position": [
         544,
-        -144
+        -240
       ],
       "id": "aa78fb85-bca0-458a-97c4-1d8b04051db2",
       "name": "判断 Event 调用是否成功"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ebee1a88-82cf-4389-bf7e-a44cef03499b",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "050e5c53-37fc-4b41-81af-2088d9c0dfd0",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        992,
+        -240
+      ],
+      "id": "a00beca3-59cd-4ee4-8f85-57e0faf444af",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      },
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        -240
+      ],
+      "id": "15190f43-a83f-4ae3-8f93-f4d7dd6f699e",
+      "name": "Stop and Error"
     }
   ],
   "connections": {
@@ -242,7 +299,13 @@
     },
     "解析报文": {
       "main": [
-        []
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "HTTP Request Event": {
@@ -266,6 +329,18 @@
           }
         ]
       ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -275,7 +350,7 @@
     "availableInMCP": false
   },
   "triggerCount": 0,
-  "versionId": "b1e387a7-83e2-45b3-a3e8-965a5042e297",
+  "versionId": "4bf1d2cd-fc93-49bd-a4f3-380afb3aec24",
   "owner": {
     "type": "personal",
     "projectId": "pskh8wmOtrNvczt8",

@@ -1,0 +1,213 @@
+{
+  "id": "bL9VkLthEyro35qui8ZDa",
+  "name": "图片智能审核",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "meta/llama-4-scout-17b-16e-instruct",
+          "mode": "list",
+          "cachedResultName": "meta/llama-4-scout-17b-16e-instruct"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -704,
+        -32
+      ],
+      "id": "52321d64-97f6-4195-8448-b8eb66e7916a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "6QtS7ma73ZKRZmQX",
+          "name": "yangshoulai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "url"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -928,
+        -256
+      ],
+      "id": "9f0b27db-7bbf-4e0d-ab62-1bfe5b84eedb",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# 角色设定\n你是一位精通人体解剖学和视觉质量评估的 AI 专家。你的核心任务是审查图片中的人物，判断是否存在生成错误、解剖学畸形或不自然的变异。\n\n# 审核标准 (出现以下任一情况即判定为不合格/true)\n请仔细检查以下部位：\n\n1.  **手部与手指 (高频错误点)：**\n    -   手指数量错误（多指或少指，非正常 5 指）。\n    -   手指严重粘连、像面团一样融化。\n    -   手指关节弯曲角度违背生理结构，或手指长短比例极度失调。\n2.  **五官与面部：**\n    -   五官（眼、鼻、口）严重扭曲、错位或模糊不清（看起来像融化了）。\n    -   极度不对称，且这种不对称显然是由于生成错误而非自然特征造成的。\n    -   面部出现不明纹理或崩坏。\n3.  **肢体与躯干：**\n    -   出现多余的肢体（例如：3 只手臂、3 条腿）。\n    -   肢体缺失（除非画面构图明显是遮挡或特定截肢设定，否则无法解释的缺失视为错误）。\n    -   肢体反关节弯曲（例如膝盖向后弯，类似骨折的样子）。\n    -   身体与衣物或背景物体发生不自然的融合。\n\n# 输出格式要求\n你必须**仅**输出一个合法的 JSON 对象，不要包含 markdown 代码块标记（如 ```json），不要包含任何额外的解释文本。\n\nJSON 结构如下：\n{\n  \"is_bad\": <布尔值>, // 如果发现上述任何畸形或变异，设为 true；如果人物结构正常，设为 false\n  \"bad_details\": \"<字符串>\" // 用中文简要描述具体的错误细节（例如：“左手有6根手指”、“脸部五官融化扭曲”）。如果 is_bad 为 false，请填 \"无\"。\n}",
+        "hasOutputParser": true,
+        "needsFallback": true,
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageUrl",
+              "imageUrl": "={{ $json.url }}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -648,
+        -256
+      ],
+      "id": "a3bc7cfc-de07-4084-ad70-3b1d10c66f49",
+      "name": "智能识别"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"is_bad\": true,\n\t\"bad_details\": \"两名女性腿部交叉且有多余的腿\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        -32
+      ],
+      "id": "1fe26469-c16e-42c6-acd5-83c6ad89ad98",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "qwen2.5-72b-instruct",
+          "mode": "list",
+          "cachedResultName": "qwen2.5-72b-instruct"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        176
+      ],
+      "id": "a2959cfc-cdfe-46cd-8063-f4322be4993a",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "6QtS7ma73ZKRZmQX",
+          "name": "yangshoulai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "meta/llama-4-scout-17b-16e-instruct",
+          "mode": "list",
+          "cachedResultName": "meta/llama-4-scout-17b-16e-instruct"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -576,
+        -32
+      ],
+      "id": "3a41d560-7f31-4904-9032-67db4877c8c5",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "6QtS7ma73ZKRZmQX",
+          "name": "yangshoulai"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "智能识别",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "智能识别",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "智能识别",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "智能识别",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "triggerCount": 0,
+  "versionId": "abce61fe-3010-4fe8-8cb3-1a279566d167",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "天天美图"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

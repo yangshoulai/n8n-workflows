@@ -1,0 +1,144 @@
+{
+  "id": "jK4pzZ7vIFHzjGdq",
+  "name": "Kensei0x 免费 AI 绘画",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "ratio"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -624,
+        -352
+      ],
+      "id": "e8165f33-35b3-4620-aed9-cb96bd838ecf",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://uncatchcat--comfyui-online-comfyui-api.modal.run/",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"{{ $json.prompt }}\",\n  \"width\": {{ $json.width }},\n  \"height\": {{ $json.height }},\n  \"seed\": {{ Math.floor(Math.random() * 999999999999) }}\n}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -176,
+        -352
+      ],
+      "id": "cfb859e4-3b5f-415c-8ead-f6d443f383f2",
+      "name": "调用接口",
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  switch(item.json.ratio) {\n    case \"1:1\":\n      item.json.width = 2048;\n      item.json.height = 2048;\n      break;\n    case \"4:3\":\n      item.json.width = 2304;\n      item.json.height = 1728;\n      break;\n    case \"3:4\":\n      item.json.width = 1728;\n      item.json.height = 2304;\n      break;\n    case \"9:16\":\n      item.json.width = 1440;\n      item.json.height = 2560;\n      break;\n    case \"16:9\":\n      item.json.width = 2560;\n      item.json.height = 1440;\n      break;\n    default:\n      item.json.width = 2048;\n      item.json.height = 2048;\n      break;\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        -352
+      ],
+      "id": "eaf160da-095c-4b59-aba0-fb35e94a53ca",
+      "name": "计算分辨率"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e10897e6-555f-4be5-bc2d-9895f3912bcf",
+              "name": "width",
+              "value": "={{ $('计算分辨率').item.json.width }}",
+              "type": "string"
+            },
+            {
+              "id": "ee3cef4b-c673-45c3-9d7e-c0e0e9d2e656",
+              "name": "height",
+              "value": "={{ $('计算分辨率').item.json.height }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        48,
+        -352
+      ],
+      "id": "aa113529-cee0-4dc9-8d4e-b58df020bf6b",
+      "name": "返回结果"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "计算分辨率",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "调用接口": {
+      "main": [
+        [
+          {
+            "node": "返回结果",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算分辨率": {
+      "main": [
+        [
+          {
+            "node": "调用接口",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "triggerCount": 0,
+  "versionId": "6b3156d1-38c0-406c-be00-17d1290f6174",
+  "owner": {
+    "type": "team",
+    "teamId": "WbNJS3WnAGCxsXVf",
+    "teamName": "天天美图"
+  },
+  "parentFolderId": "EObsJ1pbLs4voBnl",
+  "isArchived": false
+}

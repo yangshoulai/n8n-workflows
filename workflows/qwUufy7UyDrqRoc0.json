@@ -75,12 +75,26 @@
     },
     {
       "parameters": {
+        "url": "={{ $json.data[0].url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -80,
+        -704
+      ],
+      "id": "35353073-0639-4377-bbcf-68fcfd41a91f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "B45FnmqnedSHfQx1",
+          "value": "0NyMcUUQc611UWLh",
           "mode": "list",
-          "cachedResultUrl": "/workflow/B45FnmqnedSHfQx1",
-          "cachedResultName": "人工智能 — HuggingFace Space API With Tokens"
+          "cachedResultUrl": "/workflow/0NyMcUUQc611UWLh",
+          "cachedResultName": "HuggingFace Space API With Tokens"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -134,21 +148,7 @@
         -704
       ],
       "id": "7633712f-96a3-4376-98ea-7c56a8439e28",
-      "name": "Call 'HuggingFace Space API With Tokens'"
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.data[0].url }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        -80,
-        -704
-      ],
-      "id": "35353073-0639-4377-bbcf-68fcfd41a91f",
-      "name": "HTTP Request"
+      "name": "Call 'HuggingFace Space API With Tokens 2'"
     }
   ],
   "connections": {
@@ -167,7 +167,7 @@
       "main": [
         [
           {
-            "node": "Call 'HuggingFace Space API With Tokens'",
+            "node": "Call 'HuggingFace Space API With Tokens 2'",
             "type": "main",
             "index": 0
           }
@@ -186,7 +186,12 @@
         []
       ]
     },
-    "Call 'HuggingFace Space API With Tokens'": {
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    },
+    "Call 'HuggingFace Space API With Tokens 2'": {
       "main": [
         [
           {
@@ -196,18 +201,13 @@
           }
         ]
       ]
-    },
-    "HTTP Request": {
-      "main": [
-        []
-      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "ec4cdb41-4f88-4981-b847-bf23a7d0ca74",
+  "versionId": "8fff2093-94f1-4093-b0e0-b005b685a673",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

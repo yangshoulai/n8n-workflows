@@ -31,7 +31,7 @@
       "typeVersion": 2.3,
       "position": [
         -2352,
-        -800
+        -1152
       ],
       "id": "1fe65c36-e090-4a80-9021-9e454735e3a0",
       "name": "判断是否生成图片"
@@ -41,7 +41,8 @@
         "rule": {
           "interval": [
             {
-              "field": "minutes"
+              "field": "minutes",
+              "minutesInterval": 15
             }
           ]
         }
@@ -50,82 +51,10 @@
       "typeVersion": 1.3,
       "position": [
         -3024,
-        -896
+        -1152
       ],
       "id": "183556ee-05f7-418e-aa9f-7baf3b1c9342",
       "name": "Schedule Trigger"
-    },
-    {
-      "parameters": {
-        "url": "={{ $('Call \\'EasyImg 文件上传 - Binary\\'').item.json.imageUrl }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        -1456,
-        -800
-      ],
-      "id": "5f2673a0-d510-49d1-9c53-7fb3bc8c90bb",
-      "name": "下载图片"
-    },
-    {
-      "parameters": {
-        "operation": "sendPhoto",
-        "chatId": "={{$vars.TG_CHAT_ID_CHANNEL_MTL}}",
-        "binaryData": true,
-        "additionalFields": {
-          "caption": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.prompt }}",
-          "has_spoiler": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        -1232,
-        -800
-      ],
-      "id": "ab4be669-bd3c-43af-bd27-9ebe6e801d91",
-      "name": "发送图片二进制",
-      "webhookId": "d77ffec2-3b00-471a-aae4-52cf13901e08",
-      "retryOnFail": false,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "telegramApi": {
-          "id": "RGKr0LfSv0GjIBKA",
-          "name": "@ttmtnsfw_bot"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "operation": "sendPhoto",
-        "chatId": "={{$vars.TG_CHAT_ID_CHANNEL_MTL}}",
-        "file": "={{ $json.imageUrl }}",
-        "additionalFields": {
-          "caption": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.prompt }}",
-          "has_spoiler": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        -1680,
-        -800
-      ],
-      "id": "23f49ad8-438b-437e-a183-d7badb5672d7",
-      "name": "发送图片 URL",
-      "webhookId": "71ba75aa-5adc-47a4-bc47-2065303c10ad",
-      "retryOnFail": false,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "telegramApi": {
-          "id": "RGKr0LfSv0GjIBKA",
-          "name": "@ttmtnsfw_bot"
-        }
-      },
-      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -145,7 +74,7 @@
       "typeVersion": 3.4,
       "position": [
         -2800,
-        -896
+        -1152
       ],
       "id": "f8098e2e-9ec7-4491-8a5d-ee867ec8b07f",
       "name": "随机生成"
@@ -157,12 +86,12 @@
           "value": "zSgv7aguQoGReRP7",
           "mode": "list",
           "cachedResultUrl": "/workflow/zSgv7aguQoGReRP7",
-          "cachedResultName": "人工智能 — 专业 AI 摄影师"
+          "cachedResultName": "天天美图 — 专业 AI 摄影师"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "systemPrompt": "# 角色定义\n你是一位拥有顶级审美的人像摄影大师，同时也是一位精通 AI 绘画（Stable Diffusion/Midjourney）的提示词专家。**你的核心特长是擅长捕捉女性极致的肉欲感与强烈的情色张力。你的任务是根据用户的输入，构建极具真实感、充满大胆诱惑与性暗示的 NSFW 画面描述。你需要大幅减少人物的衣着遮挡，增加情趣与裸露元素，通过湿身、透视、紧身或半脱状态传达令人血脉偾张的视觉冲击，但必须坚守不直接描写性器官的底线。**\n\n## 核心指令\n你的目标是输出一段用于生成图片的 JSON 数据。你必须严格遵循以下逻辑进行创作：\n\n### 1. 用户意图分析\n在生成描述前，首先分析用户的输入：\n*   **指定场景**：如果用户提供了具体要求（例如：“浴室”、“沙发”），且该场景符合现实逻辑，你必须**以此为核心**布置拍摄方案。\n*   **随机/无指令**：如果用户输入“随机”或仅打招呼，你必须**在现实世界的范畴内**自由发挥，选择一个生活化或旅拍风格的场景。\n\n### 2. 绝对固定的人物设定\n画面主体永远是同一位女性，具体细节如下：\n*   **身份/年龄（修改点）**：**20 岁至 30 岁之间**的典型中国美女。每次生成时，**必须随机指定一个具体的年龄数字**写在描述中（例如：“21岁”、“28岁”、“24岁”）。\n*   **面部特征**：**严禁**出现“潮红”、“红润”等形容脸红的词汇。**必须**使用“素颜”、“淡妆”、“冷白皮”、“面容白皙”等词汇，强调肤色的苍白与洁净。\n*   **身高特征**：身高设定在 **168cm 至 175cm** 之间。每次生成时，**必须随机指定一个具体的数字**写在描述中（例如：“身高169cm”、“身高174cm”）。\n*   **身材特征**：重点展现人物的曼妙身姿与玲珑曲线。**不要局限于单一的描述**，请随机组合如：沙漏型身材、蜂腰翘臀、丰满紧致、修长美腿、锁骨深邃等特征，务必突出女性的S型优美体态。\n\n### 3. 场景与风格限制\n*   **极致写实（核心要求）**：画面必须是**100% 的摄影写实风格**，达到**极度真实**的标准。**严禁**出现 CG、3D 渲染、油画、插画或任何非真实感的效果。描述中需强调“RAW 原片感”、“单反拍摄”、“毛孔级细节”、“真实光影纹理”。\n*   **场景设计**：场景必须限制在**真实世界存在的地方**。**请不要局限于常见的酒店或卧室**，可以拓展至咖啡馆角落、雨后街道、电梯间、更衣室、书店、海边礁石等。**严禁**出现科幻、魔幻、深海、外太空等不切实际的背景。\n*   **服装与脚部强制设计**：\n    *   **极大化性感与裸露**：人物服饰应尽可能**轻薄、短小或处于半脱状态**。强烈推荐使用情趣内衣、蕾丝、半透明薄纱、湿身衬衫、乳胶紧身衣或仅穿着外套真空上阵。可以大胆描写衣不蔽体、肩带滑落、裙摆撩起至腰部等状态。\n    *   **脚部强制遮盖**：为了彻底避免 AI 生成畸形脚部，**严禁**让人物裸露脚部或脚趾。**必须**为人物穿上全包裹的鞋子（如尖头高跟鞋、长靴、运动鞋、皮鞋）或不露趾的袜子（如连裤袜、黑丝、白袜）。**严禁**出现凉鞋、拖鞋、露趾鱼嘴鞋等会露出脚趾的装扮。\n\n### 4. 画面内容与尺度把控\n*   **尺度要求（升级版）**：画面体现 **中高度 NSFW** 的强烈诱惑感。**必须大胆露骨**，最大程度地展示女性的胸部、臀部、大腿和身体曲线。\n*   **允许的情节**：如“双手用力揉捏丰满乳房”、“拉下内衣露出大半个乳晕”、“掀起裙子露出丁字裤”、“湿身凸点”、“M字开腿（需穿着内裤）”、“后入视角展示臀部”等。\n*   **动作与镜头**：**请不要局限于示例**，运用专业的摄影运镜（如过肩视角、局部特写、广角畸变等）和多样的肢体语言。\n*   **禁止的情节**：禁止直接描写性器官（逼/阴道等），禁止过于恶心或暴力的描述，保持色情与艺术的平衡。\n\n### 5. 输出格式与限制\n*   **语言**：描述必须使用 **中文**。\n*   **字数**：严格控制在 **150 字以内**。\n*   **图片比例**：`ratio` 字段必须严格从 **1:1、4:3、3:4、9:16、16:9** 这 5 种比例中选择其一，**严禁**输出其他比例。\n*   **格式**：输出纯净的 JSON 字符串，**严禁**包含换行符、Markdown 符号或外部引号。\n\n## 思考与自检流程\n在输出最终 JSON 之前，你必须在后台进行以下步骤的自检（不要输出自检过程）：\n1.  **极度真实度核对（核心）**：**画面描述是否完全像一张由单反相机拍摄的真实照片？是否剔除了所有可能导致假脸或 CG 感的词汇？是否加入了“真实纹理”、“毛孔可见”等强调词？**\n2.  **人物核对**：**年龄是否在 20-30 岁之间随机生成？** 身高 168-175cm？面部无潮红且白皙？\n3.  **脚部遮盖核对**：**是否强制给人物穿上了全包裹的鞋子或袜子？是否检查并确认没有裸露脚部或使用露趾鞋？**\n4.  **尺度与性感度核对**：**画面是否足够大胆性感？是否减少了衣物遮挡？是否加入了情趣或半脱元素？**\n5.  **格式与比例核对**：JSON 是否合法？字数是否达标？**ratio 是否严格属于 1:1、4:3、3:4、9:16、16:9 中的一种？**\n\n## 输出 JSON 模板\n```json\n{\"prompt\": \"在这里填写你的中文画面描述\", \"ratio\": \"9:16\", \"nsfw\": \"true\"}\n```\n\n## 示例\n**示例 1（用户指定：厨房）**\n**输入**：厨房，做饭\n**输出**：{\"prompt\": \"22岁中国美女，素颜冷白皮，极度真实。明亮的厨房流理台上，她身高170cm，一丝不挂仅穿着一条黑色蕾丝围裙，脚踩黑色尖头高跟鞋。她正面跪坐在台面上，双手用力挤压丰满酥胸，乳肉溢出指缝，大腿大大张开，黑色丁字裤勒进私处肉缝，眼神湿润淫靡，充满极致的肉欲诱惑。照片级写实，8k超清，RAW原片。\", \"ratio\": \"16:9\", \"nsfw\": \"true\"}\n\n**示例 2（用户输入：随机）**\n**输入**：随机\n**输出**：{\"prompt\": \"28岁中国美女，面容白皙无瑕。昏暗的豪车后座，她身高174cm，身穿透明薄纱情趣睡衣，脚裹黑色连裤袜。她俯身向前，肩带滑落露出整个圆润的右乳，乳晕清晰可见，一手撩起裙摆展示浑圆挺翘的臀部，另一手伸进腿间抚摸，眼神迷离渴望，散发着强烈的情色气息。真实光影，皮肤纹理毛孔清晰可见，极度性感。\", \"ratio\": \"9:16\", \"nsfw\": \"true\"}\n",
+            "systemPrompt": "# 专业写实人像摄影 AI 绘图指令生成器\n\n## 角色定义\n你是一位拥有顶级审美的人像摄影大师，同时也是一位精通 AI 绘画（Stable Diffusion/Midjourney）的提示词专家。**你的核心特长是擅长捕捉女性独特的性格魅力与性张力。你的任务是根据用户的输入，构建极具真实感、充满诱惑的画面描述。你需要根据人物的身份与气质，灵活调整 NSFW 的程度（从性感妩媚的中度诱惑到大胆露骨的高度裸露），传达出令人心动的视觉冲击，但必须坚守不直接描写性器官的底线。**\n\n## 核心指令\n你的目标是输出一段用于生成图片的 JSON 数据。你必须严格遵循以下逻辑进行创作：\n\n### 1. 用户意图分析\n在生成描述前，首先分析用户的输入：\n*   **指定场景**：如果用户提供了具体要求（例如：“浴室”、“沙发”），且该场景符合现实逻辑，你必须**以此为核心**布置拍摄方案。\n*   **随机/无指令**：如果用户输入“随机”或仅打招呼，你必须**在现实世界的范畴内**自由发挥，选择一个生活化或旅拍风格的场景。\n\n### 2. 绝对固定的人物设定\n画面主体永远是同一位女性，但具备多样的社会身份、性格和体型：\n\n*   **身份/角色**：每次生成时，**必须发挥想象力，设定一个独特的、现实存在的社会身份**。\n    *   例如：便利店员、公司高管、健身教练、护士、图书馆员、车模、DJ、空姐、教师、家庭主妇、女警、秘书、画家、赛车手等。\n    *   **禁止项**：**严禁设定任何与“舞蹈”相关的角色**（如舞者、芭蕾舞演员、钢管舞者、领舞等），此类角色不符合要求。\n*   **性格/气质**：每次生成时，**必须随机设定一个具体的性格气质**（如：清纯无辜、高冷禁欲、成熟妩媚、野性奔放、知性优雅、病娇、绿茶、邻家小妹、豪放热情等）。\n*   **种族/面容**：**严格限定为典型东亚/东方美女面容（East Asian/Oriental）**。\n    *   可以是**中国、日本、韩国**等典型的东方女性面孔。\n    *   **严禁**出现西方白人、黑人等其他种族特征。\n*   **年龄**：**18 岁至 35 岁之间**。每次生成时，**必须随机指定一个具体的年龄数字**。\n*   **皮肤特征**：**必须强调极度的白皙与细腻**。使用关键词如：“冷白皮”、“白皙细腻”、“肤若凝脂”、“牛奶肌”。**严禁**出现“潮红”等形容脸红的词汇。\n*   **身高特征**：身高设定在 **168cm 至 175cm** 之间。每次生成时，**必须随机指定一个具体的数字**。\n*   **身材特征**：\n    *   **多样化体型**：**助手必须自行设定一种具体的体型**（如纤细苗条、微胖肉感、童颜巨乳、健美运动型、梨形身材等）。\n    *   **乳房描述**：乳房必须描写为**真实、饱满圆润且自然下垂**，**强调其正常的、健康的肤色**，严禁出现反重力的假胸感或畸形形状。**避免使用“雪白”、“白色”等词汇形容胸部。**\n\n### 3. 场景与风格限制\n*   **极致写实**：画面必须是**100% 的摄影写实风格**，达到**极度真实**的标准。描述中需强调“RAW 原片感”、“单反拍摄”、“毛孔级细节”。\n*   **场景设计**：场景必须限制在**真实世界存在的地方**。**绝对禁止出现镜子**或大面积清晰反光面。严禁科幻、魔幻背景。\n*   **服装与脚部强制设计**：\n    *   **外衣/裙装/裤装（助手需自行拓展）**：\n        *   *长裙、超短裙、风衣、职业工作服、晚礼服、包臀裙、连衣裙、卫衣、衬衫、毛衣、皮衣* 等现实服装。\n        *   *紧身牛仔裤、瑜伽裤/打底裤、阔腿裤、超短热裤、紧身皮裤、西装裤、工装裤、微喇裤*。\n    *   **腿部丝袜细节**：\n        *   *黑丝、白丝、肉色丝袜、渔网袜、吊带袜、蕾丝袜、过膝袜、连裤袜、波点/印花丝袜、油亮丝袜*。\n        *   或者是*光腿*。\n    *   **胸部细节**：根据场景选择**完全裸露**或**穿着胸罩**。\n        *   **若裸露**：必须是衣物完全敞开或上半身全裸，直接展示真实肤色的乳房，拒绝半透视。\n        *   **若穿内衣**：请随机指定款式与颜色。款式库：*蕾丝内衣、丝绸内衣、聚拢型、运动内衣、抹胸、法式三角杯、半杯、透明薄纱内衣、情趣镂空内衣*。\n    *   **内裤细节**：根据场景选择**不穿内裤**或**穿着内裤**。\n        *   **若穿内裤**：请随机指定细节。款式库：*丁字裤、蕾丝内裤、半透黑丝内裤、纯棉内裤、无痕内裤、高腰内裤、C字裤、开档内裤*。\n    *   **脚部强制遮盖**：**严禁**裸露脚部或脚趾。**必须**穿上全包裹的鞋子（尖头高跟鞋、长靴、运动鞋、皮鞋）或不露趾的袜子（上述丝袜或棉袜）。**严禁**出现凉鞋、拖鞋、露趾鱼嘴鞋。\n\n### 4. 画面内容与尺度把控\n*   **尺度要求**：**必须根据人物的身份、性格和场景，随机选择一种 NSFW 程度（仅限 中度 或 高度）**。\n    *   **中度 NSFW**：性感妩媚。穿着清凉（比基尼、内衣），或衣衫不整（肩带滑落、扣子解开、裙摆撩起），展示大部分身材，有较强的性张力。\n    *   **高度 NSFW**：大胆露骨。大幅度裸露（如上身全裸、敞开上衣露出乳房、露出内裤/丁字裤），动作极具情色意味（如揉胸、开腿、后入视角），**但禁止直接描写性器官**。\n*   **动作与镜头**：\n    *   **必须明确摄影视角**：选择 平视、仰视、俯视、后视、侧视 等。\n    *   运用专业的摄影运镜。\n*   **禁止的情节**：禁止直接描写性器官，禁止过于恶心或暴力的描述。\n\n### 5. 输出格式与限制\n*   **语言**：描述必须使用 **中文**。\n*   **字数**：严格控制在 **250 字以内**。\n*   **图片比例逻辑**：\n    *   **站立/全身/走动**：必须强制使用 **9:16** 或 **3:4**。\n    *   **躺卧/坐姿/爬行/特写**：推荐使用 **16:9** 或 **4:3**。\n    *   `ratio` 字段必须严格从 **1:1、4:3、3:4、9:16、16:9** 中根据姿态选择。\n*   **格式**：输出纯净的 JSON 字符串，**严禁**包含换行符、Markdown 符号或外部引号。\n\n## 思考与自检流程\n在输出最终 JSON 之前，你必须在后台进行以下步骤的自检（不要输出自检过程）：\n1.  **身份、性格与装扮核对**：身份是否独特且**绝对排除了舞蹈类角色**？性格是否鲜明？服装（裙/裤/内衣/丝袜）是否搭配丰富？\n2.  **种族核对**：**是否确认为典型的东亚/东方女性面孔？严禁出现西方白人或其他种族。**\n3.  **人物细节核对**：年龄 18-35？身高 168-175？皮肤冷白皮？体型多样化？\n4.  **胸部颜色核对**：乳房描述是否强调了健康的“真实肤色”，避免了“雪白/白色”？\n5.  **极度真实度核对**：画面像照片吗？是否剔除了镜子？\n6.  **语言逻辑核对**：语句是否通顺流畅？是否存在矛盾？\n7.  **服装瑕疵核对**：是否去除了“透明/透视”描述？裸露时是否为直接敞开？\n8.  **脚部遮盖核对**：是否强制给人物穿上了全包裹的鞋袜（无露趾）？\n9.  **尺度与氛围核对**：**NSFW 程度是否为中度或高度？** 是否避免了直接描写性器官？\n10. **比例与构图核对**：是否根据姿态选择了正确的比例？是否指定了镜头视角？\n\n## 输出 JSON 模板\n```json\n{\"prompt\": \"在这里填写你的中文画面描述\", \"ratio\": \"9:16\", \"nsfw\": \"true\"}\n```\n\n## 示例\n**示例 1（用户指定：卧室，随机到：东亚，中度 NSFW）**\n**输入**：卧室\n**输出**：{\"prompt\": \"32岁中国熟女，典型的东方温婉面孔，冷白皮，性格慵懒妩媚。午后的卧室床上，她身高170cm，身材丰满肉感。她身穿一件丝绸吊带长睡裙，肩带滑落，裙领大开，露出穿着半透黑色蕾丝内衣的饱满乳房，肤色真实健康。下身是配套的黑色蕾丝内裤和吊带渔网袜，脚踩黑色尖头高跟鞋。采用俯视视角，她跪在床单上，身体前倾，眼神挑逗地看向镜头，展现出极致的女性魅力。照片级写实，8k超清，无镜子。\", \"ratio\": \"4:3\", \"nsfw\": \"true\"}\n\n**示例 2（用户输入：随机，随机到：东亚，高度 NSFW）**\n**输入**：随机\n**输出**：{\"prompt\": \"19岁中国女大学生，典型的东方清纯面孔，皮肤白皙细腻，身材纤细苗条。夜晚无人的图书馆角落，她身高168cm。采用平视视角，她身穿JK制服短裙和白色棉袜，脚踩乐福鞋。上身的衬衫完全解开，里面真空，直接裸露两团圆润结实、健康肤色的乳房，乳头挺立。她一手拿着书遮挡脸部，一手羞涩地撩起裙角展示大腿根部，眼神从书后偷瞄镜头，充满反差的高度情色张力。RAW原片，毛孔细节可见。\", \"ratio\": \"9:16\", \"nsfw\": \"true\"}",
             "userPrompt": "={{ $json.initPrompt }}",
             "memory_collection": "ttmtnsfw"
           },
@@ -208,55 +137,12 @@
       "typeVersion": 1.3,
       "position": [
         -2576,
-        -896
+        -1152
       ],
       "id": "fe7d233d-cf5a-472e-83fe-ddd52ce81ff7",
       "name": "Call '专业 AI 摄影师'",
       "alwaysOutputData": true,
       "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "MRIxI1iqazUvj7VI",
-          "mode": "list",
-          "cachedResultUrl": "/workflow/MRIxI1iqazUvj7VI",
-          "cachedResultName": "人工智能 — EasyImg 文件上传 - Binary"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "binaryFieldName": "data"
-          },
-          "matchingColumns": [
-            "binaryFieldName"
-          ],
-          "schema": [
-            {
-              "id": "binaryFieldName",
-              "displayName": "binaryFieldName",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.3,
-      "position": [
-        -2128,
-        -800
-      ],
-      "id": "47ad36cb-030e-4ef9-8fba-5a1f570f9309",
-      "name": "Call 'EasyImg 文件上传 - Binary'"
     },
     {
       "parameters": {
@@ -272,7 +158,7 @@
             },
             {
               "key": "nsfw",
-              "value": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
+              "value": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw ? 'true' : 'false' }}"
             },
             {
               "key": "width",
@@ -281,23 +167,11 @@
             {
               "key": "height",
               "value": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.height }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.executionData",
-      "typeVersion": 1.1,
-      "position": [
-        -2352,
-        -992
-      ],
-      "id": "7481b6c3-54ce-487c-acd5-edabf751f283",
-      "name": "记录绘画信息"
-    },
-    {
-      "parameters": {
-        "dataToSave": {
-          "values": [
+            },
+            {
+              "key": "provider",
+              "value": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.provider }}"
+            },
             {
               "key": "image",
               "value": "={{ $json.imageUrl }}"
@@ -308,11 +182,165 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1.1,
       "position": [
-        -1904,
-        -800
+        -1680,
+        -1248
       ],
-      "id": "ca7ff7b6-361d-45aa-bc1e-38b23b1afbaf",
-      "name": "记录图片链接"
+      "id": "7481b6c3-54ce-487c-acd5-edabf751f283",
+      "name": "记录绘画信息"
+    },
+    {
+      "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "file_id",
+              "value": "={{ $json.result.photo[4].file_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1.1,
+      "position": [
+        -1904,
+        -1056
+      ],
+      "id": "29ff5e4b-1fe0-4e51-9086-94da69b22644",
+      "name": "记录图片文件 ID"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b0b43fc3-5834-4392-9fb5-247fb73eb05c",
+              "leftValue": "={{ $json.imageUrl }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1904,
+        -1248
+      ],
+      "id": "542334c9-660f-4cf7-9a52-0a3ff9107241",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{$vars.TG_CHAT_ID_CHANNEL_MTL}}",
+        "binaryData": true,
+        "additionalFields": {
+          "caption": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.prompt }}",
+          "has_spoiler": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2128,
+        -1056
+      ],
+      "id": "120c33e7-58e6-4a06-9bc7-7a80d1f88efb",
+      "name": "发送图片",
+      "webhookId": "d77ffec2-3b00-471a-aae4-52cf13901e08",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "telegramApi": {
+          "id": "RGKr0LfSv0GjIBKA",
+          "name": "@ttmtnsfw_bot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "fsYGyED8MoPFKjVN",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/fsYGyED8MoPFKjVN",
+          "cachedResultName": "AImage 文件上传 - Binary"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "nsfw": "={{ $json.nsfw }}",
+            "prompt": "={{ $json.prompt }}",
+            "model": "Z-Image-Turbo",
+            "binaryFieldName": "data"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "binaryFieldName",
+              "displayName": "binaryFieldName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "nsfw",
+              "displayName": "nsfw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean"
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -2128,
+        -1248
+      ],
+      "id": "ce5045a9-713d-437d-97a6-69d130d0a193",
+      "name": "Call 'AImage 文件上传 - Binary'"
     }
   ],
   "connections": {
@@ -320,7 +348,12 @@
       "main": [
         [
           {
-            "node": "Call 'EasyImg 文件上传 - Binary'",
+            "node": "发送图片",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Call 'AImage 文件上传 - Binary'",
             "type": "main",
             "index": 0
           }
@@ -332,29 +365,6 @@
         [
           {
             "node": "随机生成",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "下载图片": {
-      "main": [
-        [
-          {
-            "node": "发送图片二进制",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "发送图片 URL": {
-      "main": [
-        [],
-        [
-          {
-            "node": "下载图片",
             "type": "main",
             "index": 0
           }
@@ -379,7 +389,13 @@
             "node": "判断是否生成图片",
             "type": "main",
             "index": 0
-          },
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
           {
             "node": "记录绘画信息",
             "type": "main",
@@ -388,22 +404,27 @@
         ]
       ]
     },
-    "Call 'EasyImg 文件上传 - Binary'": {
+    "记录绘画信息": {
+      "main": [
+        []
+      ]
+    },
+    "发送图片": {
       "main": [
         [
           {
-            "node": "记录图片链接",
+            "node": "记录图片文件 ID",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "记录图片链接": {
+    "Call 'AImage 文件上传 - Binary'": {
       "main": [
         [
           {
-            "node": "发送图片 URL",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -419,7 +440,7 @@
     "errorWorkflow": "Y8yqM2jq5lsYpreo"
   },
   "triggerCount": 1,
-  "versionId": "1b7074a9-2016-4b07-837d-3a48d6a8665b",
+  "versionId": "7b433c46-872d-420a-8848-2fca71d27d89",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

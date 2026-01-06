@@ -31,7 +31,7 @@
       "typeVersion": 2.3,
       "position": [
         -2352,
-        -800
+        -896
       ],
       "id": "e3017b1d-9c93-4bf4-bcac-195671f1c369",
       "name": "判断是否生成图片"
@@ -42,7 +42,7 @@
           "interval": [
             {
               "field": "minutes",
-              "minutesInterval": 8
+              "minutesInterval": 20
             }
           ]
         }
@@ -58,84 +58,12 @@
     },
     {
       "parameters": {
-        "url": "={{ $('Call \\'EasyImg 文件上传 - Binary\\'').item.json.imageUrl }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        -1456,
-        -800
-      ],
-      "id": "9534695f-0aed-4fb1-8da4-219c3471e06a",
-      "name": "下载图片"
-    },
-    {
-      "parameters": {
-        "operation": "sendPhoto",
-        "chatId": "={{$vars.TG_CHAT_ID_CHANNEL_MTL}}",
-        "binaryData": true,
-        "additionalFields": {
-          "caption": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.prompt }}",
-          "has_spoiler": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        -1232,
-        -800
-      ],
-      "id": "8948dc8d-008e-44af-b0eb-5d1848a195e6",
-      "name": "发送图片二进制",
-      "webhookId": "ac0219df-5b8a-4ab9-b9a1-ab785e32da17",
-      "retryOnFail": false,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "telegramApi": {
-          "id": "71ANt3iNMOuoARrU",
-          "name": "@ttmtsfw_bot"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "operation": "sendPhoto",
-        "chatId": "={{$vars.TG_CHAT_ID_CHANNEL_MTL}}",
-        "file": "={{ $json.imageUrl }}",
-        "additionalFields": {
-          "caption": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.prompt }}",
-          "has_spoiler": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
-        }
-      },
-      "type": "n8n-nodes-base.telegram",
-      "typeVersion": 1.2,
-      "position": [
-        -1680,
-        -800
-      ],
-      "id": "d64eefab-05f6-4e8e-8daa-e4ab50e37a59",
-      "name": "发送图片 URL",
-      "webhookId": "109aafb8-ab0c-44c8-9bbf-d7b45a7cc60d",
-      "retryOnFail": false,
-      "waitBetweenTries": 5000,
-      "credentials": {
-        "telegramApi": {
-          "id": "t57JKfWjEvG5Xeus",
-          "name": "@ttmtsf_bot"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
               "id": "77a15943-d31a-4536-9757-e42cef20c440",
               "name": "initPrompt",
-              "value": "=随机\n",
+              "value": "=随机生成一张 SFW 的图片\n",
               "type": "string"
             }
           ]
@@ -204,7 +132,7 @@
           "value": "zSgv7aguQoGReRP7",
           "mode": "list",
           "cachedResultUrl": "/workflow/zSgv7aguQoGReRP7",
-          "cachedResultName": "人工智能 — 专业 AI 摄影师"
+          "cachedResultName": "天天美图 — 专业 AI 摄影师"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -264,21 +192,105 @@
     },
     {
       "parameters": {
+        "dataToSave": {
+          "values": [
+            {
+              "key": "file_id",
+              "value": "={{ $json.result.photo[4].file_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executionData",
+      "typeVersion": 1.1,
+      "position": [
+        -1904,
+        -992
+      ],
+      "id": "a46fa07b-b7a7-4e03-88e3-bad341fda16d",
+      "name": "记录图片文件 ID"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{$vars.TG_CHAT_ID_CHANNEL_MTL}}",
+        "binaryData": true,
+        "additionalFields": {
+          "caption": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.prompt }}",
+          "has_spoiler": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2128,
+        -992
+      ],
+      "id": "a2b4adec-ed45-48bc-bb64-e5d32c33e6b4",
+      "name": "发送图片二进制",
+      "webhookId": "d77ffec2-3b00-471a-aae4-52cf13901e08",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "telegramApi": {
+          "id": "RGKr0LfSv0GjIBKA",
+          "name": "@ttmtnsfw_bot"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b0b43fc3-5834-4392-9fb5-247fb73eb05c",
+              "leftValue": "={{ $json.imageUrl }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1904,
+        -800
+      ],
+      "id": "a37ce6f7-b0da-4eb7-b0b3-013afeb72441",
+      "name": "If"
+    },
+    {
+      "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "MRIxI1iqazUvj7VI",
+          "value": "fsYGyED8MoPFKjVN",
           "mode": "list",
-          "cachedResultUrl": "/workflow/MRIxI1iqazUvj7VI",
-          "cachedResultName": "人工智能 — EasyImg 文件上传 - Binary"
+          "cachedResultUrl": "/workflow/fsYGyED8MoPFKjVN",
+          "cachedResultName": "AImage 文件上传 - Binary"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
+            "nsfw": "={{ $json.nsfw }}",
+            "prompt": "={{ $json.prompt }}",
+            "model": "Z-Image-Turbo",
             "binaryFieldName": "data"
           },
-          "matchingColumns": [
-            "binaryFieldName"
-          ],
+          "matchingColumns": [],
           "schema": [
             {
               "id": "binaryFieldName",
@@ -287,13 +299,40 @@
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
+              "type": "string"
+            },
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "nsfw",
+              "displayName": "nsfw",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean"
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
             }
           ],
           "attemptToConvertTypes": false,
           "convertFieldsToString": true
         },
+        "mode": "each",
         "options": {}
       },
       "type": "n8n-nodes-base.executeWorkflow",
@@ -302,8 +341,8 @@
         -2128,
         -800
       ],
-      "id": "5a1e86a4-a5a0-4a77-a277-cbe682a8cf7b",
-      "name": "Call 'EasyImg 文件上传 - Binary'"
+      "id": "559583a7-4a47-4d6e-bf4e-b0559def4ff5",
+      "name": "Call 'AImage 文件上传 - Binary'"
     },
     {
       "parameters": {
@@ -319,7 +358,7 @@
             },
             {
               "key": "nsfw",
-              "value": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw }}"
+              "value": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.nsfw ? 'true' : 'false' }}"
             },
             {
               "key": "width",
@@ -328,23 +367,11 @@
             {
               "key": "height",
               "value": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.height }}"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.executionData",
-      "typeVersion": 1.1,
-      "position": [
-        -2352,
-        -992
-      ],
-      "id": "3a5686ff-4efa-4a14-81b7-30f2b6aee1e6",
-      "name": "记录绘画信息"
-    },
-    {
-      "parameters": {
-        "dataToSave": {
-          "values": [
+            },
+            {
+              "key": "provider",
+              "value": "={{ $('Call \\'专业 AI 摄影师\\'').item.json.provider }}"
+            },
             {
               "key": "image",
               "value": "={{ $json.imageUrl }}"
@@ -355,11 +382,11 @@
       "type": "n8n-nodes-base.executionData",
       "typeVersion": 1.1,
       "position": [
-        -1904,
+        -1680,
         -800
       ],
-      "id": "75ed8520-5d76-47ca-b370-09cecb313919",
-      "name": "记录图片链接"
+      "id": "b01c74e3-6623-45d7-ba27-21c3fd956ac7",
+      "name": "记录绘画信息"
     }
   ],
   "connections": {
@@ -367,7 +394,12 @@
       "main": [
         [
           {
-            "node": "Call 'EasyImg 文件上传 - Binary'",
+            "node": "发送图片二进制",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Call 'AImage 文件上传 - Binary'",
             "type": "main",
             "index": 0
           }
@@ -379,29 +411,6 @@
         [
           {
             "node": "随机生成",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "下载图片": {
-      "main": [
-        [
-          {
-            "node": "发送图片二进制",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "发送图片 URL": {
-      "main": [
-        [],
-        [
-          {
-            "node": "下载图片",
             "type": "main",
             "index": 0
           }
@@ -448,7 +457,24 @@
             "node": "判断是否生成图片",
             "type": "main",
             "index": 0
-          },
+          }
+        ]
+      ]
+    },
+    "发送图片二进制": {
+      "main": [
+        [
+          {
+            "node": "记录图片文件 ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
           {
             "node": "记录绘画信息",
             "type": "main",
@@ -457,22 +483,11 @@
         ]
       ]
     },
-    "Call 'EasyImg 文件上传 - Binary'": {
+    "Call 'AImage 文件上传 - Binary'": {
       "main": [
         [
           {
-            "node": "记录图片链接",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "记录图片链接": {
-      "main": [
-        [
-          {
-            "node": "发送图片 URL",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -488,7 +503,7 @@
     "errorWorkflow": "Y8yqM2jq5lsYpreo"
   },
   "triggerCount": 2,
-  "versionId": "61c9399f-1761-4dd8-813b-470e835e192a",
+  "versionId": "a0fd4b4d-bf38-4abf-ac74-be55b745d2d9",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
