@@ -1,0 +1,338 @@
+{
+  "id": "gboX9qNiA5S58O3cyZ0Wo",
+  "name": "FlareSolverr",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://flaresolverr:8191/v1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"cmd\": \"sessions.list\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -128,
+        -272
+      ],
+      "id": "851f56bf-5fc4-4cbc-bf49-1875e0956074",
+      "name": "查询会话",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "970e735b-434f-43ca-92e2-2e695e5a6d97",
+              "leftValue": "={{$json.sessions.indexOf($('入口参数').item.json.session_id) }}",
+              "rightValue": -1,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        96,
+        -200
+      ],
+      "id": "895f033c-f346-41cc-89e3-562d1768f907",
+      "name": "判断会话是否存在"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://flaresolverr:8191/v1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"cmd\": \"request.get\",\n  \"url\": \"{{ $('入口参数').item.json.site }}\",\n  \"session\": \"{{ $('入口参数').item.json.session_id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        544,
+        -296
+      ],
+      "id": "859764cf-0a71-4ccc-8f8d-fb748436e5b0",
+      "name": "打开网站",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "session_id"
+            },
+            {
+              "name": "site"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -352,
+        -272
+      ],
+      "id": "ce8d83da-cf7a-4a41-8e6c-63d92d091a95",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://flaresolverr:8191/v1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"cmd\": \"sessions.create\",\n  \"session\": \"{{ $('入口参数').item.json.session_id }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        320,
+        -56
+      ],
+      "id": "7d8c8d79-f314-4ac2-989b-aa4ce18a96a6",
+      "name": "新建会话",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5a48e84e-9580-48d8-8411-706a858e2971",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "ok",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        768,
+        -152
+      ],
+      "id": "811078a2-634b-4ecc-ac9b-a1bd53f8ca49",
+      "name": "是否成功"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://flaresolverr:8191/v1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"cmd\": \"sessions.destroy\",\n  \"session\": \"{{ $('入口参数').item.json.session_id }}\"\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        768,
+        -368
+      ],
+      "id": "02159078-29a0-4a42-84c3-39189122d968",
+      "name": "销毁会话",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nfor (const item of $input.all()) {\n  const cookies = [];\n  if(item.json.solution && item.json.solution.cookies){\n    for(const cookie of item.json.solution.cookies){\n      cookies.push(cookie.name+\"=\"+cookie.value);\n    }    \n  }\n  results.push({\n    cookie: cookies.join(\", \"),\n    userAgent: item.json.solution.userAgent\n  });\n}\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        992,
+        -152
+      ],
+      "id": "c229a41b-482e-498c-a96f-f914ae76c95c",
+      "name": "提取信息"
+    }
+  ],
+  "connections": {
+    "查询会话": {
+      "main": [
+        [
+          {
+            "node": "判断会话是否存在",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "销毁会话",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断会话是否存在": {
+      "main": [
+        [
+          {
+            "node": "打开网站",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "新建会话",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "打开网站": {
+      "main": [
+        [
+          {
+            "node": "销毁会话",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "是否成功",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "销毁会话",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "查询会话",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "新建会话": {
+      "main": [
+        [
+          {
+            "node": "打开网站",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "销毁会话",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否成功": {
+      "main": [
+        [
+          {
+            "node": "提取信息",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "any",
+    "errorWorkflow": "Y8yqM2jq5lsYpreo"
+  },
+  "triggerCount": 0,
+  "versionId": "c978c075-1616-4abf-bd9d-1c9800848871",
+  "owner": {
+    "type": "personal",
+    "projectId": "pskh8wmOtrNvczt8",
+    "projectName": "寿来 shoulai.yang@gmail.com <shoulai.yang@gmail.com>",
+    "personalEmail": "shoulai.yang@gmail.com"
+  },
+  "parentFolderId": "JTF9CnBaMX9ngezi",
+  "isArchived": false
+}

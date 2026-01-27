@@ -270,6 +270,31 @@
           "name": "腾讯云"
         }
       }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "901b615e-6e45-4455-bec1-3dd35fe9ce58",
+      "name": "Generate an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HcRpLQ8AC9QYmUDr",
+          "name": "@shoulai.yang@gmail.com"
+        }
+      }
     }
   ],
   "connections": {
@@ -367,7 +392,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "7311c7c0-e791-4712-b4ff-cc4ab653b4dc",
+  "versionId": "6c93d50c-36e3-417a-bd6b-c1ce8d225cf4",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

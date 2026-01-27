@@ -1,11 +1,9 @@
 {
-  "id": "NpIOkpndAb3DOEMs",
-  "name": "Upstash",
-  "type": "redis",
+  "id": "QsEaouPk8M1rCVlU",
+  "name": "@ql_yann_tg_bot",
+  "type": "telegramApi",
   "data": {
-    "password": "",
-    "host": "",
-    "ssl": true
+    "accessToken": ""
   },
   "ownedBy": {
     "type": "personal",

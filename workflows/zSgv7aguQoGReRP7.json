@@ -120,20 +120,22 @@
       ],
       "id": "45534dac-1709-4ab1-a335-d10ae984c667",
       "name": "图片描述",
-      "retryOnFail": true,
+      "retryOnFail": false,
       "waitBetweenTries": 20
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "glm-4.7",
+          "value": "glm-4.6",
           "mode": "list",
-          "cachedResultName": "glm-4.7"
+          "cachedResultName": "glm-4.6"
         },
         "responsesApiEnabled": false,
         "options": {
-          "timeout": 120000
+          "temperature": 0.9,
+          "timeout": 240000,
+          "maxRetries": 2
         }
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
@@ -146,8 +148,8 @@
       "name": "主要模型",
       "credentials": {
         "openAiApi": {
-          "id": "6QtS7ma73ZKRZmQX",
-          "name": "yangshoulai"
+          "id": "i4ImiAEkc3SAiGDA",
+          "name": "Hydra"
         }
       }
     },
@@ -155,13 +157,16 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gemini-2.5-flash",
+          "value": "grok-4.1",
           "mode": "list",
-          "cachedResultName": "gemini-2.5-flash"
+          "cachedResultName": "grok-4.1"
         },
         "responsesApiEnabled": false,
         "options": {
-          "timeout": 120000
+          "responseFormat": "json_object",
+          "temperature": 0.9,
+          "timeout": 240000,
+          "maxRetries": 2
         }
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
@@ -174,8 +179,8 @@
       "name": "备用模型",
       "credentials": {
         "openAiApi": {
-          "id": "6QtS7ma73ZKRZmQX",
-          "name": "yangshoulai"
+          "id": "i4ImiAEkc3SAiGDA",
+          "name": "Hydra"
         }
       }
     },
@@ -197,8 +202,8 @@
       "name": "记忆",
       "credentials": {
         "mongoDb": {
-          "id": "gHBWS9s71yffZkq8",
-          "name": "腾讯云"
+          "id": "8YD8ZL8jLcVjsyse",
+          "name": "MongDB Cloud"
         }
       }
     },
@@ -222,13 +227,13 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "qwen3-235b-a22b-2507-instruct",
+          "value": "kimi-k2",
           "mode": "list",
-          "cachedResultName": "qwen3-235b-a22b-2507-instruct"
+          "cachedResultName": "kimi-k2"
         },
         "responsesApiEnabled": false,
         "options": {
-          "timeout": 120000
+          "timeout": 240000
         }
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
@@ -241,8 +246,8 @@
       "name": "大模型识别结构化输出",
       "credentials": {
         "openAiApi": {
-          "id": "6QtS7ma73ZKRZmQX",
-          "name": "yangshoulai"
+          "id": "i4ImiAEkc3SAiGDA",
+          "name": "Hydra"
         }
       }
     },
@@ -352,6 +357,16 @@
               "operator": {
                 "type": "string",
                 "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "14ad4f4b-57d1-47d6-9636-766f2b70e656",
+              "leftValue": "={{ $json.output.prompt.indexOf(\"她\") > 0 || $json.output.prompt.indexOf(\"女\") > 0 || $json.output.prompt.indexOf(\"岁\") > 0 || $json.output.prompt.indexOf(\"手\") > 0 || $json.output.prompt.indexOf(\"丝\") > 0 || $json.output.prompt.indexOf(\"衣\") > 0}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
                 "singleValue": true
               }
             }
@@ -486,7 +501,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "670ed2d5-da37-4e40-a157-ca61dbb2f861",
+  "versionId": "362e8387-3e54-4dc9-bc0c-3f7ee675f995",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

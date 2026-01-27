@@ -42,7 +42,7 @@
           "interval": [
             {
               "field": "minutes",
-              "minutesInterval": 8
+              "minutesInterval": 10
             }
           ]
         }
@@ -435,7 +435,7 @@
     "errorWorkflow": "Y8yqM2jq5lsYpreo"
   },
   "triggerCount": 1,
-  "versionId": "7a566be0-28e0-451e-859e-dd42561a0f87",
+  "versionId": "30fec503-0ec1-4075-9706-a6d1c57b2216",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

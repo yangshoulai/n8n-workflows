@@ -1,0 +1,16 @@
+{
+  "id": "TMxPImHC99n1Y4DV",
+  "name": "杂项",
+  "icon": {
+    "type": "icon",
+    "value": "layers"
+  },
+  "description": "",
+  "type": "team",
+  "owner": {
+    "type": "team",
+    "teamId": "TMxPImHC99n1Y4DV",
+    "teamName": "杂项"
+  },
+  "variableStubs": []
+}

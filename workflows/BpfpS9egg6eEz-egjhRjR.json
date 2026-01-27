@@ -1,0 +1,614 @@
+{
+  "id": "BpfpS9egg6eEz-egjhRjR",
+  "name": "NewAPI 签到",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "newApiUser"
+            },
+            {
+              "name": "accessToken"
+            },
+            {
+              "name": "baseUrl"
+            },
+            {
+              "name": "name"
+            },
+            {
+              "name": "needBypass",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -896,
+        -160
+      ],
+      "id": "aa2b8bb9-0255-4dce-9c1f-c11a199ac0a1",
+      "name": "入口参数"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('入口参数').item.json.baseUrl }}/api/user/checkin",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=Authorization",
+              "value": "=Bearer {{ $('入口参数').item.json.accessToken }}"
+            },
+            {
+              "name": "new-api-user",
+              "value": "={{ $('入口参数').item.json.newApiUser }}"
+            },
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        -16
+      ],
+      "id": "93b2d18d-1a31-4b26-978c-173c02a0f438",
+      "name": "签到接口",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f654b830-87b4-4d68-a090-ae58f265543b",
+              "leftValue": "={{$json.success}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        672,
+        -400
+      ],
+      "id": "15fbdaa8-f9a9-4619-ad14-1da7c799f9ac",
+      "name": "判断是否签到成功"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "from datetime import datetime, timedelta\nfrom zoneinfo import ZoneInfo\n\nyesterday = datetime.now(ZoneInfo(\"Asia/Shanghai\")) - timedelta(days=0)\nyyyymmdd = yesterday.strftime('%Y%m%d')\n\nreturn [{\"date\": yyyymmdd}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -672,
+        -160
+      ],
+      "id": "b5b9b69e-5448-452f-9e67-1cef2c002a99",
+      "name": "计算日期"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "signin",
+        "key": "=newapi:signin:{{ $json.date }}:{{ $('入口参数').item.json.name }}",
+        "keyType": "string",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -160
+      ],
+      "id": "7f1aaad2-1daa-4108-8830-244a16444e88",
+      "name": "查询是否已签到",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d05f44c3-30d1-4ead-bb90-24ac8123bc63",
+              "leftValue": "={{ $json.signin }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notExists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "2fd2ddb1-e35c-47fe-b39e-c52c1afab795",
+              "leftValue": "={{ $json.signin }}",
+              "rightValue": "1",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -224,
+        -160
+      ],
+      "id": "bfe0fc18-d85c-48d0-b130-643e379cc2a9",
+      "name": "如果没有签到"
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=newapi:signin:{{ $('计算日期').item.json.date }}:{{ $('入口参数').item.json.name }}",
+        "value": "1",
+        "keyType": "string",
+        "expire": true,
+        "ttl": 3600
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        -448
+      ],
+      "id": "dc0604af-982b-4075-809b-c031665783ac",
+      "name": "设置签到成功",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9f3874ee-c6c6-4531-a076-460a99f3f644",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "f968562f-d5f1-4ac8-aae7-70a1303f1f11",
+              "leftValue": "={{ $json.message === '今日已签到' || $json.message === '今天已经签到过啦'}}",
+              "rightValue": "今日已签到",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        -336
+      ],
+      "id": "7a93ad18-ad54-4a5c-842f-f35aa7b9750f",
+      "name": "已经签到"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "32629abc-9dca-4c29-b3bc-bd25c65e4cbc",
+              "name": "success",
+              "value": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1344,
+        -160
+      ],
+      "id": "66c09282-097b-4bb1-aa46-85746a0b5ac8",
+      "name": "成功"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "32629abc-9dca-4c29-b3bc-bd25c65e4cbc",
+              "name": "success",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        -160
+      ],
+      "id": "707de646-6671-4079-aa2d-b852305a302c",
+      "name": "失败"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ce17eaf2-ed74-423b-8d8c-bdd4c27f3214",
+              "leftValue": "={{ $('入口参数').item.json.needBypass }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        -240
+      ],
+      "id": "8b17dbfd-2780-4c9d-b01c-4efbb849014d",
+      "name": "需要越过 cloudflare"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "gboX9qNiA5S58O3cyZ0Wo",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/gboX9qNiA5S58O3cyZ0Wo",
+          "cachedResultName": "FlareSolverr"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session_id": "=fs-session-signin",
+            "site": "={{ $('入口参数').item.json.baseUrl }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "site",
+              "displayName": "site",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        -336
+      ],
+      "id": "a90cb769-1655-47a0-848a-c3035f143b2f",
+      "name": "Call 'FlareSolverr'"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('入口参数').item.json.baseUrl }}/api/user/checkin",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=Authorization",
+              "value": "=Bearer {{ $('入口参数').item.json.accessToken }}"
+            },
+            {
+              "name": "new-api-user",
+              "value": "={{ $('入口参数').item.json.newApiUser }}"
+            },
+            {
+              "name": "User-Agent",
+              "value": "={{$json.userAgent}}"
+            },
+            {
+              "name": "Cookie",
+              "value": "={{$json.cookie}}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        -336
+      ],
+      "id": "21c1ef7e-ada7-4254-be42-f343fa472226",
+      "name": "签到接口1",
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "connections": {
+    "入口参数": {
+      "main": [
+        [
+          {
+            "node": "计算日期",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "签到接口": {
+      "main": [
+        [
+          {
+            "node": "判断是否签到成功",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算日期": {
+      "main": [
+        [
+          {
+            "node": "查询是否已签到",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询是否已签到": {
+      "main": [
+        [
+          {
+            "node": "如果没有签到",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "如果没有签到": {
+      "main": [
+        [
+          {
+            "node": "需要越过 cloudflare",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断是否签到成功": {
+      "main": [
+        [
+          {
+            "node": "设置签到成功",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "已经签到",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "已经签到": {
+      "main": [
+        [
+          {
+            "node": "设置签到成功",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "设置签到成功": {
+      "main": [
+        [
+          {
+            "node": "成功",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "需要越过 cloudflare": {
+      "main": [
+        [
+          {
+            "node": "Call 'FlareSolverr'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "签到接口",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'FlareSolverr'": {
+      "main": [
+        [
+          {
+            "node": "签到接口1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "签到接口1": {
+      "main": [
+        [
+          {
+            "node": "判断是否签到成功",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "triggerCount": 0,
+  "versionId": "4026ea72-f837-4c25-a796-807705ce82ef",
+  "owner": {
+    "type": "team",
+    "teamId": "TMxPImHC99n1Y4DV",
+    "teamName": "杂项"
+  },
+  "parentFolderId": "9EUgpSTZ0txNipLZ",
+  "isArchived": false
+}

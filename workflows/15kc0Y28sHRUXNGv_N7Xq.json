@@ -1,0 +1,66 @@
+{
+  "id": "15kc0Y28sHRUXNGv_N7Xq",
+  "name": "HF - 代理保活",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4b899b40-bcab-4e46-ba3d-4a11351b5a03",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://huggingface.co/spaces/yangshoulai1989/airport",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0c5b6d4e-37ac-447b-af73-bb8652f33b92",
+      "name": "HTTP Request"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "triggerCount": 1,
+  "versionId": "19e82776-574c-42de-8b2b-1de7881f98ae",
+  "owner": {
+    "type": "team",
+    "teamId": "TMxPImHC99n1Y4DV",
+    "teamName": "杂项"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

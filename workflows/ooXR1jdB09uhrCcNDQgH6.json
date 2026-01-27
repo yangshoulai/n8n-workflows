@@ -1,0 +1,496 @@
+{
+  "id": "ooXR1jdB09uhrCcNDQgH6",
+  "name": "公益站签到",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "18a79d24-c641-4a0c-a743-d1b9fb12fe8e",
+              "name": "sites",
+              "value": "={{ [\n  {\n    \"name\": \"曼波API\",\n    \"accessToken\": \"FuZIpe8K6NCM34ytEOIwul5pg63DWLI=\",\n    \"baseUrl\": \"https://ai.dik3.cn\",\n    \"newApiUser\": \"524\"\n  },\n  {\n    \"name\": \"KFC API\",\n    \"accessToken\": \"iPkEqIcThhU1FbuUPZFBkWGqctmoIw==\",\n    \"baseUrl\": \"https://kfc-api.sxxe.net\",\n    \"newApiUser\": \"4033\"\n  },\n  {\n    \"name\": \"HotaruAPI\",\n    \"accessToken\": \"w0Dy1kxpVvW1Fwl3rxHs1e3NiZJxTEGp\",\n    \"baseUrl\": \"https://api.hotaruapi.top\",\n    \"newApiUser\": \"940\"\n  },\n  {\n    \"name\": \"Elysiver\",\n    \"accessToken\": \"NIBJ4fPfEgImzh+JleWbz3QBg+Bl\",\n    \"baseUrl\": \"https://elysiver.h-e.top\",\n    \"newApiUser\": \"2451\",\n    \"needBypass\": true\n  },\n  {\n    \"name\": \"随时跑路公益站\",\n    \"accessToken\": \"SErQWdYdf+K3uBQEgZ0AJyXuj6xl\",\n    \"baseUrl\": \"https://runanytime.hxi.me\",\n    \"newApiUser\": \"3980\"\n  },\n  {\n    \"name\": \"小呆API\",\n    \"accessToken\": \"ISxYSFE5qWDF3WZo/b+7Z5E9EJJECYmR\",\n    \"baseUrl\": \"https://api.daiju.live\",\n    \"newApiUser\": \"364\"\n  },\n  {\n    \"name\": \"WONG公益站\",\n    \"accessToken\": \"jexor3rZMPLibzplxZMg7Al2zpG9/zkI\",\n    \"baseUrl\": \"https://wzw.pp.ua\",\n    \"newApiUser\": \"813\"\n  },\n  {\n    \"name\": \"ThatAPI\",\n    \"accessToken\": \"SMCKU4Oj/+5Dan5JjfsKMyueQAMUvpqa\",\n    \"baseUrl\": \"https://gyapi.zxiaoruan.cn\",\n    \"newApiUser\": \"2025\",\n    \"needBypass\": true\n  },\n  {\n    \"name\": \"XiaoYo\",\n    \"accessToken\": \"vH/C0lc6jCIiDw8DhpJ28QPWRRQ7\",\n    \"baseUrl\": \"https://www.xiaoyo.cn\",\n    \"newApiUser\": \"338\"\n  },\n  {\n    \"name\": \"API分享站\",\n    \"accessToken\": \"WuB/MH+mYLWf3B1ufaUBri2t8BBMMTlI\",\n    \"baseUrl\": \"https://new-api-bxhm.onrender.com\",\n    \"newApiUser\": \"943\"\n  },\n  {\n    \"name\": \"Free DuckCoding\",\n    \"accessToken\": \"BwXVRZ8EcBI/25ziNWRttG7YhAbB10s=\",\n    \"baseUrl\": \"https://free.duckcoding.com\",\n    \"newApiUser\": \"6291\"\n  },\n  {\n    \"name\": \"DEV88公益\",\n    \"accessToken\": \"h9qzeqZoRnZthq9nKh/hKqsq3mi/+AA=\",\n    \"baseUrl\": \"https://api.dev88.tech\",\n    \"newApiUser\": \"4133\"\n  },\n  {\n    \"name\": \"Huan API\",\n    \"accessToken\": \"aqlUzTtLezUIE8cuPgVqLauca2kilbk=\",\n    \"baseUrl\": \"https://ai.huan666.de\",\n    \"newApiUser\": \"8445\"\n  },\n  {\n    \"name\": \"Mitchll API\",\n    \"accessToken\": \"JRAziZBjgFQ3wagd6Oz2SNaKV1i4kWY=\",\n    \"baseUrl\": \"https://api.mitchll.com\",\n    \"newApiUser\": \"367\"\n  },\n  {\n    \"name\": \"轻のLLM\",\n    \"accessToken\": \"Rq+wvR9huIYZVRJvBY+DM+6Wn3lJrrI=\",\n    \"baseUrl\": \"https://lightllm.online\",\n    \"newApiUser\": \"111\"\n  },\n  {\n    \"name\": \"红石API\",\n    \"accessToken\": \"lvLVsDmZkDozYlGMGxdqxo7r8hUiGw==\",\n    \"baseUrl\": \"https://api.hongshi.ggff.net\",\n    \"newApiUser\": \"375\"\n  },\n  {\n    \"name\": \"小公益站\",\n    \"accessToken\": \"mG2/TWkcueqjhMAKNWhkIWe4k9Vm\",\n    \"baseUrl\": \"https://openai.api-test.us.ci\",\n    \"newApiUser\": \"355\"\n  },\n  {\n    \"name\": \"霸气公益平台\",\n    \"accessToken\": \"V+wQG+kkbFl+2xQ+vb6VunrKhrVm\",\n    \"baseUrl\": \"https://ai.121628.xyz\",\n    \"newApiUser\": \"1745\"\n  },\n  {\n    \"name\": \"Mu.API 2026\",\n    \"accessToken\": \"jcPGI6ZZvAIknOaMDzWNwqne9bTX8w==\",\n    \"baseUrl\": \"https://demo.awa1.fun\",\n    \"newApiUser\": \"1411\"\n  },\n  {\n    \"name\": \"nhh公益站\",\n    \"accessToken\": \"1e8COuKJWH715wjjIMm6Os5Dxg8U\",\n    \"baseUrl\": \"https://new.123nhh.xyz\",\n    \"newApiUser\": \"1108\"\n  },\n  {\n    \"name\": \"慕鸢の公益站\",\n    \"accessToken\": \"h7+b2YuFETdIL1d1Uuxvazl4aTJ6\",\n    \"baseUrl\": \"https://newapi.linuxdo.edu.rs\",\n    \"newApiUser\": \"904\"\n  },\n  {\n    \"name\": \"GoGoGo公益站\",\n    \"accessToken\": \"jni855yfjELMRdFNu/sYcpT+pr99RQ==\",\n    \"baseUrl\": \"https://api.chengtx.vip\",\n    \"newApiUser\": \"486\"\n  },\n  {\n    \"name\": \"OuuAPI\",\n    \"accessToken\": \"hHZ0jtvzHvjjQbbRQjiDfSovz+zvoZNR\",\n    \"baseUrl\": \"https://api.ouu.ch\",\n    \"newApiUser\": \"1563\"\n  },\n  {\n    \"name\": \"zhenhaoji\",\n    \"accessToken\": \"uHEpbXY5ZRNL2GsUPLeDnLZfWdpokQ==\",\n    \"baseUrl\": \"https://newapi.zhenhaoji.qzz.io\",\n    \"newApiUser\": \"462\"\n  },\n  {\n    \"name\": \"ibsgss公益站\",\n    \"accessToken\": \"Blyrr5i4jWlCkbU2yO2mfu45Ofkn94gn\",\n    \"baseUrl\": \"https://codex.ibsgss.uk\",\n    \"newApiUser\": \"999\"\n  },\n  {\n    \"name\": \"啾啾小铺\",\n    \"accessToken\": \"pmPbglWltNhnjAYpfqnH1qGSALQT\",\n    \"baseUrl\": \"https://api.usegemini.xyz\",\n    \"newApiUser\": \"1119\"\n  },\n  {\n    \"name\": \"云端API\",\n    \"accessToken\": \"iVbKjOs2oYQhEzqyg7n9GSott7sQ\",\n    \"baseUrl\": \"https://newapi.onbit.de5.net\",\n    \"newApiUser\": \"46\"\n  },\n  {\n    \"name\": \"codex.cab\",\n    \"accessToken\": \"w3T+G8A2FWYmY3vl74WiZnKfEfEQtO4=\",\n    \"baseUrl\": \"https://codex.cab\",\n    \"newApiUser\": \"682\"\n  },\n  {\n    \"name\": \"摸鱼公益\",\n    \"accessToken\": \"KFrnq3KQgJg7XjfeUtsPkuiz1YLuY20=\",\n    \"baseUrl\": \"https://clove.cc.cd\",\n    \"newApiUser\": \"25\"\n  },\n  {\n    \"name\": \"Zer0by\",\n    \"accessToken\": \"fqzAeEYC6vi3ASA7HkVqo4RESB1Drw==\",\n    \"baseUrl\": \"https://new-api.oseeue.com\",\n    \"newApiUser\": \"18\"\n  },\n  {\n    \"name\": \"WOW公益站\",\n    \"accessToken\": \"cK5M7RhtcSFA3EFL1txoRTBn1SN9Qg==\",\n    \"baseUrl\": \"https://linuxdoapi.223384.xyz\",\n    \"newApiUser\": \"375\"\n  },\n  {\n    \"name\": \"Neb公益站\",\n    \"accessToken\": \"3fyITw6+iwtRMw5TyHg33r3Nyc8O\",\n    \"baseUrl\": \"https://ai.zzhdsgsss.xyz\",\n    \"newApiUser\": \"340\"\n  },\n  {\n    \"name\": \"老魔公益站\",\n    \"accessToken\": \"6j8/kEW2ct2+mgDBqCxC/Sgx2NwYPQ==\",\n    \"baseUrl\": \"https://api.2020111.xyz\",\n    \"newApiUser\": \"488\"\n  }\n] }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1040,
+        672
+      ],
+      "id": "a9146273-fd54-4f17-92f9-347d0b661aa8",
+      "name": "设置公益站列表"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "BpfpS9egg6eEz-egjhRjR",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/BpfpS9egg6eEz-egjhRjR",
+          "cachedResultName": "杂项 — NewAPI 签到"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "name": "={{ $json.name }}",
+            "accessToken": "={{ $json.accessToken }}",
+            "baseUrl": "={{ $json.baseUrl }}",
+            "newApiUser": "={{ $json.newApiUser }}",
+            "needBypass": "={{ $json.needBypass || false }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "newApiUser",
+              "displayName": "newApiUser",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "accessToken",
+              "displayName": "accessToken",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "baseUrl",
+              "displayName": "baseUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "needBypass",
+              "displayName": "needBypass",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "boolean",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        768
+      ],
+      "id": "02b9400d-0ef5-444b-a339-11ebeb24b879",
+      "name": "Call 'NewAPI 签到'",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "from datetime import datetime, timedelta\nfrom zoneinfo import ZoneInfo\n\nyesterday = datetime.now(ZoneInfo(\"Asia/Shanghai\")) - timedelta(days=0)\nyyyymmdd = yesterday.strftime('%Y%m%d')\n\nreturn [{\"date\": yyyymmdd}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -816,
+        864
+      ],
+      "id": "9924b23b-77e6-4ca5-84ee-daf7458735a6",
+      "name": "计算日期"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -592,
+        768
+      ],
+      "id": "9135292f-a49f-4889-96ec-ac04eaf057e5",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "sites",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        672
+      ],
+      "id": "c3005e78-8f62-4b96-9d55-7309a5a88e43",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "234cbb13-8ca2-4060-a51b-cfb7fa493410",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -144,
+        768
+      ],
+      "id": "f512ab6a-85dc-4d24-ad06-ac4dbf4aa37e",
+      "name": "签到失败"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b907be87-200c-4d5d-824f-e53f16a4bed1",
+              "leftValue": "={{ $now.hour }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        80,
+        768
+      ],
+      "id": "7bbcb2d5-8193-45e2-aaff-8f613947f386",
+      "name": "判断当前时间是否大于早上 10 点"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "propertyName": "isSend",
+        "key": "=newapi:signin:send:{{ $('Merge').item.json.date }}:{{ $('Merge').item.json.name }}",
+        "keyType": "string",
+        "options": {
+          "dotNotation": false
+        }
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        304,
+        768
+      ],
+      "id": "a77ec902-c05b-4999-918f-3d29eda636f9",
+      "name": "检查是否已经发送过消息",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "08969fa1-42c2-4f80-bab7-4c04b103a08f",
+              "leftValue": "={{ $json.isSend }}",
+              "rightValue": "1",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        528,
+        768
+      ],
+      "id": "b9971ecf-c456-4770-b3f8-df71743ff149",
+      "name": "没发送过"
+    },
+    {
+      "parameters": {
+        "chatId": "1473202959",
+        "text": "=*🚨 签到失败提醒*\n\n*🏠 站点：* [{{ $('Merge').item.json.name }}]({{ $('Merge').item.json.baseUrl + '/console/personal' }})\n\n*📅 时间：* `{{ $('计算日期').item.json.date }}`\n\n⚠️ _请及时检查_",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "MarkdownV2"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        752,
+        768
+      ],
+      "id": "5a855e47-c9ee-4e5c-9a43-4078fcbc47a2",
+      "name": "发送签到失败的消息",
+      "webhookId": "ed8cc25f-e930-4393-80ec-63cc67c4b2a5",
+      "credentials": {
+        "telegramApi": {
+          "id": "QsEaouPk8M1rCVlU",
+          "name": "@ql_yann_tg_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "=newapi:signin:send:{{ $('Merge').item.json.date }}:{{ $('Merge').item.json.name }}",
+        "value": "1",
+        "expire": true,
+        "ttl": 86400
+      },
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        976,
+        768
+      ],
+      "id": "c6cc30ae-cf58-4869-956f-5ba01890261c",
+      "name": "Redis",
+      "credentials": {
+        "redis": {
+          "id": "NpIOkpndAb3DOEMs",
+          "name": "Upstash"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "triggerAtMinute": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1264,
+        768
+      ],
+      "id": "5a9734d7-6d76-4a05-83d0-14713ec525db",
+      "name": "每隔 1 小时执行一次"
+    }
+  ],
+  "connections": {
+    "设置公益站列表": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "计算日期": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Call 'NewAPI 签到'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'NewAPI 签到'": {
+      "main": [
+        [
+          {
+            "node": "签到失败",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "签到失败": {
+      "main": [
+        [
+          {
+            "node": "判断当前时间是否大于早上 10 点",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "判断当前时间是否大于早上 10 点": {
+      "main": [
+        [
+          {
+            "node": "检查是否已经发送过消息",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "检查是否已经发送过消息": {
+      "main": [
+        [
+          {
+            "node": "没发送过",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "没发送过": {
+      "main": [
+        [
+          {
+            "node": "发送签到失败的消息",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "发送签到失败的消息": {
+      "main": [
+        [
+          {
+            "node": "Redis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "每隔 1 小时执行一次": {
+      "main": [
+        [
+          {
+            "node": "设置公益站列表",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "计算日期",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "triggerCount": 1,
+  "versionId": "5ff25183-0058-4e76-b769-7d6c4ed56a22",
+  "owner": {
+    "type": "team",
+    "teamId": "TMxPImHC99n1Y4DV",
+    "teamName": "杂项"
+  },
+  "parentFolderId": null,
+  "isArchived": false
+}

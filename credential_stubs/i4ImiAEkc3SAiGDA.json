@@ -1,11 +1,10 @@
 {
-  "id": "NpIOkpndAb3DOEMs",
-  "name": "Upstash",
-  "type": "redis",
+  "id": "i4ImiAEkc3SAiGDA",
+  "name": "Hydra",
+  "type": "openAiApi",
   "data": {
-    "password": "",
-    "host": "",
-    "ssl": true
+    "apiKey": "",
+    "url": ""
   },
   "ownedBy": {
     "type": "personal",
