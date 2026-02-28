@@ -18,8 +18,8 @@
       "name": "Delete documents",
       "credentials": {
         "mongoDb": {
-          "id": "gHBWS9s71yffZkq8",
-          "name": "腾讯云"
+          "id": "8YD8ZL8jLcVjsyse",
+          "name": "MongDB Cloud"
         }
       }
     },
@@ -271,7 +271,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 1,
-  "versionId": "2b630543-ed1e-4e9c-b726-4da55c860957",
+  "versionId": "9cfc12b2-d578-4ca0-992a-653397741dcd",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

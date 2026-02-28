@@ -274,25 +274,60 @@
     {
       "parameters": {
         "resource": "image",
-        "modelId": {
-          "__rl": true,
-          "mode": "list",
-          "value": ""
-        },
-        "options": {}
+        "model": "=z-image-turbo",
+        "prompt": "韩式唯美清新风格，精美通透糖水片调。8k分辨率，杰作，无瑕疵。一位25岁的中国图书管理员，身高169cm，身材丰满肉感，皮肤细腻洁白如瓷，正在明亮的图书馆内进行私密露出，她身穿一件敞开的棉质针织开衫，无内衣，露出雪白圆润的乳房，面料柔软褶皱贴合肌肤，神情带着紧张的偷感，眼神羞涩避开镜头，仿佛害怕被读者发现，下身光腿，洁白细腻的腿部皮肤在窗光下泛着光泽，脚踩平底单鞋。坐在高脚凳上整理书籍的姿势，偷拍视角，头部位于黄金分割点，三分法构图，图书馆柔和自然光与书架暖色形成对比，营造出清新而禁忌的氛围，背景是层层书架和洒落的阳光斑点。",
+        "options": {},
+        "images": {
+          "values": [
+            {}
+          ]
+        }
       },
-      "type": "@n8n/n8n-nodes-langchain.googleGemini",
-      "typeVersion": 1.1,
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
       "position": [
         0,
         0
       ],
-      "id": "901b615e-6e45-4455-bec1-3dd35fe9ce58",
+      "id": "bb38ecd3-dd8a-4ecf-9b00-4444aed8dfdb",
       "name": "Generate an image",
       "credentials": {
-        "googlePalmApi": {
-          "id": "HcRpLQ8AC9QYmUDr",
-          "name": "@shoulai.yang@gmail.com"
+        "openAiApi": {
+          "id": "i4ImiAEkc3SAiGDA",
+          "name": "Hydra"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "grok-4.1-reasoning",
+          "mode": "list",
+          "cachedResultName": "GROK-4.1-REASONING"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "22岁中国花店店员，典型的东方清纯面孔，冷白皮，性格羞涩天真。午后阳光洒满的花店，她身高170cm，童颜巨乳体型。身穿碎花围裙和白色过膝袜，脚踩黑色小皮鞋。围裙肩带滑落，里面薄荷绿蕾丝内衣包裹两团饱满圆润、健康肤色的乳房。她蹲在花架旁整理玫瑰，仰视视角，一手轻触花瓣，一手害羞地遮挡胸口，眼神无辜地望向镜头，围裙与内衣的反差萌引发强烈保护欲。RAW原片，8k超清，毛孔级细节，真实摄影质感。"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "db15cce9-a0c3-433b-92dd-d42cb6bcc83a",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "i4ImiAEkc3SAiGDA",
+          "name": "Hydra"
         }
       }
     }
@@ -386,13 +421,24 @@
           }
         ]
       ]
+    },
+    "Generate an image": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "6c93d50c-36e3-417a-bd6b-c1ce8d225cf4",
+  "versionId": "1102ca7d-9335-407b-8758-de431bb49300",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

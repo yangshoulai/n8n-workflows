@@ -127,9 +127,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "glm-4.6",
+          "value": "grok-4.20-beta",
           "mode": "list",
-          "cachedResultName": "glm-4.6"
+          "cachedResultName": "grok-4.20-beta"
         },
         "responsesApiEnabled": false,
         "options": {
@@ -157,9 +157,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "grok-4.1",
+          "value": "grok-4.1-thinking",
           "mode": "list",
-          "cachedResultName": "grok-4.1"
+          "cachedResultName": "grok-4.1-thinking"
         },
         "responsesApiEnabled": false,
         "options": {
@@ -227,9 +227,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "kimi-k2",
+          "value": "gpt-5-nano",
           "mode": "list",
-          "cachedResultName": "kimi-k2"
+          "cachedResultName": "gpt-5-nano"
         },
         "responsesApiEnabled": false,
         "options": {
@@ -501,7 +501,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "362e8387-3e54-4dc9-bc0c-3f7ee675f995",
+  "versionId": "a331d448-8f2d-4453-a4f4-49df45f60d01",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

@@ -58,7 +58,7 @@
       "typeVersion": 2.3,
       "position": [
         96,
-        -200
+        -208
       ],
       "id": "895f033c-f346-41cc-89e3-562d1768f907",
       "name": "判断会话是否存在"
@@ -85,7 +85,7 @@
       "typeVersion": 4.3,
       "position": [
         544,
-        -296
+        -304
       ],
       "id": "859764cf-0a71-4ccc-8f8d-fb748436e5b0",
       "name": "打开网站",
@@ -135,7 +135,7 @@
       "typeVersion": 4.3,
       "position": [
         320,
-        -56
+        -64
       ],
       "id": "7d8c8d79-f314-4ac2-989b-aa4ce18a96a6",
       "name": "新建会话",
@@ -169,7 +169,7 @@
       "typeVersion": 2.3,
       "position": [
         768,
-        -152
+        -160
       ],
       "id": "811078a2-634b-4ecc-ac9b-a1bd53f8ca49",
       "name": "是否成功"
@@ -210,7 +210,7 @@
       "typeVersion": 2,
       "position": [
         992,
-        -152
+        -160
       ],
       "id": "c229a41b-482e-498c-a96f-f914ae76c95c",
       "name": "提取信息"
@@ -326,7 +326,7 @@
     "errorWorkflow": "Y8yqM2jq5lsYpreo"
   },
   "triggerCount": 0,
-  "versionId": "c978c075-1616-4abf-bd9d-1c9800848871",
+  "versionId": "bc489693-6933-4587-b21b-7890212996c4",
   "owner": {
     "type": "personal",
     "projectId": "pskh8wmOtrNvczt8",

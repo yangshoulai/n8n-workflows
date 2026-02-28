@@ -42,7 +42,7 @@
           "interval": [
             {
               "field": "minutes",
-              "minutesInterval": 4
+              "minutesInterval": 8
             }
           ]
         }
@@ -63,7 +63,7 @@
             {
               "id": "77a15943-d31a-4536-9757-e42cef20c440",
               "name": "initPrompt",
-              "value": "=随机生成一张图片、主题请你自由发挥，NSFW 程度（安全、轻度）， 画风精美、清新。\n",
+              "value": "=随机生成一张图片的提示词、主题请你自由发挥。**注意: 是生成结构化的JSON格式的提示词，不是生成图片**\n",
               "type": "string"
             }
           ]
@@ -503,7 +503,7 @@
     "errorWorkflow": "Y8yqM2jq5lsYpreo"
   },
   "triggerCount": 2,
-  "versionId": "7cfd3bc5-14a9-44b4-a866-1da48d3bdbe7",
+  "versionId": "f09e21ac-11a8-4128-bc5a-f859015d4d29",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",

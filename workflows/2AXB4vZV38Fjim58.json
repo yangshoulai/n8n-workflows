@@ -534,7 +534,7 @@
           "value": "PhO3mBDRZvck8gXu",
           "mode": "list",
           "cachedResultUrl": "/workflow/PhO3mBDRZvck8gXu",
-          "cachedResultName": "天天美图 — Gitee 免费 AI 绘画 With Tokens 2"
+          "cachedResultName": "天天美图 — Gitee 免费 AI 绘画 With Tokens"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -887,7 +887,7 @@
     "executionOrder": "v1"
   },
   "triggerCount": 0,
-  "versionId": "bec8af88-bb21-4859-81fe-70dc7f506a1f",
+  "versionId": "8c8ccd64-6fc7-4136-8bae-83ea47a6bb4f",
   "owner": {
     "type": "team",
     "teamId": "WbNJS3WnAGCxsXVf",
